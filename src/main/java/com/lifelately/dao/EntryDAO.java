@@ -30,15 +30,16 @@ public final class EntryDAO {
         this.databaseConnection = databaseConnection;
     }
 
-    public List<Entry> findAll() {
-        return search("", null, null, false, "NEWEST");
+    public List<Entry> findAll(long userId) {
+        return search(userId, "", null, null, false, "NEWEST");
     }
 
-    public Optional<Entry> findById(long id) {
-        String sql = SELECT_COLUMNS + " WHERE e.id = ? AND e.deleted_at IS NULL";
+    public Optional<Entry> findById(long id, long userId) {
+        String sql = SELECT_COLUMNS + " WHERE e.id = ? AND e.user_id = ? AND e.deleted_at IS NULL";
         try (var connection = databaseConnection.getConnection();
-             var statement = connection.prepareStatement(sql)) {
+            var statement = connection.prepareStatement(sql)) {
             statement.setLong(1, id);
+            statement.setLong(2, userId);
             try (ResultSet result = statement.executeQuery()) {
                 if (!result.next()) return Optional.empty();
                 Entry entry = map(result);
@@ -50,11 +51,13 @@ public final class EntryDAO {
         }
     }
 
-    public List<Entry> search(String query, Long moodId, Long tagId, boolean favoritesOnly, String sort) {
+    public List<Entry> search(long userId, String query, Long moodId, Long tagId,
+                              boolean favoritesOnly, String sort) {
         StringBuilder sql = new StringBuilder(SELECT_COLUMNS);
         List<Object> parameters = new ArrayList<>();
         if (tagId != null) sql.append(" JOIN entry_tags filter_et ON filter_et.entry_id = e.id ");
-        sql.append(" WHERE e.deleted_at IS NULL ");
+        sql.append(" WHERE e.deleted_at IS NULL AND e.user_id = ? ");
+        parameters.add(userId);
         if (query != null && !query.isBlank()) {
             sql.append(" AND (LOWER(e.title) LIKE ? OR LOWER(e.content) LIKE ?) ");
             String searchValue = "%" + query.toLowerCase().trim() + "%";
@@ -90,15 +93,16 @@ public final class EntryDAO {
         }
     }
 
-    public Entry insert(Entry entry) {
+    public Entry insert(Entry entry, long userId) {
         String sql = """
-                INSERT INTO entries (title, content, mood_id, entry_date, is_favorite)
-                VALUES (?, ?, ?, ?, ?)
+                INSERT INTO entries (user_id, title, content, mood_id, entry_date, is_favorite)
+                VALUES (?, ?, ?, ?, ?, ?)
                 """;
         try (var connection = databaseConnection.getConnection()) {
             connection.setAutoCommit(false);
             try (var statement = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
-                bindEntry(statement, entry);
+                statement.setLong(1, userId);
+                bindEntry(statement, entry, 2);
                 statement.executeUpdate();
                 try (ResultSet keys = statement.getGeneratedKeys()) {
                     if (!keys.next()) throw new SQLException("No key returned for new entry");
@@ -106,7 +110,7 @@ public final class EntryDAO {
                 }
                 replaceTags(connection, entry.getId(), entry.getTags());
                 connection.commit();
-                return findById(entry.getId()).orElseThrow();
+                return findById(entry.getId(), userId).orElseThrow();
             } catch (SQLException exception) {
                 connection.rollback();
                 throw exception;
@@ -116,20 +120,22 @@ public final class EntryDAO {
         }
     }
 
-    public Entry update(Entry entry) {
+    public Entry update(Entry entry, long userId) {
         String sql = """
                 UPDATE entries SET title = ?, content = ?, mood_id = ?, entry_date = ?,
-                    is_favorite = ?, updated_at = CURRENT_TIMESTAMP WHERE id = ? AND deleted_at IS NULL
+                    is_favorite = ?, updated_at = CURRENT_TIMESTAMP
+                WHERE id = ? AND user_id = ? AND deleted_at IS NULL
                 """;
         try (var connection = databaseConnection.getConnection()) {
             connection.setAutoCommit(false);
             try (var statement = connection.prepareStatement(sql)) {
-                bindEntry(statement, entry);
+                bindEntry(statement, entry, 1);
                 statement.setLong(6, entry.getId());
+                statement.setLong(7, userId);
                 if (statement.executeUpdate() == 0) throw new SQLException("Entry was not found");
                 replaceTags(connection, entry.getId(), entry.getTags());
                 connection.commit();
-                return findById(entry.getId()).orElseThrow();
+                return findById(entry.getId(), userId).orElseThrow();
             } catch (SQLException exception) {
                 connection.rollback();
                 throw exception;
@@ -139,31 +145,32 @@ public final class EntryDAO {
         }
     }
 
-    public void softDelete(long id) {
-        changeDeletedAt(id, "CURRENT_TIMESTAMP");
+    public void softDelete(long id, long userId) {
+        changeDeletedAt(id, userId, "CURRENT_TIMESTAMP");
     }
 
-    public void restore(long id) {
-        changeDeletedAt(id, "NULL");
+    public void restore(long id, long userId) {
+        changeDeletedAt(id, userId, "NULL");
     }
 
-    private void changeDeletedAt(long id, String value) {
-        String sql = "UPDATE entries SET deleted_at = " + value + " WHERE id = ?";
+    private void changeDeletedAt(long id, long userId, String value) {
+        String sql = "UPDATE entries SET deleted_at = " + value + " WHERE id = ? AND user_id = ?";
         try (var connection = databaseConnection.getConnection();
              var statement = connection.prepareStatement(sql)) {
             statement.setLong(1, id);
+            statement.setLong(2, userId);
             statement.executeUpdate();
         } catch (SQLException exception) {
             throw databaseError("update entry deletion status", exception);
         }
     }
 
-    private void bindEntry(java.sql.PreparedStatement statement, Entry entry) throws SQLException {
-        statement.setString(1, entry.getTitle());
-        statement.setString(2, entry.getContent());
-        statement.setLong(3, entry.getMood().id());
-        statement.setDate(4, Date.valueOf(entry.getEntryDate()));
-        statement.setBoolean(5, entry.isFavorite());
+    private void bindEntry(java.sql.PreparedStatement statement, Entry entry, int start) throws SQLException {
+        statement.setString(start, entry.getTitle());
+        statement.setString(start + 1, entry.getContent());
+        statement.setLong(start + 2, entry.getMood().id());
+        statement.setDate(start + 3, Date.valueOf(entry.getEntryDate()));
+        statement.setBoolean(start + 4, entry.isFavorite());
     }
 
     private Entry map(ResultSet result) throws SQLException {

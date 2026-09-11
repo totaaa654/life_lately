@@ -9,6 +9,7 @@ searchable entries, tags, calendar browsing, lightweight insights, and persisten
 - One-stage JavaFX shell with Home, Journal, Calendar, Insights, and Settings navigation
 - First-run local account setup, sign-in, and logout
 - Restored local sessions, so successful sign-in persists until logout
+- Multiple local accounts with isolated entries, tags, and appearance settings
 - PBKDF2-SHA256 password hashing with a unique random salt
 - Create, read, edit, search, favorite, and soft-delete journal entries
 - Five seeded moods: Great, Good, Okay, Low, and Rough
@@ -127,7 +128,9 @@ mysql -u root -p < src/main/resources/com/lifelately/database/seed.sql
 ```
 
 After import, `SHOW TABLES FROM life_lately;` displays `users`, `moods`, `entries`, `tags`,
-`entry_tags`, and `app_settings`. Passwords are never stored as plain text.
+`entry_tags`, `app_settings`, and `user_settings`. Passwords are never stored as plain text.
+Existing entries are assigned to the first existing account during startup migration; new accounts
+cannot see or edit another account's entries.
 
 ## Verify Phase 1
 

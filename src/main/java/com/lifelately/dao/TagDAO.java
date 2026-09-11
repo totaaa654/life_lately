@@ -17,14 +17,23 @@ public final class TagDAO {
         this.databaseConnection = databaseConnection;
     }
 
-    public List<Tag> findAll() {
-        String sql = "SELECT id, name, color_hex FROM tags ORDER BY name";
+    public List<Tag> findAllForUser(long userId) {
+        String sql = """
+                SELECT DISTINCT t.id, t.name, t.color_hex
+                FROM tags t
+                JOIN entry_tags et ON et.tag_id = t.id
+                JOIN entries e ON e.id = et.entry_id
+                WHERE e.user_id = ? AND e.deleted_at IS NULL
+                ORDER BY t.name
+                """;
         List<Tag> tags = new ArrayList<>();
         try (var connection = databaseConnection.getConnection();
-             var statement = connection.prepareStatement(sql);
-             ResultSet result = statement.executeQuery()) {
-            while (result.next()) tags.add(map(result));
-            return tags;
+             var statement = connection.prepareStatement(sql)) {
+            statement.setLong(1, userId);
+            try (ResultSet result = statement.executeQuery()) {
+                while (result.next()) tags.add(map(result));
+                return tags;
+            }
         } catch (SQLException exception) {
             throw databaseError("load tags", exception);
         }

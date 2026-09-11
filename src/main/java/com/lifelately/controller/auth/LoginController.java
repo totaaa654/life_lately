@@ -23,10 +23,12 @@ public final class LoginController {
     @FXML private PasswordField passwordField;
     @FXML private PasswordField confirmationField;
     @FXML private Button submitButton;
+    @FXML private Button modeButton;
+    @FXML private Label modePrompt;
     @FXML private Label statusLabel;
 
     private final AppConfig config = AppConfig.getInstance();
-    private boolean firstAccount;
+    private boolean registrationMode;
 
     @FXML
     private void initialize() {
@@ -39,17 +41,7 @@ public final class LoginController {
             return;
         }
 
-        firstAccount = config.authService().requiresFirstAccount();
-        displayNameGroup.setVisible(firstAccount);
-        displayNameGroup.setManaged(firstAccount);
-        confirmationGroup.setVisible(firstAccount);
-        confirmationGroup.setManaged(firstAccount);
-        if (firstAccount) {
-            formEyebrow.setText("FIRST TIME SETUP");
-            formTitle.setText("Create your private account");
-            formSubtitle.setText("Your journal stays connected to this local MySQL database.");
-            submitButton.setText("Create account");
-        }
+        setMode(config.authService().requiresFirstAccount());
     }
 
     @FXML
@@ -57,8 +49,8 @@ public final class LoginController {
         clearStatus();
         try {
             AuthService auth = config.authService();
-            if (firstAccount) {
-                auth.createFirstAccount(usernameField.getText(), displayNameField.getText(),
+            if (registrationMode) {
+                auth.createAccount(usernameField.getText(), displayNameField.getText(),
                         passwordField.getText(), confirmationField.getText());
             } else {
                 auth.login(usernameField.getText(), passwordField.getText());
@@ -66,6 +58,37 @@ public final class LoginController {
             App.showMain(loginRoot.getScene());
         } catch (IllegalArgumentException | IllegalStateException exception) {
             showError(exception.getMessage());
+        }
+    }
+
+    @FXML
+    private void toggleMode() {
+        setMode(!registrationMode);
+        clearStatus();
+        passwordField.clear();
+        confirmationField.clear();
+    }
+
+    private void setMode(boolean register) {
+        registrationMode = register;
+        displayNameGroup.setVisible(register);
+        displayNameGroup.setManaged(register);
+        confirmationGroup.setVisible(register);
+        confirmationGroup.setManaged(register);
+        if (register) {
+            formEyebrow.setText("CREATE ACCOUNT");
+            formTitle.setText("Start your own journal");
+            formSubtitle.setText("Each account has separate entries and personal settings.");
+            submitButton.setText("Create account");
+            modePrompt.setText("Already have an account?");
+            modeButton.setText("Sign in");
+        } else {
+            formEyebrow.setText("WELCOME BACK");
+            formTitle.setText("Sign in to your journal");
+            formSubtitle.setText("Your entries and settings stay private to your account.");
+            submitButton.setText("Sign in");
+            modePrompt.setText("New to Life Lately?");
+            modeButton.setText("Create an account");
         }
     }
 

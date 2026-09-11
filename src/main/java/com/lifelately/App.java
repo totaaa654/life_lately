@@ -23,7 +23,7 @@ public final class App extends Application {
                 ? "/com/lifelately/fxml/main.fxml"
                 : "/com/lifelately/fxml/auth/login.fxml"), 1240, 820);
         ThemeManager.initialize(scene);
-        AppSettings settings = config.isDatabaseReady()
+        AppSettings settings = restoreJournal
                 ? config.settingsService().getSettings()
                 : AppSettings.defaults();
         ThemeManager.apply(Theme.valueOf(settings.theme()), settings.accentColor());
@@ -39,7 +39,8 @@ public final class App extends Application {
 
     public static void showMain(Scene scene) {
         scene.setRoot(loadRoot("/com/lifelately/fxml/main.fxml"));
-        ThemeManager.refreshRoot();
+        AppSettings settings = AppConfig.getInstance().settingsService().getSettings();
+        ThemeManager.apply(Theme.valueOf(settings.theme()), settings.accentColor());
     }
 
     public static void showLogin(Scene scene) {

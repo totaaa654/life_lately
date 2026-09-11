@@ -22,22 +22,24 @@ public final class EntryService {
 
     private final EntryDAO entryDAO;
     private final TagService tagService;
+    private final AuthService authService;
 
-    public EntryService(EntryDAO entryDAO, TagService tagService) {
+    public EntryService(EntryDAO entryDAO, TagService tagService, AuthService authService) {
         this.entryDAO = entryDAO;
         this.tagService = tagService;
+        this.authService = authService;
     }
 
     public List<Entry> getAllEntries() {
-        return entryDAO.findAll();
+        return entryDAO.findAll(currentUserId());
     }
 
     public Optional<Entry> getEntry(long id) {
-        return entryDAO.findById(id);
+        return entryDAO.findById(id, currentUserId());
     }
 
     public List<Entry> search(String query, Mood mood, Tag tag, boolean favoritesOnly, String sort) {
-        return entryDAO.search(query, mood == null ? null : mood.id(), tag == null ? null : tag.id(),
+        return entryDAO.search(currentUserId(), query, mood == null ? null : mood.id(), tag == null ? null : tag.id(),
                 favoritesOnly, sort);
     }
 
@@ -53,15 +55,16 @@ public final class EntryService {
         entry.setEntryDate(date);
         entry.setFavorite(favorite);
         entry.setTags(tagService.resolveTags(tags));
-        return id == null ? entryDAO.insert(entry) : entryDAO.update(entry);
+        long userId = currentUserId();
+        return id == null ? entryDAO.insert(entry, userId) : entryDAO.update(entry, userId);
     }
 
     public void delete(long id) {
-        entryDAO.softDelete(id);
+        entryDAO.softDelete(id, currentUserId());
     }
 
     public void restore(long id) {
-        entryDAO.restore(id);
+        entryDAO.restore(id, currentUserId());
     }
 
     public Insights getInsights() {
@@ -105,5 +108,11 @@ public final class EntryService {
             previous = date;
         }
         return longest;
+    }
+
+    private long currentUserId() {
+        return authService.currentUser()
+                .orElseThrow(() -> new IllegalStateException("Sign in to access journal entries."))
+                .id();
     }
 }

@@ -30,9 +30,10 @@ public final class AuthService {
     }
 
     public User createFirstAccount(String username, String displayName, String password, String confirmation) {
-        if (userDAO.hasUsers()) {
-            throw new IllegalArgumentException("A local account already exists. Sign in instead.");
-        }
+        return createAccount(username, displayName, password, confirmation);
+    }
+
+    public User createAccount(String username, String displayName, String password, String confirmation) {
         String cleanUsername = validateUsername(username);
         String cleanDisplayName = ValidationUtils.requireText(displayName, "Display name");
         validatePassword(password, confirmation);
@@ -40,6 +41,7 @@ public final class AuthService {
         new SecureRandom().nextBytes(salt);
         User user = userDAO.insert(cleanUsername, cleanDisplayName, hash(password, salt),
                 Base64.getEncoder().encodeToString(salt));
+        userDAO.claimUnownedEntries(user.id());
         currentUser = user;
         userDAO.rememberUser(user.id());
         return user;

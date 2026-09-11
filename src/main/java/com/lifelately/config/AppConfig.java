@@ -29,12 +29,12 @@ public final class AppConfig {
     private AppConfig() {
         databaseConnection = new DatabaseConnection(DatabaseConfig.load());
         databaseInitializer = new DatabaseInitializer(databaseConnection);
-        TagDAO tagDAO = new TagDAO(databaseConnection);
-        tagService = new TagService(tagDAO);
-        entryService = new EntryService(new EntryDAO(databaseConnection), tagService);
-        moodService = new MoodService(new MoodDAO(databaseConnection));
-        settingsService = new SettingsService(new SettingsDAO(databaseConnection));
         authService = new AuthService(new UserDAO(databaseConnection));
+        TagDAO tagDAO = new TagDAO(databaseConnection);
+        tagService = new TagService(tagDAO, authService);
+        entryService = new EntryService(new EntryDAO(databaseConnection), tagService, authService);
+        moodService = new MoodService(new MoodDAO(databaseConnection));
+        settingsService = new SettingsService(new SettingsDAO(databaseConnection), authService);
     }
 
     public static AppConfig getInstance() { return INSTANCE; }

@@ -14,28 +14,31 @@ public final class SettingsDAO {
         this.databaseConnection = databaseConnection;
     }
 
-    public Map<String, String> findAll() {
-        String sql = "SELECT setting_key, setting_value FROM app_settings";
+    public Map<String, String> findAll(long userId) {
+        String sql = "SELECT setting_key, setting_value FROM user_settings WHERE user_id = ?";
         Map<String, String> settings = new LinkedHashMap<>();
         try (var connection = databaseConnection.getConnection();
-             var statement = connection.prepareStatement(sql);
-             ResultSet result = statement.executeQuery()) {
-            while (result.next()) settings.put(result.getString("setting_key"), result.getString("setting_value"));
-            return settings;
+             var statement = connection.prepareStatement(sql)) {
+            statement.setLong(1, userId);
+            try (ResultSet result = statement.executeQuery()) {
+                while (result.next()) settings.put(result.getString("setting_key"), result.getString("setting_value"));
+                return settings;
+            }
         } catch (SQLException exception) {
             throw databaseError("load settings", exception);
         }
     }
 
-    public void save(String key, String value) {
+    public void save(long userId, String key, String value) {
         String sql = """
-                INSERT INTO app_settings (setting_key, setting_value) VALUES (?, ?)
+                INSERT INTO user_settings (user_id, setting_key, setting_value) VALUES (?, ?, ?)
                 ON DUPLICATE KEY UPDATE setting_value = VALUES(setting_value)
                 """;
         try (var connection = databaseConnection.getConnection();
              var statement = connection.prepareStatement(sql)) {
-            statement.setString(1, key);
-            statement.setString(2, value);
+            statement.setLong(1, userId);
+            statement.setString(2, key);
+            statement.setString(3, value);
             statement.executeUpdate();
         } catch (SQLException exception) {
             throw databaseError("save settings", exception);

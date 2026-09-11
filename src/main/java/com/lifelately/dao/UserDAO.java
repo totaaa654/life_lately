@@ -117,7 +117,21 @@ public final class UserDAO {
                 return findByUsername(username).orElseThrow();
             }
         } catch (SQLException exception) {
+            if (exception.getErrorCode() == 1062) {
+                throw new IllegalArgumentException("That username is already taken.", exception);
+            }
             throw databaseError("create local account", exception);
+        }
+    }
+
+    public void claimUnownedEntries(long userId) {
+        String sql = "UPDATE entries SET user_id = ? WHERE user_id IS NULL";
+        try (var connection = databaseConnection.getConnection();
+             var statement = connection.prepareStatement(sql)) {
+            statement.setLong(1, userId);
+            statement.executeUpdate();
+        } catch (SQLException exception) {
+            throw databaseError("assign existing journal entries", exception);
         }
     }
 

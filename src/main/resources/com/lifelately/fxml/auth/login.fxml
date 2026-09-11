@@ -63,6 +63,10 @@
                     <Label fx:id="statusLabel" visible="false" managed="false" wrapText="true" maxWidth="Infinity" styleClass="error-label, login-status"/>
                     <Button fx:id="submitButton" text="Sign in" onAction="#submit" defaultButton="true"
                             maxWidth="Infinity" prefHeight="46" styleClass="primary-button, login-submit"/>
+                    <HBox alignment="CENTER" spacing="4" maxWidth="Infinity" styleClass="auth-switch">
+                        <Label fx:id="modePrompt" text="New to Life Lately?" styleClass="login-note"/>
+                        <Button fx:id="modeButton" text="Create an account" onAction="#toggleMode" styleClass="link-button, compact-button"/>
+                    </HBox>
                     <HBox alignment="CENTER" spacing="8" maxWidth="Infinity">
                         <Region styleClass="login-rule" HBox.hgrow="ALWAYS"/>
                         <Label text="one page at a time" styleClass="login-note"/>

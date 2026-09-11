@@ -3,8 +3,10 @@ package com.lifelately;
 import com.lifelately.config.AppConfig;
 import com.lifelately.config.DatabaseConfig;
 import com.lifelately.database.DatabaseConnection;
+import com.lifelately.dao.UserDAO;
 import com.lifelately.model.Entry;
 import com.lifelately.model.Mood;
+import com.lifelately.model.User;
 import com.lifelately.theme.Theme;
 import com.lifelately.theme.ThemeManager;
 import javafx.application.Platform;
@@ -16,6 +18,8 @@ import javafx.scene.control.DatePicker;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Region;
 import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.AfterAll;
+import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Test;
 
 import java.sql.SQLException;
@@ -32,11 +36,37 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 
 class PhaseOneIntegrationTest {
     private static final AppConfig CONFIG = AppConfig.getInstance();
+    private static final DatabaseConnection TEST_DATABASE = new DatabaseConnection(DatabaseConfig.load());
+    private static final UserDAO TEST_USERS = new UserDAO(TEST_DATABASE);
+    private static final String TEST_USERNAME = "verify_user_" + System.nanoTime();
+    private static final String TEST_PASSWORD = "VerificationPass123";
+    private static Long testUserId;
+    private static String previousRememberedUser;
 
     @BeforeAll
     static void initialize() {
         CONFIG.initializeDatabase();
         assertTrue(CONFIG.isDatabaseReady(), "Laragon MySQL must be running for integration verification");
+        previousRememberedUser = readRememberedUser();
+        User testUser = TEST_USERS.insert(TEST_USERNAME, "Verification User", "dGVzdA==", "dGVzdA==");
+        testUserId = testUser.id();
+        switchToTestUser(testUserId);
+    }
+
+    @AfterEach
+    void keepTestAccountActive() {
+        switchToTestUser(testUserId);
+    }
+
+    @AfterAll
+    static void cleanupAccount() throws SQLException {
+        CONFIG.authService().logout();
+        try (var connection = TEST_DATABASE.getConnection();
+             var statement = connection.prepareStatement("DELETE FROM users WHERE id = ?")) {
+            statement.setLong(1, testUserId);
+            statement.executeUpdate();
+        }
+        restoreRememberedUser(previousRememberedUser);
     }
 
     @Test
@@ -96,7 +126,7 @@ class PhaseOneIntegrationTest {
     @Test
     void expectedDatabaseTablesAreVisible() throws SQLException {
         DatabaseConnection connectionProvider = new DatabaseConnection(DatabaseConfig.load());
-        List<String> expected = List.of("users", "moods", "entries", "tags", "entry_tags", "app_settings");
+        List<String> expected = List.of("users", "moods", "entries", "tags", "entry_tags", "app_settings", "user_settings");
         try (var connection = connectionProvider.getConnection()) {
             for (String table : expected) {
                 try (var result = connection.getMetaData().getTables(connection.getCatalog(), null, table, new String[]{"TABLE"})) {
@@ -112,9 +142,13 @@ class PhaseOneIntegrationTest {
         runOnJavaFxThread(() -> {
             Parent login = new FXMLLoader(App.class.getResource("/com/lifelately/fxml/auth/login.fxml")).load();
             Button submit = (Button) login.lookup("#submitButton");
+            Button modeButton = (Button) login.lookup("#modeButton");
             assertNotNull(submit);
+            assertNotNull(modeButton);
             assertTrue(submit.getStyleClass().contains("primary-button"));
             assertTrue(submit.getStyleClass().contains("login-submit"));
+            modeButton.fire();
+            assertEquals("Create account", submit.getText());
 
             Parent main = new FXMLLoader(App.class.getResource("/com/lifelately/fxml/main.fxml")).load();
             Scene scene = new Scene(main, 1240, 820);
@@ -160,6 +194,48 @@ class PhaseOneIntegrationTest {
                 }
             }
         });
+    }
+
+    @Test
+    void accountsCannotReadOrChangeEachOthersEntries() throws SQLException {
+        String firstMarker = "private-first-" + System.nanoTime();
+        String secondMarker = "private-second-" + System.nanoTime();
+        Entry firstEntry = null;
+        Entry secondEntry = null;
+        User secondUser = null;
+        try {
+            Mood mood = CONFIG.moodService().getMoods().getFirst();
+            firstEntry = CONFIG.entryService().save(null, firstMarker, "Visible only to the first test account.",
+                    mood, LocalDate.now(), false, "private-first");
+
+            secondUser = CONFIG.authService().createAccount(
+                    "verify_second_" + System.nanoTime(), "Second Verification User",
+                    TEST_PASSWORD, TEST_PASSWORD);
+            assertTrue(CONFIG.entryService().getEntry(firstEntry.getId()).isEmpty());
+            assertTrue(CONFIG.entryService().search(firstMarker, null, null, false, "NEWEST").isEmpty());
+
+            secondEntry = CONFIG.entryService().save(null, secondMarker, "Visible only to the second test account.",
+                    mood, LocalDate.now(), false, "private-second");
+            CONFIG.authService().login(secondUser.username(), TEST_PASSWORD);
+            assertEquals(secondEntry.getId(), CONFIG.entryService().getEntry(secondEntry.getId()).orElseThrow().getId());
+
+            switchToTestUser(testUserId);
+            assertEquals(firstEntry.getId(), CONFIG.entryService().getEntry(firstEntry.getId()).orElseThrow().getId());
+            assertTrue(CONFIG.entryService().getEntry(secondEntry.getId()).isEmpty());
+        } finally {
+            switchToTestUser(testUserId);
+            try (var connection = TEST_DATABASE.getConnection()) {
+                if (firstEntry != null) deleteEntry(connection, firstEntry.getId());
+                if (secondUser != null) {
+                    try (var deleteUser = connection.prepareStatement("DELETE FROM users WHERE id = ?")) {
+                        deleteUser.setLong(1, secondUser.id());
+                        deleteUser.executeUpdate();
+                    }
+                }
+                deleteTag(connection, "private-first");
+                deleteTag(connection, "private-second");
+            }
+        }
     }
 
     @Test
@@ -213,16 +289,59 @@ class PhaseOneIntegrationTest {
     }
 
     private void removeVerificationData(long entryId, String tagName) throws SQLException {
-        DatabaseConnection connectionProvider = new DatabaseConnection(DatabaseConfig.load());
-        try (var connection = connectionProvider.getConnection()) {
-            try (var deleteEntry = connection.prepareStatement("DELETE FROM entries WHERE id = ?")) {
-                deleteEntry.setLong(1, entryId);
-                deleteEntry.executeUpdate();
+        try (var connection = TEST_DATABASE.getConnection()) {
+            deleteEntry(connection, entryId);
+            deleteTag(connection, tagName);
+        }
+    }
+
+    private static void switchToTestUser(long userId) {
+        CONFIG.authService().logout();
+        TEST_USERS.rememberUser(userId);
+        assertTrue(CONFIG.authService().restoreSession(), "Could not activate test account");
+    }
+
+    private static String readRememberedUser() {
+        try (var connection = TEST_DATABASE.getConnection();
+             var statement = connection.prepareStatement(
+                     "SELECT setting_value FROM app_settings WHERE setting_key = 'remembered_user_id'");
+             var result = statement.executeQuery()) {
+            return result.next() ? result.getString(1) : null;
+        } catch (SQLException exception) {
+            throw new IllegalStateException("Could not preserve the existing session.", exception);
+        }
+    }
+
+    private static void restoreRememberedUser(String userId) throws SQLException {
+        try (var connection = TEST_DATABASE.getConnection()) {
+            if (userId == null) {
+                try (var statement = connection.prepareStatement(
+                        "DELETE FROM app_settings WHERE setting_key = 'remembered_user_id'")) {
+                    statement.executeUpdate();
+                }
+            } else {
+                try (var statement = connection.prepareStatement("""
+                        INSERT INTO app_settings (setting_key, setting_value) VALUES ('remembered_user_id', ?)
+                        ON DUPLICATE KEY UPDATE setting_value = VALUES(setting_value)
+                        """)) {
+                    statement.setString(1, userId);
+                    statement.executeUpdate();
+                }
             }
-            try (var deleteTag = connection.prepareStatement("DELETE FROM tags WHERE name = ?")) {
-                deleteTag.setString(1, tagName);
-                deleteTag.executeUpdate();
-            }
+        }
+    }
+
+    private static void deleteEntry(java.sql.Connection connection, long entryId) throws SQLException {
+        try (var statement = connection.prepareStatement("DELETE FROM entries WHERE id = ?")) {
+            statement.setLong(1, entryId);
+            statement.executeUpdate();
+        }
+    }
+
+    private static void deleteTag(java.sql.Connection connection, String tagName) throws SQLException {
+        try (var statement = connection.prepareStatement("DELETE FROM tags WHERE name = ?")) {
+            statement.setString(1, tagName);
+            statement.executeUpdate();
         }
     }
 

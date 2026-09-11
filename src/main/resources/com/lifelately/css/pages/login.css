@@ -27,5 +27,7 @@
 .login-form-side .text-field { -fx-font-size: 13px; -fx-padding: 11 13; }
 .login-status { -fx-background-color: derive(-color-danger, 88%); -fx-background-radius: 10; -fx-padding: 9 11; }
 .login-submit { -fx-font-size: 13px; -fx-background-radius: 12; }
+.auth-switch { -fx-padding: 1 0 0 0; }
+.auth-switch .link-button { -fx-font-size: 10px; -fx-padding: 4; }
 .login-rule { -fx-background-color: -color-border; -fx-min-height: 1; -fx-pref-height: 1; }
 .login-note { -fx-font-size: 10px; -fx-text-fill: -color-muted; }

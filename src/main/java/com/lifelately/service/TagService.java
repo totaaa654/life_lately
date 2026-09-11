@@ -8,13 +8,18 @@ import java.util.List;
 
 public final class TagService {
     private final TagDAO tagDAO;
+    private final AuthService authService;
 
-    public TagService(TagDAO tagDAO) {
+    public TagService(TagDAO tagDAO, AuthService authService) {
         this.tagDAO = tagDAO;
+        this.authService = authService;
     }
 
     public List<Tag> getTags() {
-        return tagDAO.findAll();
+        long userId = authService.currentUser()
+                .orElseThrow(() -> new IllegalStateException("Sign in to access journal tags."))
+                .id();
+        return tagDAO.findAllForUser(userId);
     }
 
     public List<Tag> resolveTags(String commaSeparatedTags) {

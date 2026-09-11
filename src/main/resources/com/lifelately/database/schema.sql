@@ -26,6 +26,7 @@ CREATE TABLE IF NOT EXISTS moods (
 
 CREATE TABLE IF NOT EXISTS entries (
     id BIGINT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
+    user_id BIGINT UNSIGNED NOT NULL,
     title VARCHAR(160) NOT NULL,
     content TEXT NOT NULL,
     mood_id BIGINT UNSIGNED NOT NULL,
@@ -34,7 +35,9 @@ CREATE TABLE IF NOT EXISTS entries (
     updated_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
     is_favorite BOOLEAN NOT NULL DEFAULT FALSE,
     deleted_at TIMESTAMP NULL DEFAULT NULL,
+    CONSTRAINT fk_entries_user FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE,
     CONSTRAINT fk_entries_mood FOREIGN KEY (mood_id) REFERENCES moods(id),
+    INDEX idx_entries_user (user_id),
     INDEX idx_entries_date (entry_date),
     INDEX idx_entries_mood (mood_id),
     INDEX idx_entries_deleted (deleted_at),
@@ -60,4 +63,12 @@ CREATE TABLE IF NOT EXISTS entry_tags (
 CREATE TABLE IF NOT EXISTS app_settings (
     setting_key VARCHAR(80) PRIMARY KEY,
     setting_value VARCHAR(255) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+CREATE TABLE IF NOT EXISTS user_settings (
+    user_id BIGINT UNSIGNED NOT NULL,
+    setting_key VARCHAR(80) NOT NULL,
+    setting_value VARCHAR(255) NOT NULL,
+    PRIMARY KEY (user_id, setting_key),
+    CONSTRAINT fk_user_settings_user FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
