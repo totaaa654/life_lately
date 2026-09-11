@@ -14,7 +14,17 @@
 .stat-memories, .stat-month { -fx-background-color: linear-gradient(to bottom right, -soft-blue, -color-surface); -fx-border-color: derive(#6f8fea, 68%); }
 .stat-feeling { -fx-background-color: linear-gradient(to bottom right, -soft-green, -color-surface); -fx-border-color: derive(#78bfa3, 62%); }
 .stat-lavender { -fx-background-color: linear-gradient(to bottom right, -soft-lavender, -color-surface); -fx-border-color: derive(#a994e8, 65%); }
-.stat-icon { -fx-font-size: 19px; }
+.stat-symbol {
+    -fx-min-width: 20;
+    -fx-pref-width: 20;
+    -fx-min-height: 20;
+    -fx-pref-height: 20;
+    -fx-background-color: -accent;
+}
+.stat-symbol-streak { -fx-background-color: -mood-rough; -fx-shape: "M 12 0 C 16 5 17 9 14 12 C 18 11 21 14 20 18 C 19 23 15 26 10 25 C 4 25 1 21 2 16 C 3 12 6 10 7 5 C 9 7 11 7 12 0 Z"; }
+.stat-symbol-memory { -fx-background-color: -mood-okay; -fx-shape: "M 2 2 H 11 C 13 2 14 4 14 6 V 23 C 13 21 11 20 8 20 H 2 Z M 16 6 C 16 4 18 2 20 2 H 29 V 20 H 23 C 20 20 18 21 16 23 Z"; }
+.stat-symbol-mood { -fx-background-color: -mood-good; -fx-shape: "M 12 1 A 11 11 0 1 0 12 23 A 11 11 0 1 0 12 1 Z"; }
+.stat-symbol-best { -fx-background-color: -mood-low; -fx-shape: "M 12 0 L 15 8 L 24 9 L 17 15 L 19 24 L 12 19 L 5 24 L 7 15 L 0 9 L 9 8 Z"; }
 .stat-label { -fx-font-size: 9px; -fx-font-weight: bold; -fx-text-fill: -color-muted; }
 .stat-value { -fx-font-size: 27px; -fx-font-weight: bold; -fx-text-fill: -color-text-strong; }
 .stat-value-small { -fx-font-size: 21px; -fx-font-weight: bold; -fx-text-fill: -color-text-strong; }

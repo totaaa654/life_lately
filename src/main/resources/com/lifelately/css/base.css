@@ -33,3 +33,12 @@
 .scroll-bar:vertical .thumb { -fx-background-color: -color-border; -fx-background-radius: 10; }
 .scroll-bar .increment-button, .scroll-bar .decrement-button { -fx-pref-height: 0; -fx-opacity: 0; }
 .tooltip { -fx-background-color: -color-text-strong; -fx-text-fill: -color-surface; -fx-background-radius: 8; }
+.accent-mark {
+    -fx-background-color: -accent;
+    -fx-shape: "M 8 0 L 10 6 L 16 8 L 10 10 L 8 16 L 6 10 L 0 8 L 6 6 Z";
+    -fx-min-width: 12;
+    -fx-pref-width: 12;
+    -fx-min-height: 12;
+    -fx-pref-height: 12;
+}
+.accent-mark-small { -fx-min-width: 8; -fx-pref-width: 8; -fx-min-height: 8; -fx-pref-height: 8; -fx-opacity: 0.55; }

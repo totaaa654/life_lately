@@ -76,7 +76,7 @@ public final class CalendarController {
             if (!dateEntries.isEmpty()) {
                 dayButton.getStyleClass().add("calendar-has-entry");
                 dayButton.getStyleClass().add("calendar-mood-" + dateEntries.getFirst().getMood().name().toLowerCase());
-                dayButton.setText(day + "\n" + dateEntries.getFirst().getMood().icon());
+                dayButton.setText(Integer.toString(day));
             }
             dayButton.setOnAction(event -> showDate(date));
             calendarGrid.add(dayButton, position % 7, position / 7 + 1);

@@ -25,7 +25,7 @@ public final class MainController {
     private void initialize() {
         navigation = new NavigationManager(contentHost, this::updateActiveButton);
         AppConfig config = AppConfig.getInstance();
-        databaseStatus.setText(config.isDatabaseReady() ? "● Journal ready" : "○ MySQL offline");
+        databaseStatus.setText(config.isDatabaseReady() ? "Journal ready" : "MySQL offline");
         databaseStatus.getStyleClass().add(config.isDatabaseReady() ? "status-online" : "status-offline");
         navigation.navigate(View.HOME);
     }

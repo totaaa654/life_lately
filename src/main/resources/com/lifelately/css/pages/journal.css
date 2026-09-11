@@ -17,7 +17,7 @@
 .journal-date-tile { -fx-background-color: -mood-soft; -fx-background-radius: 13; -fx-min-height: 68; }
 .journal-date-month { -fx-font-size: 9px; -fx-font-weight: bold; -fx-text-fill: -mood; }
 .journal-date-day { -fx-font-size: 23px; -fx-font-weight: bold; -fx-text-fill: -color-text-strong; }
-.favorite-star { -fx-text-fill: #ef9b69; -fx-font-size: 21px; }
+.favorite-star { -fx-text-fill: #b95f54; -fx-font-size: 9px; -fx-font-weight: bold; -fx-background-color: -soft-coral; -fx-background-radius: 10; -fx-padding: 4 7; }
 .entry-title { -fx-font-size: 15px; -fx-font-weight: bold; -fx-text-fill: -color-text-strong; }
 .entry-preview { -fx-font-size: 11px; -fx-text-fill: -color-muted; -fx-line-spacing: 2px; }
 .journal-card-arrow { -fx-font-size: 26px; -fx-text-fill: -color-border; }

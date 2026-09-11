@@ -6,6 +6,7 @@
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.Region?>
 <?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.layout.VBox?>
 <BorderPane xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1"
@@ -24,16 +25,16 @@
             </HBox>
             <Label text="YOUR SPACE" styleClass="sidebar-section-label"/>
             <VBox spacing="7" styleClass="sidebar-menu" VBox.vgrow="ALWAYS">
-                <Button fx:id="homeButton" text="⌂    Home" onAction="#showHome" maxWidth="Infinity" styleClass="sidebar-item"/>
-                <Button fx:id="journalButton" text="▤    Journal" onAction="#showJournal" maxWidth="Infinity" styleClass="sidebar-item"/>
-                <Button fx:id="calendarButton" text="□    Calendar" onAction="#showCalendar" maxWidth="Infinity" styleClass="sidebar-item"/>
-                <Button fx:id="insightsButton" text="◌    Insights" onAction="#showInsights" maxWidth="Infinity" styleClass="sidebar-item"/>
+                <Button fx:id="homeButton" text="Home" onAction="#showHome" maxWidth="Infinity" styleClass="sidebar-item"/>
+                <Button fx:id="journalButton" text="Journal" onAction="#showJournal" maxWidth="Infinity" styleClass="sidebar-item"/>
+                <Button fx:id="calendarButton" text="Calendar" onAction="#showCalendar" maxWidth="Infinity" styleClass="sidebar-item"/>
+                <Button fx:id="insightsButton" text="Insights" onAction="#showInsights" maxWidth="Infinity" styleClass="sidebar-item"/>
             </VBox>
             <VBox spacing="6" styleClass="sidebar-whisper">
-                <Label text="✦" styleClass="sidebar-sparkle"/>
+                <Region styleClass="accent-mark"/>
                 <Label text="Small moments become meaningful stories." wrapText="true" styleClass="companion-copy"/>
             </VBox>
-            <Button fx:id="settingsButton" text="⚙    Settings" onAction="#showSettings" maxWidth="Infinity" styleClass="sidebar-item"/>
+            <Button fx:id="settingsButton" text="Settings" onAction="#showSettings" maxWidth="Infinity" styleClass="sidebar-item"/>
             <Label fx:id="databaseStatus" styleClass="database-status"/>
         </VBox>
     </left>

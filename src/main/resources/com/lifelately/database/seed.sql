@@ -1,9 +1,9 @@
 INSERT INTO moods (name, icon, color_hex, sort_order) VALUES
-    ('Great', '★', '#4BAE8D', 1),
-    ('Good', '●', '#5B8DEF', 2),
-    ('Okay', '◆', '#E7B64B', 3),
-    ('Low', '☂', '#8B7FD6', 4),
-    ('Rough', '≈', '#EC7D72', 5)
+    ('Great', 'sun', '#E9B937', 1),
+    ('Good', 'leaf', '#65AE90', 2),
+    ('Okay', 'cloud', '#6F9ED8', 3),
+    ('Low', 'drop', '#9A86DA', 4),
+    ('Rough', 'rain', '#E57C6C', 5)
 ON DUPLICATE KEY UPDATE icon = VALUES(icon), color_hex = VALUES(color_hex), sort_order = VALUES(sort_order);
 
 INSERT INTO app_settings (setting_key, setting_value) VALUES

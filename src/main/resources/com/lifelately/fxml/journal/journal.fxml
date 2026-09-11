@@ -21,15 +21,15 @@
             <HBox alignment="CENTER_LEFT">
                 <VBox spacing="3"><Label text="ALL YOUR LITTLE MOMENTS" styleClass="eyebrow"/><Label text="Your journal" styleClass="page-title"/><Label text="A home for thoughts, bright spots, and everything in between." styleClass="page-subtitle"/></VBox>
                 <Region HBox.hgrow="ALWAYS"/>
-                <Button text="＋  New memory" onAction="#newEntry" styleClass="primary-button"/>
+                <Button text="New memory" onAction="#newEntry" styleClass="primary-button"/>
             </HBox>
             <VBox spacing="11" styleClass="journal-toolbar">
-                <TextField fx:id="searchField" promptText="⌕   Search your memories…" styleClass="search-field"/>
+                <TextField fx:id="searchField" promptText="Search your memories…" styleClass="search-field"/>
                 <FlowPane hgap="9" vgap="9" alignment="CENTER_LEFT">
                     <ComboBox fx:id="moodFilter" promptText="All moods  ▾" onAction="#refresh" prefWidth="142" styleClass="filter-chip"/>
                     <ComboBox fx:id="tagFilter" promptText="All tags  ▾" onAction="#refresh" prefWidth="138" styleClass="filter-chip"/>
                     <DatePicker fx:id="dateFilter" promptText="Any date" onAction="#refresh" prefWidth="145" styleClass="filter-chip"/>
-                    <CheckBox fx:id="favoritesFilter" text="♡  Favorites" onAction="#refresh" styleClass="filter-check"/>
+                    <CheckBox fx:id="favoritesFilter" text="Favorites" onAction="#refresh" styleClass="filter-check"/>
                     <ComboBox fx:id="sortBox" promptText="Newest first" onAction="#refresh" prefWidth="165" styleClass="filter-chip"/>
                     <Button text="Reset" onAction="#clearFilters" styleClass="ghost-button compact-button"/>
                 </FlowPane>

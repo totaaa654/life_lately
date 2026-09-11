@@ -21,7 +21,7 @@
             <HBox spacing="18" alignment="TOP_LEFT">
                 <VBox spacing="16" HBox.hgrow="ALWAYS">
                     <VBox spacing="18" styleClass="settings-card">
-                        <HBox alignment="CENTER_LEFT"><VBox spacing="2"><Label text="Appearance" styleClass="section-title"/><Label text="Keep your journal comfortable in any light." styleClass="page-subtitle"/></VBox><Region HBox.hgrow="ALWAYS"/><Label text="☀  ◐  ☾" styleClass="appearance-glyphs"/></HBox>
+                        <HBox alignment="CENTER_LEFT"><VBox spacing="2"><Label text="Appearance" styleClass="section-title"/><Label text="Keep your journal comfortable in any light." styleClass="page-subtitle"/></VBox><Region HBox.hgrow="ALWAYS"/><HBox spacing="5" styleClass="appearance-swatches"><Region styleClass="theme-swatch swatch-light"/><Region styleClass="theme-swatch swatch-system"/><Region styleClass="theme-swatch swatch-dark"/></HBox></HBox>
                         <GridPane hgap="18" vgap="9">
                             <Label text="THEME" styleClass="field-label" GridPane.columnIndex="0" GridPane.rowIndex="0"/>
                             <Label text="ACCENT COLOR" styleClass="field-label" GridPane.columnIndex="1" GridPane.rowIndex="0"/>
@@ -29,7 +29,7 @@
                             <ComboBox fx:id="accentBox" onAction="#applyPreview" maxWidth="Infinity" prefWidth="250" GridPane.columnIndex="1" GridPane.rowIndex="1"/>
                         </GridPane>
                         <HBox spacing="12" alignment="CENTER_LEFT">
-                            <Label text="●" styleClass="accent-dot dot-blue"/><Label text="●" styleClass="accent-dot dot-yellow"/><Label text="●" styleClass="accent-dot dot-green"/><Label text="●" styleClass="accent-dot dot-lavender"/><Label text="●" styleClass="accent-dot dot-coral"/>
+                            <Region styleClass="color-dot color-blue"/><Region styleClass="color-dot color-yellow"/><Region styleClass="color-dot color-green"/><Region styleClass="color-dot color-lavender"/><Region styleClass="color-dot color-coral"/>
                             <Label text="A calm palette, with room for every mood." styleClass="page-subtitle"/>
                         </HBox>
                     </VBox>
@@ -42,13 +42,13 @@
                             <ComboBox fx:id="firstDayBox" maxWidth="Infinity" prefWidth="250" GridPane.columnIndex="1" GridPane.rowIndex="1"/>
                         </GridPane>
                     </VBox>
-                    <HBox alignment="CENTER_LEFT"><Label fx:id="statusLabel" visible="false" managed="false"/><Region HBox.hgrow="ALWAYS"/><Button text="Save my settings  →" onAction="#save" styleClass="primary-button"/></HBox>
+                    <HBox alignment="CENTER_LEFT"><Label fx:id="statusLabel" visible="false" managed="false"/><Region HBox.hgrow="ALWAYS"/><Button text="Save my settings" onAction="#save" styleClass="primary-button"/></HBox>
                 </VBox>
                 <VBox alignment="CENTER" spacing="8" minWidth="292" prefWidth="292" styleClass="night-companion-card">
                     <Label text="A COZY CORNER, DAY OR NIGHT" wrapText="true" styleClass="tiny-label"/>
                     <ImageView fitWidth="245" fitHeight="245" preserveRatio="true"><image><Image url="@../../images/bear/bear-sleeping.png"/></image></ImageView>
                     <Label text="Rest today for a brighter tomorrow." wrapText="true" textAlignment="CENTER" styleClass="night-message"/>
-                    <Label text="☾  ✦  ✧" styleClass="night-stars"/>
+                    <HBox alignment="CENTER" spacing="6"><Region styleClass="night-dot"/><Region styleClass="night-dot night-dot-small"/><Region styleClass="night-dot"/></HBox>
                 </VBox>
             </HBox>
         </VBox>

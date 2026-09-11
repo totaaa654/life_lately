@@ -88,13 +88,11 @@ public final class HomeController {
         if (content.length() > 68) content = content.substring(0, 68) + "…";
         Label preview = new Label(content);
         preview.getStyleClass().add("memory-preview");
-        Label mood = new Label(entry.getMood().icon() + "  " + entry.getMood().name());
+        Label mood = new Label(entry.getMood().name());
         mood.getStyleClass().addAll("mini-mood", "mood-" + entry.getMood().name().toLowerCase());
         VBox copy = new VBox(3, title, preview, mood);
         HBox.setHgrow(copy, javafx.scene.layout.Priority.ALWAYS);
-        Label arrow = new Label("›");
-        arrow.getStyleClass().add("memory-arrow");
-        HBox row = new HBox(14, dateTile, copy, arrow);
+        HBox row = new HBox(14, dateTile, copy);
         row.getStyleClass().add("recent-entry-row");
         row.setOnMouseClicked(event -> NavigationManager.getInstance().openDetails(entry.getId()));
         return row;

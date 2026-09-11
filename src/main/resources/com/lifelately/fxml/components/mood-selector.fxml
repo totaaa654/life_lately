@@ -1,10 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.layout.FlowPane?>
+<?import javafx.scene.layout.Region?>
 <FlowPane xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" hgap="9" vgap="9">
-    <Button text="☀&#10;Great" styleClass="mood-choice mood-great"/>
-    <Button text="●&#10;Good" styleClass="mood-choice mood-good"/>
-    <Button text="☁&#10;Okay" styleClass="mood-choice mood-okay"/>
-    <Button text="◕&#10;Low" styleClass="mood-choice mood-low"/>
-    <Button text="☂&#10;Rough" styleClass="mood-choice mood-rough"/>
+    <Button text="Great" contentDisplay="TOP" styleClass="mood-choice mood-great"><graphic><Region styleClass="mood-icon mood-icon-great"/></graphic></Button>
+    <Button text="Good" contentDisplay="TOP" styleClass="mood-choice mood-good"><graphic><Region styleClass="mood-icon mood-icon-good"/></graphic></Button>
+    <Button text="Okay" contentDisplay="TOP" styleClass="mood-choice mood-okay"><graphic><Region styleClass="mood-icon mood-icon-okay"/></graphic></Button>
+    <Button text="Low" contentDisplay="TOP" styleClass="mood-choice mood-low"><graphic><Region styleClass="mood-icon mood-icon-low"/></graphic></Button>
+    <Button text="Rough" contentDisplay="TOP" styleClass="mood-choice mood-rough"><graphic><Region styleClass="mood-icon mood-icon-rough"/></graphic></Button>
 </FlowPane>

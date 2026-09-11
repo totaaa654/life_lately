@@ -24,5 +24,4 @@
         <FlowPane fx:id="tagPane" hgap="7" vgap="7"/>
     </VBox>
     <Label fx:id="favoriteLabel" styleClass="favorite-star"/>
-    <Label text="›" styleClass="journal-card-arrow"/>
 </HBox>

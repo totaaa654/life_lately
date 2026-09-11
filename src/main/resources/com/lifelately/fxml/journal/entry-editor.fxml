@@ -29,7 +29,7 @@
                 <VBox spacing="2"><Label text="A QUIET PAGE FOR YOU" styleClass="eyebrow"/><Label fx:id="pageTitle" text="Write a new memory" styleClass="page-title"/><Label text="No perfect words needed. Just begin where you are." styleClass="page-subtitle"/></VBox>
                 <Region HBox.hgrow="ALWAYS"/>
                 <Button text="Cancel" onAction="#cancel" styleClass="ghost-button"/>
-                <Button text="Save memory  →" onAction="#save" styleClass="primary-button"/>
+                <Button text="Save memory" onAction="#save" styleClass="primary-button"/>
             </HBox>
             <HBox spacing="24" alignment="TOP_LEFT" styleClass="notebook-card">
                 <VBox spacing="17" HBox.hgrow="ALWAYS" styleClass="notebook-page">
@@ -45,18 +45,18 @@
                     <VBox spacing="10">
                         <Label text="How are you feeling?" styleClass="section-title"/>
                         <FlowPane hgap="9" vgap="9">
-                            <ToggleButton text="☀&#10;Great" userData="Great" toggleGroup="$moodGroup" styleClass="mood-choice editor-mood mood-great"/>
-                            <ToggleButton text="●&#10;Good" userData="Good" selected="true" toggleGroup="$moodGroup" styleClass="mood-choice editor-mood mood-good"/>
-                            <ToggleButton text="☁&#10;Okay" userData="Okay" toggleGroup="$moodGroup" styleClass="mood-choice editor-mood mood-okay"/>
-                            <ToggleButton text="◕&#10;Low" userData="Low" toggleGroup="$moodGroup" styleClass="mood-choice editor-mood mood-low"/>
-                            <ToggleButton text="☂&#10;Rough" userData="Rough" toggleGroup="$moodGroup" styleClass="mood-choice editor-mood mood-rough"/>
+                            <ToggleButton text="Great" userData="Great" toggleGroup="$moodGroup" contentDisplay="TOP" styleClass="mood-choice editor-mood mood-great"><graphic><Region styleClass="mood-icon mood-icon-great"/></graphic></ToggleButton>
+                            <ToggleButton text="Good" userData="Good" selected="true" toggleGroup="$moodGroup" contentDisplay="TOP" styleClass="mood-choice editor-mood mood-good"><graphic><Region styleClass="mood-icon mood-icon-good"/></graphic></ToggleButton>
+                            <ToggleButton text="Okay" userData="Okay" toggleGroup="$moodGroup" contentDisplay="TOP" styleClass="mood-choice editor-mood mood-okay"><graphic><Region styleClass="mood-icon mood-icon-okay"/></graphic></ToggleButton>
+                            <ToggleButton text="Low" userData="Low" toggleGroup="$moodGroup" contentDisplay="TOP" styleClass="mood-choice editor-mood mood-low"><graphic><Region styleClass="mood-icon mood-icon-low"/></graphic></ToggleButton>
+                            <ToggleButton text="Rough" userData="Rough" toggleGroup="$moodGroup" contentDisplay="TOP" styleClass="mood-choice editor-mood mood-rough"><graphic><Region styleClass="mood-icon mood-icon-rough"/></graphic></ToggleButton>
                         </FlowPane>
                     </VBox>
                     <TextField fx:id="titleField" promptText="Give your day a title…" styleClass="journal-title-field"/>
                     <TextArea fx:id="contentArea" promptText="What’s on your mind?" wrapText="true" prefRowCount="12" styleClass="journal-text-area" VBox.vgrow="ALWAYS"/>
                     <HBox alignment="CENTER_LEFT" spacing="10">
-                        <TextField fx:id="tagsField" promptText="＋  Add tags, separated by commas" HBox.hgrow="ALWAYS" styleClass="tags-field"/>
-                        <CheckBox fx:id="favoriteBox" text="♡  Keep close" styleClass="favorite-check"/>
+                        <TextField fx:id="tagsField" promptText="Add tags, separated by commas" HBox.hgrow="ALWAYS" styleClass="tags-field"/>
+                        <CheckBox fx:id="favoriteBox" text="Keep close" styleClass="favorite-check"/>
                         <Label fx:id="wordCountLabel" text="0 words" styleClass="word-count"/>
                     </HBox>
                     <Label fx:id="errorLabel" visible="false" managed="false" wrapText="true" styleClass="error-label"/>
@@ -68,7 +68,7 @@
                         <ImageView fitWidth="205" fitHeight="205" preserveRatio="true"><image><Image url="@../../images/bear/bear-writing.png"/></image></ImageView>
                     </StackPane>
                     <Label text="I’ll sit with you while you write." wrapText="true" textAlignment="CENTER" styleClass="companion-message"/>
-                    <Label text="✦  ✧  ✦" styleClass="companion-sparkles"/>
+                    <HBox alignment="CENTER" spacing="5"><Region styleClass="accent-mark"/><Region styleClass="accent-mark accent-mark-small"/><Region styleClass="accent-mark"/></HBox>
                 </VBox>
             </HBox>
         </VBox>
