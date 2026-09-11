@@ -1,12 +1,14 @@
 # Life Lately
 
-Life Lately is a cozy, single-user desktop journal for capturing everyday moments without turning
+Life Lately is a clean, single-user desktop journal for capturing everyday moments without turning
 journaling into a chore. It uses one JavaFX window, a calm bear companion, quick mood check-ins,
 searchable entries, tags, calendar browsing, lightweight insights, and persistent appearance settings.
 
 ## Phase 1 features
 
 - One-stage JavaFX shell with Home, Journal, Calendar, Insights, and Settings navigation
+- First-run local account setup, sign-in, and logout
+- PBKDF2-SHA256 password hashing with a unique random salt
 - Create, read, edit, search, favorite, and soft-delete journal entries
 - Five seeded moods: Great, Good, Okay, Low, and Rough
 - Comma-separated tags that are reused automatically
@@ -104,8 +106,27 @@ From the project directory:
 mvn clean javafx:run
 ```
 
-If MySQL is stopped, the interface still opens and explains how to reconnect. Start MySQL and restart
-the application to enable data features.
+On the first launch, create the one local account used by this installation. Later launches open the
+sign-in page. If MySQL is stopped, the sign-in page explains how to reconnect; start MySQL and restart
+the application.
+
+## View or import the SQL tables
+
+The app creates the database automatically. To import it yourself in phpMyAdmin, open **Import** and
+run these files in order:
+
+1. `src/main/resources/com/lifelately/database/schema.sql`
+2. `src/main/resources/com/lifelately/database/seed.sql`
+
+From the MySQL command line, the equivalent commands are:
+
+```shell
+mysql -u root -p < src/main/resources/com/lifelately/database/schema.sql
+mysql -u root -p < src/main/resources/com/lifelately/database/seed.sql
+```
+
+After import, `SHOW TABLES FROM life_lately;` displays `users`, `moods`, `entries`, `tags`,
+`entry_tags`, and `app_settings`. Passwords are never stored as plain text.
 
 ## Verify Phase 1
 
@@ -132,6 +153,7 @@ resource so broken controller bindings or malformed layouts fail the build.
 | Entry validation and logic | `src/main/java/com/lifelately/service/EntryService.java` |
 | Entry editor UI behavior | `src/main/java/com/lifelately/controller/journal/EntryEditorController.java` |
 | Models and stored fields | `src/main/java/com/lifelately/model/` |
+| Login layout and styling | `src/main/resources/com/lifelately/fxml/auth/login.fxml` and `css/pages/login.css` |
 | Database tables or seed values | `src/main/resources/com/lifelately/database/` |
 | Navigation destinations | `src/main/java/com/lifelately/navigation/NavigationManager.java` and `View.java` |
 | Shared theme colors | `src/main/resources/com/lifelately/css/light-theme.css` and `dark-theme.css` |

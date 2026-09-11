@@ -111,6 +111,11 @@ public final class HomeController {
     }
 
     private String friendlyName() {
+        String accountName = config.authService().currentUser()
+                .map(user -> user.displayName().strip())
+                .filter(name -> !name.isBlank())
+                .orElse(null);
+        if (accountName != null) return accountName;
         String user = System.getProperty("user.name", "friend").strip();
         if (user.isBlank()) return "friend";
         String first = user.split("[ ._-]")[0].toLowerCase(Locale.ROOT);

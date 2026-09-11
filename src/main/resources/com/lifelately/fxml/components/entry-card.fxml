@@ -8,7 +8,7 @@
 <?import javafx.scene.layout.VBox?>
 <HBox fx:id="cardRoot" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1"
       fx:controller="com.lifelately.controller.journal.EntryCardController"
-      spacing="16" alignment="CENTER_LEFT" styleClass="entry-card journal-card">
+      spacing="16" alignment="CENTER_LEFT" styleClass="entry-card, journal-card">
     <padding><Insets top="16" right="18" bottom="16" left="18"/></padding>
     <VBox alignment="CENTER" spacing="-2" minWidth="64" prefWidth="64" styleClass="journal-date-tile">
         <Label fx:id="monthLabel" styleClass="journal-date-month"/>

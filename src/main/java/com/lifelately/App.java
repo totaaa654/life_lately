@@ -13,12 +13,11 @@ import java.io.IOException;
 
 public final class App extends Application {
     @Override
-    public void start(Stage stage) throws IOException {
+    public void start(Stage stage) {
         AppConfig config = AppConfig.getInstance();
         config.initializeDatabase();
 
-        FXMLLoader loader = new FXMLLoader(App.class.getResource("/com/lifelately/fxml/main.fxml"));
-        Scene scene = new Scene(loader.load(), 1240, 820);
+        Scene scene = new Scene(loadRoot("/com/lifelately/fxml/auth/login.fxml"), 1240, 820);
         ThemeManager.initialize(scene);
         AppSettings settings = config.isDatabaseReady()
                 ? config.settingsService().getSettings()
@@ -30,6 +29,24 @@ public final class App extends Application {
         stage.setMinHeight(650);
         stage.setScene(scene);
         stage.show();
+    }
+
+    public static void showMain(Scene scene) {
+        scene.setRoot(loadRoot("/com/lifelately/fxml/main.fxml"));
+        ThemeManager.refreshRoot();
+    }
+
+    public static void showLogin(Scene scene) {
+        scene.setRoot(loadRoot("/com/lifelately/fxml/auth/login.fxml"));
+        ThemeManager.refreshRoot();
+    }
+
+    private static javafx.scene.Parent loadRoot(String resource) {
+        try {
+            return new FXMLLoader(App.class.getResource(resource)).load();
+        } catch (IOException exception) {
+            throw new IllegalStateException("Could not open application view: " + resource, exception);
+        }
     }
 
     public static void main(String[] args) {

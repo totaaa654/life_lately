@@ -16,7 +16,7 @@
             fx:controller="com.lifelately.controller.journal.JournalController"
             fitToWidth="true" hbarPolicy="NEVER" styleClass="page-scroll">
     <content>
-        <VBox spacing="20" styleClass="page journal-page">
+        <VBox spacing="20" styleClass="page, journal-page">
             <padding><Insets top="28" right="38" bottom="44" left="38"/></padding>
             <HBox alignment="CENTER_LEFT">
                 <VBox spacing="3"><Label text="ALL YOUR LITTLE MOMENTS" styleClass="eyebrow"/><Label text="Your journal" styleClass="page-title"/><Label text="A home for thoughts, bright spots, and everything in between." styleClass="page-subtitle"/></VBox>
@@ -31,7 +31,7 @@
                     <DatePicker fx:id="dateFilter" promptText="Any date" onAction="#refresh" prefWidth="145" styleClass="filter-chip"/>
                     <CheckBox fx:id="favoritesFilter" text="Favorites" onAction="#refresh" styleClass="filter-check"/>
                     <ComboBox fx:id="sortBox" promptText="Newest first" onAction="#refresh" prefWidth="165" styleClass="filter-chip"/>
-                    <Button text="Reset" onAction="#clearFilters" styleClass="ghost-button compact-button"/>
+                    <Button text="Reset" onAction="#clearFilters" styleClass="ghost-button, compact-button"/>
                 </FlowPane>
             </VBox>
             <HBox alignment="CENTER_LEFT"><Label text="Memories" styleClass="section-title"/><Region HBox.hgrow="ALWAYS"/><Label fx:id="resultCount" text="0 memories" styleClass="result-pill"/></HBox>

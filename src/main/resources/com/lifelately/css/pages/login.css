@@ -1,0 +1,41 @@
+.login-page {
+    -fx-background-color: linear-gradient(to bottom right, -color-bg, derive(-accent-soft, 15%));
+    -fx-padding: 42;
+}
+
+.login-shell {
+    -fx-background-color: -color-surface;
+    -fx-background-radius: 28;
+    -fx-border-color: -color-border;
+    -fx-border-radius: 28;
+    -fx-effect: dropshadow(gaussian, -color-shadow, 32, 0.18, 0, 12);
+}
+
+.login-story {
+    -fx-background-color: linear-gradient(to bottom right, derive(-accent-soft, 55%), -accent-soft);
+    -fx-background-radius: 27 0 0 27;
+}
+
+.brand-mark {
+    -fx-background-color: -accent;
+    -fx-min-width: 28;
+    -fx-pref-width: 28;
+    -fx-min-height: 28;
+    -fx-pref-height: 28;
+    -fx-background-radius: 9;
+    -fx-shape: "M 3 2 L 13 2 Q 16 2 16 5 L 16 15 Q 16 18 13 18 L 3 18 Q 0 18 0 15 L 0 5 Q 0 2 3 2 Z M 4 7 L 12 7 L 12 9 L 4 9 Z";
+}
+
+.login-brand { -fx-font-size: 24px; -fx-font-weight: bold; -fx-text-fill: -color-text-strong; }
+.login-story-title { -fx-font-size: 30px; -fx-font-weight: bold; -fx-text-fill: -color-text-strong; -fx-line-spacing: 2px; }
+.login-story-copy { -fx-font-size: 14px; -fx-text-fill: -color-muted; -fx-line-spacing: 3px; }
+.login-art-frame { -fx-background-color: rgba(255, 255, 255, 0.38); -fx-background-radius: 24; -fx-padding: 10; }
+.login-privacy { -fx-font-size: 11px; -fx-text-fill: -color-muted; }
+.login-form-side { -fx-background-color: -color-surface; -fx-background-radius: 0 27 27 0; }
+.login-form-title { -fx-font-size: 28px; -fx-font-weight: bold; -fx-text-fill: -color-text-strong; }
+.login-form-subtitle { -fx-font-size: 13px; }
+.login-form-side .text-field { -fx-font-size: 13px; -fx-padding: 11 13; }
+.login-status { -fx-background-color: derive(-color-danger, 88%); -fx-background-radius: 10; -fx-padding: 9 11; }
+.login-submit { -fx-font-size: 13px; -fx-background-radius: 12; }
+.login-rule { -fx-background-color: -color-border; -fx-min-height: 1; -fx-pref-height: 1; }
+.login-note { -fx-font-size: 10px; -fx-text-fill: -color-muted; }

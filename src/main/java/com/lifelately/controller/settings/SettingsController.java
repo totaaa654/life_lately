@@ -1,5 +1,6 @@
 package com.lifelately.controller.settings;
 
+import com.lifelately.App;
 import com.lifelately.config.AppConfig;
 import com.lifelately.model.AppSettings;
 import com.lifelately.theme.Theme;
@@ -7,8 +8,10 @@ import com.lifelately.theme.ThemeManager;
 import javafx.fxml.FXML;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
+import javafx.scene.control.ScrollPane;
 
 public final class SettingsController {
+    @FXML private ScrollPane settingsRoot;
     @FXML private ComboBox<String> themeBox;
     @FXML private ComboBox<String> accentBox;
     @FXML private ComboBox<String> dateFormatBox;
@@ -50,6 +53,12 @@ public final class SettingsController {
         } catch (IllegalStateException exception) {
             showStatus(exception.getMessage(), true);
         }
+    }
+
+    @FXML
+    private void logout() {
+        config.authService().logout();
+        App.showLogin(settingsRoot.getScene());
     }
 
     private AppSettings selectedSettings() {

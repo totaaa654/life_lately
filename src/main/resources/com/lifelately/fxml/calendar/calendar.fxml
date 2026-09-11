@@ -14,7 +14,7 @@
             fx:controller="com.lifelately.controller.calendar.CalendarController"
             fitToWidth="true" hbarPolicy="NEVER" styleClass="page-scroll">
     <content>
-        <VBox spacing="20" styleClass="page calendar-page">
+        <VBox spacing="20" styleClass="page, calendar-page">
             <padding><Insets top="28" right="38" bottom="42" left="38"/></padding>
             <HBox alignment="CENTER_LEFT">
                 <VBox spacing="3"><Label text="YOUR DAYS, GENTLY KEPT" styleClass="eyebrow"/><Label text="Calendar" styleClass="page-title"/><Label text="A month of little moments at a glance." styleClass="page-subtitle"/></VBox>
@@ -33,11 +33,11 @@
                     </HBox>
                     <GridPane fx:id="calendarGrid" hgap="7" vgap="7"/>
                     <HBox spacing="13" alignment="CENTER_LEFT" styleClass="calendar-legend">
-                        <HBox spacing="4" alignment="CENTER_LEFT"><Region styleClass="legend-dot dot-great"/><Label text="Great"/></HBox>
-                        <HBox spacing="4" alignment="CENTER_LEFT"><Region styleClass="legend-dot dot-good"/><Label text="Good"/></HBox>
-                        <HBox spacing="4" alignment="CENTER_LEFT"><Region styleClass="legend-dot dot-okay"/><Label text="Okay"/></HBox>
-                        <HBox spacing="4" alignment="CENTER_LEFT"><Region styleClass="legend-dot dot-low"/><Label text="Low"/></HBox>
-                        <HBox spacing="4" alignment="CENTER_LEFT"><Region styleClass="legend-dot dot-rough"/><Label text="Rough"/></HBox>
+                        <HBox spacing="4" alignment="CENTER_LEFT"><Region styleClass="legend-dot, dot-great"/><Label text="Great"/></HBox>
+                        <HBox spacing="4" alignment="CENTER_LEFT"><Region styleClass="legend-dot, dot-good"/><Label text="Good"/></HBox>
+                        <HBox spacing="4" alignment="CENTER_LEFT"><Region styleClass="legend-dot, dot-okay"/><Label text="Okay"/></HBox>
+                        <HBox spacing="4" alignment="CENTER_LEFT"><Region styleClass="legend-dot, dot-low"/><Label text="Low"/></HBox>
+                        <HBox spacing="4" alignment="CENTER_LEFT"><Region styleClass="legend-dot, dot-rough"/><Label text="Rough"/></HBox>
                     </HBox>
                 </VBox>
                 <VBox spacing="15" minWidth="284" prefWidth="284">
@@ -48,9 +48,9 @@
                     </VBox>
                     <VBox spacing="9" styleClass="month-story-card">
                         <HBox alignment="CENTER_LEFT"><VBox spacing="2"><Label text="This month" styleClass="section-title"/><Label text="Your little rhythm" styleClass="page-subtitle"/></VBox><Region HBox.hgrow="ALWAYS"/><Region styleClass="accent-mark"/></HBox>
-                        <HBox spacing="10" alignment="CENTER_LEFT"><Region styleClass="stat-symbol stat-symbol-memory"/><Label fx:id="monthMemoriesLabel" text="0 memories" styleClass="month-story-value"/></HBox>
-                        <HBox spacing="10" alignment="CENTER_LEFT"><Region styleClass="stat-symbol stat-symbol-mood"/><Label fx:id="monthMoodLabel" text="No mood yet" styleClass="month-story-value"/></HBox>
-                        <HBox spacing="10" alignment="CENTER_LEFT"><Region styleClass="stat-symbol stat-symbol-streak"/><Label fx:id="monthStreakLabel" text="0 day streak" styleClass="month-story-value"/></HBox>
+                        <HBox spacing="10" alignment="CENTER_LEFT"><Region styleClass="stat-symbol, stat-symbol-memory"/><Label fx:id="monthMemoriesLabel" text="0 memories" styleClass="month-story-value"/></HBox>
+                        <HBox spacing="10" alignment="CENTER_LEFT"><Region styleClass="stat-symbol, stat-symbol-mood"/><Label fx:id="monthMoodLabel" text="No mood yet" styleClass="month-story-value"/></HBox>
+                        <HBox spacing="10" alignment="CENTER_LEFT"><Region styleClass="stat-symbol, stat-symbol-streak"/><Label fx:id="monthStreakLabel" text="0 day streak" styleClass="month-story-value"/></HBox>
                         <ImageView fitWidth="145" fitHeight="145" preserveRatio="true" VBox.vgrow="ALWAYS"><image><Image url="@../../images/bear/bear-celebrate.png"/></image></ImageView>
                         <Label text="“Little moments make a big life.”" wrapText="true" styleClass="calendar-quote"/>
                     </VBox>

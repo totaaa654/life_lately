@@ -1,3 +1,5 @@
+USE life_lately;
+
 INSERT INTO moods (name, icon, color_hex, sort_order) VALUES
     ('Great', 'sun', '#E9B937', 1),
     ('Good', 'leaf', '#65AE90', 2),

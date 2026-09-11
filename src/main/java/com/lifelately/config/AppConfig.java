@@ -4,12 +4,14 @@ import com.lifelately.dao.EntryDAO;
 import com.lifelately.dao.MoodDAO;
 import com.lifelately.dao.SettingsDAO;
 import com.lifelately.dao.TagDAO;
+import com.lifelately.dao.UserDAO;
 import com.lifelately.database.DatabaseConnection;
 import com.lifelately.database.DatabaseInitializer;
 import com.lifelately.service.EntryService;
 import com.lifelately.service.MoodService;
 import com.lifelately.service.SettingsService;
 import com.lifelately.service.TagService;
+import com.lifelately.service.AuthService;
 
 public final class AppConfig {
     private static final AppConfig INSTANCE = new AppConfig();
@@ -20,6 +22,7 @@ public final class AppConfig {
     private final MoodService moodService;
     private final TagService tagService;
     private final SettingsService settingsService;
+    private final AuthService authService;
     private boolean databaseReady;
     private String databaseMessage = "Database has not been initialized.";
 
@@ -31,6 +34,7 @@ public final class AppConfig {
         entryService = new EntryService(new EntryDAO(databaseConnection), tagService);
         moodService = new MoodService(new MoodDAO(databaseConnection));
         settingsService = new SettingsService(new SettingsDAO(databaseConnection));
+        authService = new AuthService(new UserDAO(databaseConnection));
     }
 
     public static AppConfig getInstance() { return INSTANCE; }
@@ -51,6 +55,7 @@ public final class AppConfig {
     public MoodService moodService() { return moodService; }
     public TagService tagService() { return tagService; }
     public SettingsService settingsService() { return settingsService; }
+    public AuthService authService() { return authService; }
     public boolean isDatabaseReady() { return databaseReady; }
     public String databaseMessage() { return databaseMessage; }
 }

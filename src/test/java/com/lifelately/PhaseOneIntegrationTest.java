@@ -11,6 +11,7 @@ import javafx.application.Platform;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Button;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
@@ -71,6 +72,7 @@ class PhaseOneIntegrationTest {
         startJavaFx();
         List<String> resources = List.of(
                 "/com/lifelately/fxml/main.fxml",
+                "/com/lifelately/fxml/auth/login.fxml",
                 "/com/lifelately/fxml/home/home.fxml",
                 "/com/lifelately/fxml/journal/journal.fxml",
                 "/com/lifelately/fxml/journal/entry-editor.fxml",
@@ -86,6 +88,39 @@ class PhaseOneIntegrationTest {
         for (String resource : resources) {
             runOnJavaFxThread(() -> assertNotNull(new FXMLLoader(App.class.getResource(resource)).load(), resource));
         }
+    }
+
+    @Test
+    void expectedDatabaseTablesAreVisible() throws SQLException {
+        DatabaseConnection connectionProvider = new DatabaseConnection(DatabaseConfig.load());
+        List<String> expected = List.of("users", "moods", "entries", "tags", "entry_tags", "app_settings");
+        try (var connection = connectionProvider.getConnection()) {
+            for (String table : expected) {
+                try (var result = connection.getMetaData().getTables(connection.getCatalog(), null, table, new String[]{"TABLE"})) {
+                    assertTrue(result.next(), "Missing MySQL table: " + table);
+                }
+            }
+        }
+    }
+
+    @Test
+    void primaryButtonStylesAndSidebarActionsWork() throws Exception {
+        startJavaFx();
+        runOnJavaFxThread(() -> {
+            Parent login = new FXMLLoader(App.class.getResource("/com/lifelately/fxml/auth/login.fxml")).load();
+            Button submit = (Button) login.lookup("#submitButton");
+            assertNotNull(submit);
+            assertTrue(submit.getStyleClass().contains("primary-button"));
+            assertTrue(submit.getStyleClass().contains("login-submit"));
+
+            Parent main = new FXMLLoader(App.class.getResource("/com/lifelately/fxml/main.fxml")).load();
+            for (String id : List.of("homeButton", "journalButton", "calendarButton", "insightsButton", "settingsButton")) {
+                Button button = (Button) main.lookup("#" + id);
+                assertNotNull(button, id);
+                button.fire();
+                assertTrue(button.getStyleClass().contains("sidebar-item-active"), id + " action did not navigate");
+            }
+        });
     }
 
     @Test

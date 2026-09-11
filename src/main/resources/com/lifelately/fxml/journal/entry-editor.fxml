@@ -22,7 +22,7 @@
             fx:controller="com.lifelately.controller.journal.EntryEditorController"
             fitToWidth="true" hbarPolicy="NEVER" styleClass="page-scroll">
     <content>
-        <VBox spacing="18" styleClass="page editor-page">
+        <VBox spacing="18" styleClass="page, editor-page">
             <fx:define><ToggleGroup fx:id="moodGroup"/></fx:define>
             <padding><Insets top="26" right="46" bottom="42" left="46"/></padding>
             <HBox alignment="CENTER_LEFT">
@@ -45,11 +45,11 @@
                     <VBox spacing="10">
                         <Label text="How are you feeling?" styleClass="section-title"/>
                         <FlowPane hgap="9" vgap="9">
-                            <ToggleButton text="Great" userData="Great" toggleGroup="$moodGroup" contentDisplay="TOP" styleClass="mood-choice editor-mood mood-great"><graphic><Region styleClass="mood-icon mood-icon-great"/></graphic></ToggleButton>
-                            <ToggleButton text="Good" userData="Good" selected="true" toggleGroup="$moodGroup" contentDisplay="TOP" styleClass="mood-choice editor-mood mood-good"><graphic><Region styleClass="mood-icon mood-icon-good"/></graphic></ToggleButton>
-                            <ToggleButton text="Okay" userData="Okay" toggleGroup="$moodGroup" contentDisplay="TOP" styleClass="mood-choice editor-mood mood-okay"><graphic><Region styleClass="mood-icon mood-icon-okay"/></graphic></ToggleButton>
-                            <ToggleButton text="Low" userData="Low" toggleGroup="$moodGroup" contentDisplay="TOP" styleClass="mood-choice editor-mood mood-low"><graphic><Region styleClass="mood-icon mood-icon-low"/></graphic></ToggleButton>
-                            <ToggleButton text="Rough" userData="Rough" toggleGroup="$moodGroup" contentDisplay="TOP" styleClass="mood-choice editor-mood mood-rough"><graphic><Region styleClass="mood-icon mood-icon-rough"/></graphic></ToggleButton>
+                            <ToggleButton text="Great" userData="Great" toggleGroup="$moodGroup" contentDisplay="TOP" styleClass="mood-choice, editor-mood, mood-great"><graphic><Region styleClass="mood-icon, mood-icon-great"/></graphic></ToggleButton>
+                            <ToggleButton text="Good" userData="Good" selected="true" toggleGroup="$moodGroup" contentDisplay="TOP" styleClass="mood-choice, editor-mood, mood-good"><graphic><Region styleClass="mood-icon, mood-icon-good"/></graphic></ToggleButton>
+                            <ToggleButton text="Okay" userData="Okay" toggleGroup="$moodGroup" contentDisplay="TOP" styleClass="mood-choice, editor-mood, mood-okay"><graphic><Region styleClass="mood-icon, mood-icon-okay"/></graphic></ToggleButton>
+                            <ToggleButton text="Low" userData="Low" toggleGroup="$moodGroup" contentDisplay="TOP" styleClass="mood-choice, editor-mood, mood-low"><graphic><Region styleClass="mood-icon, mood-icon-low"/></graphic></ToggleButton>
+                            <ToggleButton text="Rough" userData="Rough" toggleGroup="$moodGroup" contentDisplay="TOP" styleClass="mood-choice, editor-mood, mood-rough"><graphic><Region styleClass="mood-icon, mood-icon-rough"/></graphic></ToggleButton>
                         </FlowPane>
                     </VBox>
                     <TextField fx:id="titleField" promptText="Give your day a title…" styleClass="journal-title-field"/>
@@ -68,7 +68,7 @@
                         <ImageView fitWidth="205" fitHeight="205" preserveRatio="true"><image><Image url="@../../images/bear/bear-writing.png"/></image></ImageView>
                     </StackPane>
                     <Label text="I’ll sit with you while you write." wrapText="true" textAlignment="CENTER" styleClass="companion-message"/>
-                    <HBox alignment="CENTER" spacing="5"><Region styleClass="accent-mark"/><Region styleClass="accent-mark accent-mark-small"/><Region styleClass="accent-mark"/></HBox>
+                    <HBox alignment="CENTER" spacing="5"><Region styleClass="accent-mark"/><Region styleClass="accent-mark, accent-mark-small"/><Region styleClass="accent-mark"/></HBox>
                 </VBox>
             </HBox>
         </VBox>

@@ -16,7 +16,7 @@
             fx:controller="com.lifelately.controller.journal.EntryDetailsController"
             fitToWidth="true" hbarPolicy="NEVER" styleClass="page-scroll">
     <content>
-        <VBox spacing="18" styleClass="page details-page">
+        <VBox spacing="18" styleClass="page, details-page">
             <padding><Insets top="28" right="46" bottom="44" left="46"/></padding>
             <HBox alignment="CENTER_LEFT" spacing="10">
                 <Button text="Back to your journal" onAction="#back" styleClass="link-button"/>

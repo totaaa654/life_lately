@@ -18,7 +18,7 @@
             fx:controller="com.lifelately.controller.home.HomeController"
             fitToWidth="true" hbarPolicy="NEVER" styleClass="page-scroll">
     <content>
-        <VBox spacing="22" styleClass="page home-page">
+        <VBox spacing="22" styleClass="page, home-page">
             <fx:define><ToggleGroup fx:id="moodGroup"/></fx:define>
             <padding><Insets top="28" right="34" bottom="42" left="34"/></padding>
             <HBox alignment="CENTER_LEFT">
@@ -35,7 +35,7 @@
                     <Label text="How’s life lately?" wrapText="true" styleClass="hero-title"/>
                     <Label text="Whatever today feels like, there’s room for it here. Start with one honest little moment." wrapText="true" maxWidth="510" styleClass="hero-subtitle"/>
                     <HBox spacing="10" alignment="CENTER_LEFT">
-                        <Button text="Write about today" onAction="#writeToday" styleClass="primary-button hero-button"/>
+                        <Button text="Write about today" onAction="#writeToday" styleClass="primary-button, hero-button"/>
                         <Label text="one page at a time" styleClass="hero-note"/>
                     </HBox>
                 </VBox>
@@ -53,11 +53,11 @@
                     <Region HBox.hgrow="ALWAYS"/><Label text="TODAY" styleClass="tiny-label"/>
                 </HBox>
                 <FlowPane hgap="10" vgap="10" alignment="CENTER_LEFT">
-                    <ToggleButton text="Great" userData="Great" toggleGroup="$moodGroup" contentDisplay="TOP" styleClass="mood-choice mood-great"><graphic><Region styleClass="mood-icon mood-icon-great"/></graphic></ToggleButton>
-                    <ToggleButton text="Good" userData="Good" selected="true" toggleGroup="$moodGroup" contentDisplay="TOP" styleClass="mood-choice mood-good"><graphic><Region styleClass="mood-icon mood-icon-good"/></graphic></ToggleButton>
-                    <ToggleButton text="Okay" userData="Okay" toggleGroup="$moodGroup" contentDisplay="TOP" styleClass="mood-choice mood-okay"><graphic><Region styleClass="mood-icon mood-icon-okay"/></graphic></ToggleButton>
-                    <ToggleButton text="Low" userData="Low" toggleGroup="$moodGroup" contentDisplay="TOP" styleClass="mood-choice mood-low"><graphic><Region styleClass="mood-icon mood-icon-low"/></graphic></ToggleButton>
-                    <ToggleButton text="Rough" userData="Rough" toggleGroup="$moodGroup" contentDisplay="TOP" styleClass="mood-choice mood-rough"><graphic><Region styleClass="mood-icon mood-icon-rough"/></graphic></ToggleButton>
+                    <ToggleButton text="Great" userData="Great" toggleGroup="$moodGroup" contentDisplay="TOP" styleClass="mood-choice, mood-great"><graphic><Region styleClass="mood-icon, mood-icon-great"/></graphic></ToggleButton>
+                    <ToggleButton text="Good" userData="Good" selected="true" toggleGroup="$moodGroup" contentDisplay="TOP" styleClass="mood-choice, mood-good"><graphic><Region styleClass="mood-icon, mood-icon-good"/></graphic></ToggleButton>
+                    <ToggleButton text="Okay" userData="Okay" toggleGroup="$moodGroup" contentDisplay="TOP" styleClass="mood-choice, mood-okay"><graphic><Region styleClass="mood-icon, mood-icon-okay"/></graphic></ToggleButton>
+                    <ToggleButton text="Low" userData="Low" toggleGroup="$moodGroup" contentDisplay="TOP" styleClass="mood-choice, mood-low"><graphic><Region styleClass="mood-icon, mood-icon-low"/></graphic></ToggleButton>
+                    <ToggleButton text="Rough" userData="Rough" toggleGroup="$moodGroup" contentDisplay="TOP" styleClass="mood-choice, mood-rough"><graphic><Region styleClass="mood-icon, mood-icon-rough"/></graphic></ToggleButton>
                 </FlowPane>
             </VBox>
             <VBox fx:id="databaseNotice" visible="false" managed="false" spacing="8" styleClass="notice-card">
@@ -67,25 +67,25 @@
             <VBox spacing="12">
                 <HBox alignment="CENTER_LEFT"><Label text="Your lately" styleClass="section-title"/><Region HBox.hgrow="ALWAYS"/><Label text="little wins, real feelings" styleClass="section-kicker"/></HBox>
                 <HBox spacing="14">
-                    <VBox spacing="8" styleClass="stat-card stat-streak" HBox.hgrow="ALWAYS">
-                        <HBox alignment="CENTER_LEFT"><Region styleClass="stat-symbol stat-symbol-streak"/><Region HBox.hgrow="ALWAYS"/><Label text="KEEP GOING" styleClass="stat-label"/></HBox>
+                    <VBox spacing="8" styleClass="stat-card, stat-streak" HBox.hgrow="ALWAYS">
+                        <HBox alignment="CENTER_LEFT"><Region styleClass="stat-symbol, stat-symbol-streak"/><Region HBox.hgrow="ALWAYS"/><Label text="KEEP GOING" styleClass="stat-label"/></HBox>
                         <HBox alignment="BASELINE_LEFT" spacing="7"><Label fx:id="streakValue" text="0" styleClass="stat-value"/><Label text="day streak" styleClass="stat-suffix"/></HBox>
                         <Label text="Your quiet ritual is growing." styleClass="stat-note"/>
                     </VBox>
-                    <VBox spacing="8" styleClass="stat-card stat-memories" HBox.hgrow="ALWAYS">
-                        <HBox alignment="CENTER_LEFT"><Region styleClass="stat-symbol stat-symbol-memory"/><Region HBox.hgrow="ALWAYS"/><Label fx:id="monthLabel" styleClass="stat-label"/></HBox>
+                    <VBox spacing="8" styleClass="stat-card, stat-memories" HBox.hgrow="ALWAYS">
+                        <HBox alignment="CENTER_LEFT"><Region styleClass="stat-symbol, stat-symbol-memory"/><Region HBox.hgrow="ALWAYS"/><Label fx:id="monthLabel" styleClass="stat-label"/></HBox>
                         <HBox alignment="BASELINE_LEFT" spacing="7"><Label fx:id="monthValue" text="0" styleClass="stat-value"/><Label text="memories" styleClass="stat-suffix"/></HBox>
                         <Label text="Little moments, safely kept." styleClass="stat-note"/>
                     </VBox>
-                    <VBox spacing="8" styleClass="stat-card stat-feeling" HBox.hgrow="ALWAYS">
-                        <HBox alignment="CENTER_LEFT"><Region styleClass="stat-symbol stat-symbol-mood"/><Region HBox.hgrow="ALWAYS"/><Label text="TOP MOOD" styleClass="stat-label"/></HBox>
+                    <VBox spacing="8" styleClass="stat-card, stat-feeling" HBox.hgrow="ALWAYS">
+                        <HBox alignment="CENTER_LEFT"><Region styleClass="stat-symbol, stat-symbol-mood"/><Region HBox.hgrow="ALWAYS"/><Label text="TOP MOOD" styleClass="stat-label"/></HBox>
                         <Label fx:id="moodValue" text="—" styleClass="stat-value-small"/>
                         <Label text="You’ve been showing up honestly." styleClass="stat-note"/>
                     </VBox>
                 </HBox>
             </VBox>
             <HBox spacing="18" alignment="TOP_LEFT">
-                <VBox spacing="12" styleClass="content-card memories-card" HBox.hgrow="ALWAYS">
+                <VBox spacing="12" styleClass="content-card, memories-card" HBox.hgrow="ALWAYS">
                     <HBox alignment="CENTER_LEFT">
                         <VBox spacing="2"><Label text="Recent memories" styleClass="section-title"/><Label text="A few pages from your lately." styleClass="page-subtitle"/></VBox>
                         <Region HBox.hgrow="ALWAYS"/><Button text="View all" onAction="#openJournal" styleClass="link-button"/>
@@ -99,7 +99,7 @@
                         </VBox>
                     </VBox>
                 </VBox>
-                <VBox spacing="12" minWidth="306" prefWidth="306" styleClass="content-card week-card">
+                <VBox spacing="12" minWidth="306" prefWidth="306" styleClass="content-card, week-card">
                     <HBox alignment="CENTER_LEFT"><VBox spacing="2"><Label text="This week" styleClass="section-title"/><Label text="A tiny view of today." styleClass="page-subtitle"/></VBox><Region HBox.hgrow="ALWAYS"/><Region styleClass="accent-mark"/></HBox>
                     <HBox fx:id="calendarDays" spacing="5" alignment="CENTER"/>
                     <HBox spacing="10" alignment="CENTER_LEFT" styleClass="week-whisper">

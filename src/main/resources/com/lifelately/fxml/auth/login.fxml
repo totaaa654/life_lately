@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.PasswordField?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.Priority?>
+<?import javafx.scene.layout.Region?>
+<?import javafx.scene.layout.StackPane?>
+<?import javafx.scene.layout.VBox?>
+<StackPane fx:id="loginRoot" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1"
+           fx:controller="com.lifelately.controller.auth.LoginController" styleClass="login-page">
+    <children>
+        <HBox maxWidth="1060" maxHeight="690" styleClass="login-shell">
+            <VBox alignment="TOP_LEFT" spacing="22" prefWidth="520" minWidth="420" styleClass="login-story">
+                <padding><Insets top="44" right="48" bottom="38" left="48"/></padding>
+                <HBox alignment="CENTER_LEFT" spacing="10">
+                    <Region styleClass="brand-mark"/>
+                    <Label text="life lately." styleClass="login-brand"/>
+                </HBox>
+                <VBox spacing="8">
+                    <Label text="A quiet place for the days you want to remember." wrapText="true" styleClass="login-story-title"/>
+                    <Label text="Write honestly, notice patterns, and return whenever you need a little room to think." wrapText="true" styleClass="login-story-copy"/>
+                </VBox>
+                <Region VBox.vgrow="ALWAYS"/>
+                <StackPane alignment="CENTER" styleClass="login-art-frame">
+                    <ImageView fitWidth="310" fitHeight="275" preserveRatio="true">
+                        <image><Image url="@../../images/bear/bear-default.png"/></image>
+                    </ImageView>
+                </StackPane>
+                <Label text="Private by design. Stored in your own MySQL database." wrapText="true" styleClass="login-privacy"/>
+            </VBox>
+
+            <StackPane HBox.hgrow="ALWAYS" styleClass="login-form-side">
+                <padding><Insets top="42" right="56" bottom="42" left="56"/></padding>
+                <VBox maxWidth="380" spacing="20" alignment="CENTER_LEFT">
+                    <VBox spacing="7">
+                        <Label fx:id="formEyebrow" text="WELCOME BACK" styleClass="eyebrow"/>
+                        <Label fx:id="formTitle" text="Sign in to your journal" wrapText="true" styleClass="login-form-title"/>
+                        <Label fx:id="formSubtitle" text="Pick up where you left off." wrapText="true" styleClass="page-subtitle, login-form-subtitle"/>
+                    </VBox>
+
+                    <VBox fx:id="displayNameGroup" spacing="7" visible="false" managed="false">
+                        <Label text="DISPLAY NAME" styleClass="field-label"/>
+                        <TextField fx:id="displayNameField" promptText="How should we greet you?" prefHeight="46"/>
+                    </VBox>
+                    <VBox spacing="7">
+                        <Label text="USERNAME" styleClass="field-label"/>
+                        <TextField fx:id="usernameField" promptText="Your username" prefHeight="46"/>
+                    </VBox>
+                    <VBox spacing="7">
+                        <Label text="PASSWORD" styleClass="field-label"/>
+                        <PasswordField fx:id="passwordField" promptText="Your password" prefHeight="46"/>
+                    </VBox>
+                    <VBox fx:id="confirmationGroup" spacing="7" visible="false" managed="false">
+                        <Label text="CONFIRM PASSWORD" styleClass="field-label"/>
+                        <PasswordField fx:id="confirmationField" promptText="Type your password again" prefHeight="46"/>
+                    </VBox>
+
+                    <Label fx:id="statusLabel" visible="false" managed="false" wrapText="true" maxWidth="Infinity" styleClass="error-label, login-status"/>
+                    <Button fx:id="submitButton" text="Sign in" onAction="#submit" defaultButton="true"
+                            maxWidth="Infinity" prefHeight="46" styleClass="primary-button, login-submit"/>
+                    <HBox alignment="CENTER" spacing="8" maxWidth="Infinity">
+                        <Region styleClass="login-rule" HBox.hgrow="ALWAYS"/>
+                        <Label text="one page at a time" styleClass="login-note"/>
+                        <Region styleClass="login-rule" HBox.hgrow="ALWAYS"/>
+                    </HBox>
+                </VBox>
+            </StackPane>
+        </HBox>
+    </children>
+</StackPane>

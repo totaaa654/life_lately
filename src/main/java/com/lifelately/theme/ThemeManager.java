@@ -9,6 +9,8 @@ public final class ThemeManager {
     private static final List<String> ACCENT_CLASSES = List.of(
             "accent-blue", "accent-yellow", "accent-green", "accent-lavender", "accent-coral");
     private static Scene scene;
+    private static Theme currentTheme = Theme.LIGHT;
+    private static String currentAccent = "BLUE";
 
     private ThemeManager() { }
 
@@ -25,16 +27,23 @@ public final class ThemeManager {
         addStylesheet("pages/calendar.css");
         addStylesheet("pages/insights.css");
         addStylesheet("pages/settings.css");
+        addStylesheet("pages/login.css");
     }
 
     public static void apply(Theme requestedTheme, String accent) {
         if (scene == null) return;
+        currentTheme = requestedTheme;
+        currentAccent = accent;
         scene.getStylesheets().removeIf(sheet -> sheet.endsWith("light-theme.css") || sheet.endsWith("dark-theme.css"));
         Theme effective = requestedTheme == Theme.SYSTEM ? Theme.LIGHT : requestedTheme;
         addStylesheet(effective == Theme.DARK ? "dark-theme.css" : "light-theme.css");
 
         scene.getRoot().getStyleClass().removeAll(ACCENT_CLASSES);
         scene.getRoot().getStyleClass().add("accent-" + accent.toLowerCase());
+    }
+
+    public static void refreshRoot() {
+        apply(currentTheme, currentAccent);
     }
 
     private static void addStylesheet(String path) {
