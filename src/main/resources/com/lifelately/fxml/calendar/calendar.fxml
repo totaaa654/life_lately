@@ -24,14 +24,14 @@
                 <Label text="The calendar is taking a tiny nap." styleClass="card-title"/>
                 <Label text="Start MySQL in Laragon to see your journal calendar." styleClass="body-copy"/>
             </VBox>
-            <HBox spacing="18" alignment="TOP_LEFT">
+            <HBox spacing="18" alignment="TOP_LEFT" fillHeight="false">
                 <VBox spacing="15" styleClass="calendar-card" HBox.hgrow="ALWAYS">
                     <HBox alignment="CENTER_LEFT">
                         <Button text="Previous" onAction="#previousMonth" styleClass="month-button"/>
                         <Region HBox.hgrow="ALWAYS"/><Label fx:id="monthTitle" styleClass="calendar-month-title"/><Region HBox.hgrow="ALWAYS"/>
                         <Button text="Next" onAction="#nextMonth" styleClass="month-button"/>
                     </HBox>
-                    <GridPane fx:id="calendarGrid" hgap="7" vgap="7"/>
+                    <GridPane fx:id="calendarGrid" id="calendarGrid" hgap="7" vgap="7" maxWidth="Infinity"/>
                     <HBox spacing="13" alignment="CENTER_LEFT" styleClass="calendar-legend">
                         <HBox spacing="4" alignment="CENTER_LEFT"><Region styleClass="legend-dot, dot-great"/><Label text="Great"/></HBox>
                         <HBox spacing="4" alignment="CENTER_LEFT"><Region styleClass="legend-dot, dot-good"/><Label text="Good"/></HBox>

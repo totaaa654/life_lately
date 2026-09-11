@@ -25,7 +25,7 @@ public final class App extends Application {
         ThemeManager.apply(Theme.valueOf(settings.theme()), settings.accentColor());
 
         stage.setTitle("Life Lately");
-        stage.setMinWidth(960);
+        stage.setMinWidth(1120);
         stage.setMinHeight(650);
         stage.setScene(scene);
         stage.show();

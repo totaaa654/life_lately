@@ -12,6 +12,8 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.layout.GridPane;
+import javafx.scene.layout.Region;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
@@ -104,7 +106,7 @@ class PhaseOneIntegrationTest {
     }
 
     @Test
-    void primaryButtonStylesAndSidebarActionsWork() throws Exception {
+    void primaryButtonStylesSidebarActionsAndFixedGraphicsWork() throws Exception {
         startJavaFx();
         runOnJavaFxThread(() -> {
             Parent login = new FXMLLoader(App.class.getResource("/com/lifelately/fxml/auth/login.fxml")).load();
@@ -114,11 +116,31 @@ class PhaseOneIntegrationTest {
             assertTrue(submit.getStyleClass().contains("login-submit"));
 
             Parent main = new FXMLLoader(App.class.getResource("/com/lifelately/fxml/main.fxml")).load();
+            Scene scene = new Scene(main, 1240, 820);
+            ThemeManager.initialize(scene);
+            ThemeManager.apply(Theme.LIGHT, "BLUE");
+            main.applyCss();
+            main.layout();
+
+            Region moodIcon = (Region) main.lookup(".mood-icon");
+            Region statSymbol = (Region) main.lookup(".stat-symbol");
+            Region accentMark = (Region) main.lookup(".accent-mark");
+            assertTrue(moodIcon.getMaxWidth() <= 24, "Mood icon may stretch across its button");
+            assertTrue(statSymbol.getMaxWidth() <= 20, "Stat icon may stretch across its card");
+            assertTrue(accentMark.getMaxWidth() <= 12, "Accent mark may stretch across its container");
+
             for (String id : List.of("homeButton", "journalButton", "calendarButton", "insightsButton", "settingsButton")) {
                 Button button = (Button) main.lookup("#" + id);
                 assertNotNull(button, id);
                 button.fire();
                 assertTrue(button.getStyleClass().contains("sidebar-item-active"), id + " action did not navigate");
+                if (id.equals("calendarButton")) {
+                    main.applyCss();
+                    main.layout();
+                    GridPane grid = (GridPane) main.lookup("#calendarGrid");
+                    assertNotNull(grid);
+                    assertEquals(7, grid.getColumnConstraints().size(), "Calendar must span seven responsive columns");
+                }
             }
         });
     }

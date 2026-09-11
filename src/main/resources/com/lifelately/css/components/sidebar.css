@@ -4,7 +4,7 @@
     -fx-border-width: 0 1 0 0;
 }
 .brand-block { -fx-padding: 0 4 28 4; }
-.brand-mascot-wrap { -fx-background-color: -soft-yellow; -fx-background-radius: 13; -fx-min-width: 46; -fx-min-height: 46; }
+.brand-mascot-wrap { -fx-background-color: -soft-yellow; -fx-background-radius: 13; -fx-min-width: 46; -fx-pref-width: 46; -fx-max-width: 46; -fx-min-height: 46; -fx-pref-height: 46; -fx-max-height: 46; }
 .brand-title { -fx-font-size: 20px; -fx-font-weight: bold; -fx-text-fill: -color-text-strong; }
 .brand-subtitle { -fx-font-size: 7px; -fx-font-weight: bold; -fx-text-fill: -color-muted; }
 .sidebar-section-label { -fx-font-size: 8px; -fx-font-weight: bold; -fx-text-fill: -color-muted; -fx-padding: 0 10 8 10; }

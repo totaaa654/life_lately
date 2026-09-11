@@ -20,8 +20,10 @@
     -fx-background-color: -accent;
     -fx-min-width: 28;
     -fx-pref-width: 28;
+    -fx-max-width: 28;
     -fx-min-height: 28;
     -fx-pref-height: 28;
+    -fx-max-height: 28;
     -fx-background-radius: 9;
     -fx-shape: "M 3 2 L 13 2 Q 16 2 16 5 L 16 15 Q 16 18 13 18 L 3 18 Q 0 18 0 15 L 0 5 Q 0 2 3 2 Z M 4 7 L 12 7 L 12 9 L 4 9 Z";
 }

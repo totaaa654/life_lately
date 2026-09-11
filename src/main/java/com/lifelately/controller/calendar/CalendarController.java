@@ -6,8 +6,12 @@ import com.lifelately.navigation.NavigationManager;
 import com.lifelately.util.DateUtils;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
+import javafx.scene.control.ContentDisplay;
 import javafx.scene.control.Label;
+import javafx.scene.layout.ColumnConstraints;
 import javafx.scene.layout.GridPane;
+import javafx.scene.layout.Priority;
+import javafx.scene.layout.Region;
 import javafx.scene.layout.VBox;
 
 import java.time.DayOfWeek;
@@ -42,8 +46,9 @@ public final class CalendarController {
         }
         entries = config.entryService().getAllEntries();
         var insights = config.entryService().getInsights();
-        monthMemoriesLabel.setText(insights.entriesThisMonth() + " memories");
-        monthMoodLabel.setText(insights.mostCommonMood() + " days lately");
+        monthMemoriesLabel.setText(insights.entriesThisMonth() +
+                (insights.entriesThisMonth() == 1 ? " memory" : " memories"));
+        monthMoodLabel.setText(insights.mostCommonMood() + " most often");
         monthStreakLabel.setText(insights.currentStreak() + " day streak");
         renderMonth();
         showDate(LocalDate.now());
@@ -55,6 +60,15 @@ public final class CalendarController {
 
     private void renderMonth() {
         calendarGrid.getChildren().clear();
+        if (calendarGrid.getColumnConstraints().isEmpty()) {
+            for (int column = 0; column < 7; column++) {
+                ColumnConstraints constraints = new ColumnConstraints();
+                constraints.setPercentWidth(100.0 / 7.0);
+                constraints.setHgrow(Priority.ALWAYS);
+                constraints.setFillWidth(true);
+                calendarGrid.getColumnConstraints().add(constraints);
+            }
+        }
         monthTitle.setText(displayedMonth.getMonth().getDisplayName(TextStyle.FULL, Locale.getDefault())
                 + " " + displayedMonth.getYear());
         String[] headings = {"MON", "TUE", "WED", "THU", "FRI", "SAT", "SUN"};
@@ -94,7 +108,12 @@ public final class CalendarController {
             return;
         }
         for (Entry entry : matching) {
-            Button row = new Button(entry.getMood().icon() + "  " + entry.getTitle());
+            Button row = new Button(entry.getTitle());
+            Region marker = new Region();
+            marker.getStyleClass().addAll("calendar-entry-marker",
+                    "dot-" + entry.getMood().name().toLowerCase());
+            row.setGraphic(marker);
+            row.setContentDisplay(ContentDisplay.LEFT);
             row.getStyleClass().add("calendar-entry-row");
             row.setOnAction(event -> NavigationManager.getInstance().openDetails(entry.getId()));
             selectedEntries.getChildren().add(row);
