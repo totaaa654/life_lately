@@ -7,6 +7,7 @@ import javafx.scene.Parent;
 import javafx.scene.layout.StackPane;
 
 import java.io.IOException;
+import java.time.LocalDate;
 import java.util.function.Consumer;
 
 public final class NavigationManager {
@@ -34,10 +35,15 @@ public final class NavigationManager {
     }
 
     public void openEditor(Long entryId, String moodName) {
+        openEditor(entryId, moodName, null);
+    }
+
+    public void openEditor(Long entryId, String moodName, LocalDate entryDate) {
         load(View.ENTRY_EDITOR, controller -> {
             EntryEditorController editor = (EntryEditorController) controller;
             editor.setEntry(entryId);
             if (entryId == null && moodName != null) editor.selectMood(moodName);
+            if (entryId == null && entryDate != null) editor.setDate(entryDate);
         });
     }
 

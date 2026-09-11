@@ -41,6 +41,7 @@ public final class AuthService {
         User user = userDAO.insert(cleanUsername, cleanDisplayName, hash(password, salt),
                 Base64.getEncoder().encodeToString(salt));
         currentUser = user;
+        userDAO.rememberUser(user.id());
         return user;
     }
 
@@ -57,7 +58,14 @@ public final class AuthService {
         }
         userDAO.recordLogin(user.id());
         currentUser = user;
+        userDAO.rememberUser(user.id());
         return user;
+    }
+
+    public boolean restoreSession() {
+        if (currentUser != null) return true;
+        currentUser = userDAO.findRememberedUser().orElse(null);
+        return currentUser != null;
     }
 
     public Optional<User> currentUser() {
@@ -65,6 +73,7 @@ public final class AuthService {
     }
 
     public void logout() {
+        userDAO.clearRememberedUser();
         currentUser = null;
     }
 

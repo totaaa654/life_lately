@@ -18,7 +18,7 @@
             <VBox alignment="TOP_LEFT" spacing="22" prefWidth="520" minWidth="420" styleClass="login-story">
                 <padding><Insets top="44" right="48" bottom="38" left="48"/></padding>
                 <HBox alignment="CENTER_LEFT" spacing="10">
-                    <Region styleClass="brand-mark"/>
+                    <ImageView fitWidth="34" fitHeight="34" preserveRatio="true"><image><Image url="@../../images/brand/app-icon.png"/></image></ImageView>
                     <Label text="life lately." styleClass="login-brand"/>
                 </HBox>
                 <VBox spacing="8">
@@ -40,7 +40,7 @@
                     <VBox spacing="7">
                         <Label fx:id="formEyebrow" text="WELCOME BACK" styleClass="eyebrow"/>
                         <Label fx:id="formTitle" text="Sign in to your journal" wrapText="true" styleClass="login-form-title"/>
-                        <Label fx:id="formSubtitle" text="Pick up where you left off." wrapText="true" styleClass="page-subtitle, login-form-subtitle"/>
+                        <Label fx:id="formSubtitle" text="Sign in once on this computer. You stay signed in until you log out." wrapText="true" styleClass="page-subtitle, login-form-subtitle"/>
                     </VBox>
 
                     <VBox fx:id="displayNameGroup" spacing="7" visible="false" managed="false">

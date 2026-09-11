@@ -39,7 +39,7 @@
                             <Label fx:id="fullDateLabel" text="September 11, 2026" styleClass="editor-date"/>
                         </VBox>
                         <Region HBox.hgrow="ALWAYS"/>
-                        <DatePicker fx:id="datePicker" prefWidth="142" styleClass="date-chip"/>
+                        <DatePicker fx:id="datePicker" id="entryDatePicker" prefWidth="142" styleClass="date-chip"/>
                     </HBox>
                     <Separator/>
                     <VBox spacing="10">

@@ -7,6 +7,7 @@ import com.lifelately.theme.ThemeManager;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
+import javafx.scene.image.Image;
 import javafx.stage.Stage;
 
 import java.io.IOException;
@@ -17,7 +18,10 @@ public final class App extends Application {
         AppConfig config = AppConfig.getInstance();
         config.initializeDatabase();
 
-        Scene scene = new Scene(loadRoot("/com/lifelately/fxml/auth/login.fxml"), 1240, 820);
+        boolean restoreJournal = config.isDatabaseReady() && config.authService().restoreSession();
+        Scene scene = new Scene(loadRoot(restoreJournal
+                ? "/com/lifelately/fxml/main.fxml"
+                : "/com/lifelately/fxml/auth/login.fxml"), 1240, 820);
         ThemeManager.initialize(scene);
         AppSettings settings = config.isDatabaseReady()
                 ? config.settingsService().getSettings()
@@ -25,7 +29,9 @@ public final class App extends Application {
         ThemeManager.apply(Theme.valueOf(settings.theme()), settings.accentColor());
 
         stage.setTitle("Life Lately");
-        stage.setMinWidth(1120);
+        stage.getIcons().add(new Image(App.class.getResourceAsStream(
+                "/com/lifelately/images/brand/app-icon.png")));
+        stage.setMinWidth(1180);
         stage.setMinHeight(650);
         stage.setScene(scene);
         stage.show();

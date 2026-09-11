@@ -10,6 +10,7 @@ import javafx.scene.control.ContentDisplay;
 import javafx.scene.control.Label;
 import javafx.scene.layout.ColumnConstraints;
 import javafx.scene.layout.GridPane;
+import javafx.scene.layout.HBox;
 import javafx.scene.layout.Priority;
 import javafx.scene.layout.Region;
 import javafx.scene.layout.VBox;
@@ -27,6 +28,7 @@ public final class CalendarController {
     @FXML private Label monthTitle;
     @FXML private GridPane calendarGrid;
     @FXML private Label selectedDateTitle;
+    @FXML private Label selectedDateCount;
     @FXML private VBox selectedEntries;
     @FXML private VBox unavailableState;
     @FXML private Label monthMemoriesLabel;
@@ -35,6 +37,7 @@ public final class CalendarController {
 
     private final AppConfig config = AppConfig.getInstance();
     private YearMonth displayedMonth = YearMonth.now();
+    private LocalDate selectedDate = LocalDate.now();
     private List<Entry> entries = List.of();
 
     @FXML
@@ -54,9 +57,14 @@ public final class CalendarController {
         showDate(LocalDate.now());
     }
 
-    @FXML private void previousMonth() { displayedMonth = displayedMonth.minusMonths(1); renderMonth(); }
-    @FXML private void nextMonth() { displayedMonth = displayedMonth.plusMonths(1); renderMonth(); }
-    @FXML private void today() { displayedMonth = YearMonth.now(); renderMonth(); showDate(LocalDate.now()); }
+    @FXML private void previousMonth() { showMonth(displayedMonth.minusMonths(1)); }
+    @FXML private void nextMonth() { showMonth(displayedMonth.plusMonths(1)); }
+    @FXML private void today() { showMonth(YearMonth.now()); showDate(LocalDate.now()); updateSelectedDay(); }
+
+    @FXML
+    private void addForSelectedDate() {
+        NavigationManager.getInstance().openEditor(null, null, selectedDate);
+    }
 
     private void renderMonth() {
         calendarGrid.getChildren().clear();
@@ -84,36 +92,88 @@ public final class CalendarController {
             LocalDate date = displayedMonth.atDay(day);
             int position = offset + day - 1;
             Button dayButton = new Button(Integer.toString(day));
+            dayButton.setUserData(date);
             dayButton.getStyleClass().add("calendar-day");
             if (date.equals(LocalDate.now())) dayButton.getStyleClass().add("calendar-today");
+            if (date.equals(selectedDate)) dayButton.getStyleClass().add("calendar-selected");
             List<Entry> dateEntries = byDate.getOrDefault(date, List.of());
             if (!dateEntries.isEmpty()) {
                 dayButton.getStyleClass().add("calendar-has-entry");
                 dayButton.getStyleClass().add("calendar-mood-" + dateEntries.getFirst().getMood().name().toLowerCase());
                 dayButton.setText(Integer.toString(day));
             }
-            dayButton.setOnAction(event -> showDate(date));
+            dayButton.setOnAction(event -> {
+                showDate(date);
+                updateSelectedDay();
+            });
             calendarGrid.add(dayButton, position % 7, position / 7 + 1);
         }
     }
 
+    private void showMonth(YearMonth month) {
+        displayedMonth = month;
+        selectedDate = month.atDay(1);
+        renderMonth();
+        showDate(selectedDate);
+    }
+
+    private void updateSelectedDay() {
+        calendarGrid.getChildren().stream()
+                .filter(Button.class::isInstance)
+                .map(Button.class::cast)
+                .forEach(button -> {
+                    button.getStyleClass().remove("calendar-selected");
+                    if (selectedDate.equals(button.getUserData())) {
+                        button.getStyleClass().add("calendar-selected");
+                    }
+                });
+    }
+
     private void showDate(LocalDate date) {
+        selectedDate = date;
         selectedDateTitle.setText(DateUtils.format(date, "EEEE, MMMM d"));
         selectedEntries.getChildren().clear();
         List<Entry> matching = entries.stream().filter(entry -> entry.getEntryDate().equals(date)).toList();
+        selectedDateCount.setText(matching.size() + (matching.size() == 1 ? " memory" : " memories"));
         if (matching.isEmpty()) {
-            Label empty = new Label("No entry for this day.");
-            empty.getStyleClass().add("muted-label");
+            VBox empty = new VBox(3);
+            Label title = new Label("A clear page");
+            title.getStyleClass().add("calendar-empty-title");
+            Label copy = new Label("Nothing written for this date yet.");
+            copy.setWrapText(true);
+            copy.getStyleClass().add("muted-label");
+            empty.getChildren().addAll(title, copy);
+            empty.getStyleClass().add("calendar-empty-state");
             selectedEntries.getChildren().add(empty);
             return;
         }
         for (Entry entry : matching) {
-            Button row = new Button(entry.getTitle());
             Region marker = new Region();
             marker.getStyleClass().addAll("calendar-entry-marker",
                     "dot-" + entry.getMood().name().toLowerCase());
-            row.setGraphic(marker);
-            row.setContentDisplay(ContentDisplay.LEFT);
+
+            Label mood = new Label(entry.getMood().name());
+            mood.getStyleClass().add("calendar-entry-mood");
+            HBox metadata = new HBox(6, marker, mood);
+            metadata.getStyleClass().add("calendar-entry-meta");
+
+            Label title = new Label(entry.getTitle());
+            title.setWrapText(true);
+            title.setMaxWidth(246);
+            title.getStyleClass().add("calendar-entry-title");
+            String excerpt = entry.getContent().replaceAll("\\s+", " ").strip();
+            if (excerpt.length() > 92) excerpt = excerpt.substring(0, 92) + "...";
+            Label preview = new Label(excerpt.isBlank() ? "No written details." : excerpt);
+            preview.setWrapText(true);
+            preview.setMaxWidth(246);
+            preview.getStyleClass().add("calendar-entry-preview");
+
+            VBox overview = new VBox(4, metadata, title, preview);
+            overview.setFillWidth(true);
+            overview.setPrefWidth(246);
+            Button row = new Button();
+            row.setGraphic(overview);
+            row.setContentDisplay(ContentDisplay.GRAPHIC_ONLY);
             row.getStyleClass().add("calendar-entry-row");
             row.setOnAction(event -> NavigationManager.getInstance().openDetails(entry.getId()));
             selectedEntries.getChildren().add(row);

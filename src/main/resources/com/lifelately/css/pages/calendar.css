@@ -12,9 +12,17 @@
 .calendar-mood-low { -fx-border-color: transparent transparent -mood-low transparent; }
 .calendar-mood-rough { -fx-border-color: transparent transparent -mood-rough transparent; }
 .calendar-today { -fx-background-color: -accent; -fx-text-fill: white; -fx-font-weight: bold; }
-.calendar-entry-row { -fx-background-color: -color-surface-alt; -fx-text-fill: -color-text; -fx-alignment: CENTER_LEFT; -fx-max-width: Infinity; -fx-padding: 9 11; -fx-background-radius: 10; -fx-graphic-text-gap: 8; }
+.calendar-selected { -fx-border-color: -accent; -fx-border-width: 2; -fx-border-radius: 12; }
+.calendar-entry-row { -fx-background-color: -color-surface-alt; -fx-text-fill: -color-text; -fx-alignment: CENTER_LEFT; -fx-max-width: Infinity; -fx-padding: 11 12; -fx-background-radius: 11; -fx-border-color: transparent; -fx-border-radius: 11; }
 .calendar-entry-marker { -fx-min-width: 8; -fx-pref-width: 8; -fx-max-width: 8; -fx-min-height: 8; -fx-pref-height: 8; -fx-max-height: 8; -fx-background-radius: 4; }
-.calendar-entry-row:hover { -fx-background-color: -accent-soft; -fx-text-fill: -accent-text; }
+.calendar-entry-row:hover { -fx-background-color: -accent-soft; -fx-border-color: derive(-accent, 55%); }
+.calendar-entry-meta { -fx-alignment: CENTER_LEFT; }
+.calendar-entry-mood { -fx-font-size: 9px; -fx-font-weight: bold; -fx-text-fill: -color-muted; }
+.calendar-entry-title { -fx-font-size: 12px; -fx-font-weight: bold; -fx-text-fill: -color-text-strong; }
+.calendar-entry-preview { -fx-font-size: 10px; -fx-text-fill: -color-muted; }
+.selected-date-count { -fx-font-size: 10px; -fx-text-fill: -color-muted; }
+.calendar-empty-state { -fx-background-color: -color-surface-alt; -fx-background-radius: 11; -fx-padding: 13; }
+.calendar-empty-title { -fx-font-size: 11px; -fx-font-weight: bold; -fx-text-fill: -color-text-strong; }
 .calendar-legend { -fx-padding: 7 4 0 4; }
 .calendar-legend .label { -fx-font-size: 8px; -fx-text-fill: -color-muted; }
 .legend-dot { -fx-min-width: 7; -fx-pref-width: 7; -fx-max-width: 7; -fx-min-height: 7; -fx-pref-height: 7; -fx-max-height: 7; -fx-background-radius: 4; }

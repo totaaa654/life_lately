@@ -8,6 +8,7 @@ searchable entries, tags, calendar browsing, lightweight insights, and persisten
 
 - One-stage JavaFX shell with Home, Journal, Calendar, Insights, and Settings navigation
 - First-run local account setup, sign-in, and logout
+- Restored local sessions, so successful sign-in persists until logout
 - PBKDF2-SHA256 password hashing with a unique random salt
 - Create, read, edit, search, favorite, and soft-delete journal entries
 - Five seeded moods: Great, Good, Okay, Low, and Rough
@@ -159,6 +160,7 @@ resource so broken controller bindings or malformed layouts fail the build.
 | Shared theme colors | `src/main/resources/com/lifelately/css/light-theme.css` and `dark-theme.css` |
 | Theme application behavior | `src/main/java/com/lifelately/theme/ThemeManager.java` |
 | Bear mascot files | `src/main/resources/com/lifelately/images/bear/` |
+| Application logo and window icon | `src/main/resources/com/lifelately/images/brand/app-icon.png` |
 | Application wiring | `src/main/java/com/lifelately/config/AppConfig.java` |
 
 ## Notes for extending the app

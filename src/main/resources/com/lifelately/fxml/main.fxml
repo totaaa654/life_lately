@@ -16,7 +16,7 @@
             <padding><Insets top="24" right="15" bottom="18" left="15"/></padding>
             <HBox alignment="CENTER_LEFT" spacing="9" styleClass="brand-block">
                 <StackPane styleClass="brand-mascot-wrap">
-                    <ImageView fitWidth="42" fitHeight="42" preserveRatio="true"><image><Image url="@../images/bear/bear-default.png"/></image></ImageView>
+                    <ImageView fitWidth="38" fitHeight="38" preserveRatio="true"><image><Image url="@../images/brand/app-icon.png"/></image></ImageView>
                 </StackPane>
                 <VBox spacing="-2">
                     <Label text="life lately." styleClass="brand-title"/>

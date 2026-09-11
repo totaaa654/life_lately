@@ -43,6 +43,63 @@ public final class UserDAO {
         }
     }
 
+    public Optional<User> findById(long userId) {
+        String sql = """
+                SELECT id, username, display_name, password_hash, password_salt, created_at, last_login_at
+                FROM users WHERE id = ?
+                """;
+        try (var connection = databaseConnection.getConnection();
+             var statement = connection.prepareStatement(sql)) {
+            statement.setLong(1, userId);
+            try (ResultSet result = statement.executeQuery()) {
+                return result.next() ? Optional.of(map(result)) : Optional.empty();
+            }
+        } catch (SQLException exception) {
+            throw databaseError("restore local account", exception);
+        }
+    }
+
+    public Optional<User> findRememberedUser() {
+        String sql = "SELECT setting_value FROM app_settings WHERE setting_key = 'remembered_user_id'";
+        try (var connection = databaseConnection.getConnection();
+             var statement = connection.prepareStatement(sql);
+             var result = statement.executeQuery()) {
+            if (!result.next()) return Optional.empty();
+            try {
+                return findById(Long.parseLong(result.getString(1)));
+            } catch (NumberFormatException invalidSetting) {
+                clearRememberedUser();
+                return Optional.empty();
+            }
+        } catch (SQLException exception) {
+            throw databaseError("restore local session", exception);
+        }
+    }
+
+    public void rememberUser(long userId) {
+        String sql = """
+                INSERT INTO app_settings (setting_key, setting_value) VALUES ('remembered_user_id', ?)
+                ON DUPLICATE KEY UPDATE setting_value = VALUES(setting_value)
+                """;
+        try (var connection = databaseConnection.getConnection();
+             var statement = connection.prepareStatement(sql)) {
+            statement.setString(1, Long.toString(userId));
+            statement.executeUpdate();
+        } catch (SQLException exception) {
+            throw databaseError("remember local session", exception);
+        }
+    }
+
+    public void clearRememberedUser() {
+        String sql = "DELETE FROM app_settings WHERE setting_key = 'remembered_user_id'";
+        try (var connection = databaseConnection.getConnection();
+             var statement = connection.prepareStatement(sql)) {
+            statement.executeUpdate();
+        } catch (SQLException exception) {
+            throw databaseError("clear local session", exception);
+        }
+    }
+
     public User insert(String username, String displayName, String passwordHash, String passwordSalt) {
         String sql = """
                 INSERT INTO users (username, display_name, password_hash, password_salt)

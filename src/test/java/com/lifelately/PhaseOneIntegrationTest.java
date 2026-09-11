@@ -12,6 +12,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.DatePicker;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Region;
 import org.junit.jupiter.api.BeforeAll;
@@ -140,6 +141,22 @@ class PhaseOneIntegrationTest {
                     GridPane grid = (GridPane) main.lookup("#calendarGrid");
                     assertNotNull(grid);
                     assertEquals(7, grid.getColumnConstraints().size(), "Calendar must span seven responsive columns");
+
+                    Button firstDay = grid.getChildren().stream()
+                            .filter(Button.class::isInstance)
+                            .map(Button.class::cast)
+                            .filter(day -> day.getText().equals("1"))
+                            .findFirst().orElseThrow();
+                    firstDay.fire();
+                    Button addMemory = (Button) main.lookup("#addDateEntryButton");
+                    assertNotNull(addMemory);
+                    addMemory.fire();
+                    main.applyCss();
+                    main.layout();
+                    DatePicker editorDate = (DatePicker) main.lookup("#entryDatePicker");
+                    assertNotNull(editorDate);
+                    assertEquals(LocalDate.now().withDayOfMonth(1), editorDate.getValue(),
+                            "Calendar add action must preselect the clicked date");
                 }
             }
         });

@@ -40,10 +40,16 @@
                         <HBox spacing="4" alignment="CENTER_LEFT"><Region styleClass="legend-dot, dot-rough"/><Label text="Rough"/></HBox>
                     </HBox>
                 </VBox>
-                <VBox spacing="15" minWidth="284" prefWidth="284">
+                <VBox spacing="15" minWidth="318" prefWidth="318">
                     <VBox spacing="10" styleClass="day-memories-card">
                         <Label text="ON THIS DAY" styleClass="tiny-label"/>
-                        <Label fx:id="selectedDateTitle" text="Selected day" wrapText="true" styleClass="section-title"/>
+                        <HBox alignment="CENTER_LEFT" spacing="10">
+                            <VBox spacing="2" HBox.hgrow="ALWAYS">
+                                <Label fx:id="selectedDateTitle" text="Selected day" wrapText="true" styleClass="section-title"/>
+                                <Label fx:id="selectedDateCount" text="0 memories" styleClass="selected-date-count"/>
+                            </VBox>
+                            <Button fx:id="addDateEntryButton" id="addDateEntryButton" text="Add memory" onAction="#addForSelectedDate" styleClass="primary-button, compact-button"/>
+                        </HBox>
                         <VBox fx:id="selectedEntries" spacing="9"/>
                     </VBox>
                     <VBox spacing="9" styleClass="month-story-card">

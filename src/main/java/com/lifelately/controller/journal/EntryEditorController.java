@@ -57,6 +57,10 @@ public final class EntryEditorController {
         tagsField.setText(entry.getTags().stream().map(tag -> tag.name()).collect(Collectors.joining(", ")));
     }
 
+    public void setDate(LocalDate date) {
+        if (date != null && entryId == null) datePicker.setValue(date);
+    }
+
     @FXML
     private void save() {
         try {
