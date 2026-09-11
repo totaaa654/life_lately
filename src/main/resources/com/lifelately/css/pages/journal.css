@@ -1,0 +1,45 @@
+.journal-toolbar { -fx-background-color: -color-surface-alt; -fx-background-radius: 16; -fx-border-color: -color-border; -fx-border-radius: 16; -fx-padding: 13; }
+.result-pill { -fx-background-color: -accent-soft; -fx-text-fill: -accent-text; -fx-padding: 5 10; -fx-background-radius: 13; -fx-font-size: 9px; -fx-font-weight: bold; }
+.entry-card {
+    -fx-background-color: -color-surface;
+    -fx-background-radius: 17;
+    -fx-border-color: -color-border;
+    -fx-border-radius: 17;
+    -fx-effect: dropshadow(gaussian, -color-shadow, 10, 0.04, 0, 3);
+    -fx-cursor: hand;
+}
+.entry-card:hover { -fx-border-color: -mood; -fx-translate-y: -2; -fx-effect: dropshadow(gaussian, -color-shadow, 15, 0.08, 0, 5); }
+.journal-card-great { -mood: -mood-great; -mood-soft: -soft-yellow; }
+.journal-card-good { -mood: -mood-good; -mood-soft: -soft-green; }
+.journal-card-okay { -mood: -mood-okay; -mood-soft: -soft-blue; }
+.journal-card-low { -mood: -mood-low; -mood-soft: -soft-lavender; }
+.journal-card-rough { -mood: -mood-rough; -mood-soft: -soft-coral; }
+.journal-date-tile { -fx-background-color: -mood-soft; -fx-background-radius: 13; -fx-min-height: 68; }
+.journal-date-month { -fx-font-size: 9px; -fx-font-weight: bold; -fx-text-fill: -mood; }
+.journal-date-day { -fx-font-size: 23px; -fx-font-weight: bold; -fx-text-fill: -color-text-strong; }
+.favorite-star { -fx-text-fill: #ef9b69; -fx-font-size: 21px; }
+.entry-title { -fx-font-size: 15px; -fx-font-weight: bold; -fx-text-fill: -color-text-strong; }
+.entry-preview { -fx-font-size: 11px; -fx-text-fill: -color-muted; -fx-line-spacing: 2px; }
+.journal-card-arrow { -fx-font-size: 26px; -fx-text-fill: -color-border; }
+.notebook-card { -fx-background-color: -color-surface; -fx-background-radius: 22; -fx-border-color: -color-border; -fx-border-radius: 22; -fx-effect: dropshadow(gaussian, -color-shadow, 16, 0.08, 0, 5); -fx-padding: 0; }
+.notebook-page { -fx-padding: 27 28; -fx-background-color: -color-surface; -fx-background-radius: 22 0 0 22; }
+.editor-weekday { -fx-font-size: 19px; -fx-font-weight: bold; -fx-text-fill: -color-text-strong; }
+.editor-date { -fx-font-size: 12px; -fx-text-fill: -color-muted; }
+.date-chip { -fx-font-size: 10px; -fx-background-color: -soft-blue; }
+.editor-mood { -fx-min-width: 72; -fx-padding: 7 11; }
+.journal-title-field { -fx-background-color: transparent; -fx-border-color: transparent transparent -color-border transparent; -fx-border-radius: 0; -fx-font-size: 22px; -fx-font-weight: bold; -fx-padding: 10 2; }
+.journal-text-area { -fx-font-size: 14px; -fx-line-spacing: 4px; -fx-background-color: -color-surface; -fx-border-color: -color-border; }
+.journal-text-area .content { -fx-background-color: linear-gradient(to bottom, -color-surface 0%, -color-surface 97%, -paper-line 98%, -paper-line 100%); }
+.tags-field { -fx-font-size: 10px; }
+.favorite-check { -fx-font-size: 10px; -fx-background-color: -soft-coral; -fx-padding: 8 10; -fx-background-radius: 10; }
+.word-count { -fx-font-size: 9px; -fx-text-fill: -color-muted; }
+.writing-companion { -fx-background-color: linear-gradient(to bottom, -soft-yellow, -soft-blue); -fx-padding: 25 16; -fx-background-radius: 0 22 22 0; -fx-min-height: 580; }
+.writing-halo { -fx-background-color: rgba(255,255,255,0.44); -fx-background-radius: 100; }
+.companion-message { -fx-font-size: 11px; -fx-font-weight: bold; -fx-text-fill: -color-muted; }
+.companion-sparkles { -fx-text-fill: #e9b937; -fx-font-size: 16px; }
+.paper-card { -fx-background-color: -color-surface; -fx-background-radius: 20; -fx-border-color: -color-border; -fx-border-radius: 20; -fx-effect: dropshadow(gaussian, -color-shadow, 13, 0.05, 0, 4); }
+.detail-title { -fx-font-size: 29px; -fx-font-weight: bold; -fx-text-fill: -color-text-strong; }
+.detail-content, .detail-content .content { -fx-background-color: transparent; -fx-border-color: transparent; }
+.detail-content { -fx-font-size: 14px; -fx-line-spacing: 5px; -fx-padding: 0; }
+.memory-kept-card { -fx-background-color: linear-gradient(to bottom, -soft-yellow, -soft-green); -fx-background-radius: 20; -fx-border-color: -color-border; -fx-border-radius: 20; -fx-padding: 20 16; -fx-min-height: 420; }
+.memory-kept-note { -fx-font-size: 9px; -fx-text-fill: -color-muted; -fx-font-style: italic; }

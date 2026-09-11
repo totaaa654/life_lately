@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.control.Separator?>
+<?import javafx.scene.control.TextArea?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.FlowPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.Priority?>
+<?import javafx.scene.layout.Region?>
+<?import javafx.scene.layout.VBox?>
+<ScrollPane xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="com.lifelately.controller.journal.EntryDetailsController"
+            fitToWidth="true" hbarPolicy="NEVER" styleClass="page-scroll">
+    <content>
+        <VBox spacing="18" styleClass="page details-page">
+            <padding><Insets top="28" right="46" bottom="44" left="46"/></padding>
+            <HBox alignment="CENTER_LEFT" spacing="10">
+                <Button text="‹  Back to your journal" onAction="#back" styleClass="link-button"/>
+                <Region HBox.hgrow="ALWAYS"/>
+                <Button text="Delete" onAction="#delete" styleClass="danger-button"/>
+                <Button text="Edit memory" onAction="#edit" styleClass="primary-button"/>
+            </HBox>
+            <HBox spacing="18" alignment="TOP_LEFT">
+                <VBox spacing="17" styleClass="paper-card" HBox.hgrow="ALWAYS">
+                    <padding><Insets top="32" right="36" bottom="34" left="36"/></padding>
+                    <HBox alignment="CENTER_LEFT" spacing="12">
+                        <VBox spacing="2"><Label text="A MOMENT YOU KEPT" styleClass="tiny-label"/><Label fx:id="dateLabel" styleClass="editor-date"/></VBox>
+                        <Region HBox.hgrow="ALWAYS"/>
+                        <Label fx:id="moodLabel" styleClass="mood-badge"/>
+                        <Label fx:id="favoriteLabel" styleClass="favorite-star"/>
+                    </HBox>
+                    <Label fx:id="titleLabel" wrapText="true" styleClass="detail-title"/>
+                    <Separator/>
+                    <TextArea fx:id="contentArea" editable="false" wrapText="true" prefRowCount="16" styleClass="detail-content"/>
+                    <FlowPane fx:id="tagsPane" hgap="8" vgap="8"/>
+                </VBox>
+                <VBox alignment="CENTER" spacing="8" minWidth="240" prefWidth="240" styleClass="memory-kept-card">
+                    <ImageView fitWidth="200" fitHeight="200" preserveRatio="true"><image><Image url="@../../images/bear/bear-default.png"/></image></ImageView>
+                    <Label text="A little piece of your life, safely kept." wrapText="true" textAlignment="CENTER" styleClass="companion-message"/>
+                    <Label text="✦  paw-printed with care  ✦" styleClass="memory-kept-note"/>
+                </VBox>
+            </HBox>
+        </VBox>
+    </content>
+</ScrollPane>

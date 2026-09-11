@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.Priority?>
+<?import javafx.scene.layout.Region?>
+<?import javafx.scene.layout.VBox?>
+<ScrollPane xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="com.lifelately.controller.settings.SettingsController"
+            fitToWidth="true" hbarPolicy="NEVER" styleClass="page-scroll">
+    <content>
+        <VBox spacing="20" styleClass="page settings-page">
+            <padding><Insets top="28" right="38" bottom="42" left="38"/></padding>
+            <VBox spacing="3"><Label text="MAKE IT FEEL LIKE HOME" styleClass="eyebrow"/><Label text="Settings" styleClass="page-title"/><Label text="A few small choices for a journal that feels like yours." styleClass="page-subtitle"/></VBox>
+            <HBox spacing="18" alignment="TOP_LEFT">
+                <VBox spacing="16" HBox.hgrow="ALWAYS">
+                    <VBox spacing="18" styleClass="settings-card">
+                        <HBox alignment="CENTER_LEFT"><VBox spacing="2"><Label text="Appearance" styleClass="section-title"/><Label text="Keep your journal comfortable in any light." styleClass="page-subtitle"/></VBox><Region HBox.hgrow="ALWAYS"/><Label text="☀  ◐  ☾" styleClass="appearance-glyphs"/></HBox>
+                        <GridPane hgap="18" vgap="9">
+                            <Label text="THEME" styleClass="field-label" GridPane.columnIndex="0" GridPane.rowIndex="0"/>
+                            <Label text="ACCENT COLOR" styleClass="field-label" GridPane.columnIndex="1" GridPane.rowIndex="0"/>
+                            <ComboBox fx:id="themeBox" onAction="#applyPreview" maxWidth="Infinity" prefWidth="250" GridPane.columnIndex="0" GridPane.rowIndex="1"/>
+                            <ComboBox fx:id="accentBox" onAction="#applyPreview" maxWidth="Infinity" prefWidth="250" GridPane.columnIndex="1" GridPane.rowIndex="1"/>
+                        </GridPane>
+                        <HBox spacing="12" alignment="CENTER_LEFT">
+                            <Label text="●" styleClass="accent-dot dot-blue"/><Label text="●" styleClass="accent-dot dot-yellow"/><Label text="●" styleClass="accent-dot dot-green"/><Label text="●" styleClass="accent-dot dot-lavender"/><Label text="●" styleClass="accent-dot dot-coral"/>
+                            <Label text="A calm palette, with room for every mood." styleClass="page-subtitle"/>
+                        </HBox>
+                    </VBox>
+                    <VBox spacing="18" styleClass="settings-card">
+                        <VBox spacing="2"><Label text="Journal preferences" styleClass="section-title"/><Label text="Choose how dates and weeks appear." styleClass="page-subtitle"/></VBox>
+                        <GridPane hgap="18" vgap="9">
+                            <Label text="DATE FORMAT" styleClass="field-label" GridPane.columnIndex="0" GridPane.rowIndex="0"/>
+                            <Label text="FIRST DAY OF WEEK" styleClass="field-label" GridPane.columnIndex="1" GridPane.rowIndex="0"/>
+                            <ComboBox fx:id="dateFormatBox" maxWidth="Infinity" prefWidth="250" GridPane.columnIndex="0" GridPane.rowIndex="1"/>
+                            <ComboBox fx:id="firstDayBox" maxWidth="Infinity" prefWidth="250" GridPane.columnIndex="1" GridPane.rowIndex="1"/>
+                        </GridPane>
+                    </VBox>
+                    <HBox alignment="CENTER_LEFT"><Label fx:id="statusLabel" visible="false" managed="false"/><Region HBox.hgrow="ALWAYS"/><Button text="Save my settings  →" onAction="#save" styleClass="primary-button"/></HBox>
+                </VBox>
+                <VBox alignment="CENTER" spacing="8" minWidth="292" prefWidth="292" styleClass="night-companion-card">
+                    <Label text="A COZY CORNER, DAY OR NIGHT" wrapText="true" styleClass="tiny-label"/>
+                    <ImageView fitWidth="245" fitHeight="245" preserveRatio="true"><image><Image url="@../../images/bear/bear-sleeping.png"/></image></ImageView>
+                    <Label text="Rest today for a brighter tomorrow." wrapText="true" textAlignment="CENTER" styleClass="night-message"/>
+                    <Label text="☾  ✦  ✧" styleClass="night-stars"/>
+                </VBox>
+            </HBox>
+        </VBox>
+    </content>
+</ScrollPane>

@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.VBox?>
+<VBox xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" alignment="CENTER" spacing="7" styleClass="empty-state">
+    <padding><Insets top="20" right="22" bottom="22" left="22"/></padding>
+    <ImageView fitWidth="130" fitHeight="130" preserveRatio="true"><image><Image url="@../../images/bear/bear-empty.png"/></image></ImageView>
+    <Label text="It’s a little quiet here." styleClass="empty-title"/>
+    <Label text="Your memories will show up once you start writing." styleClass="muted-label"/>
+</VBox>

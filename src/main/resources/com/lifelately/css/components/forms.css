@@ -1,0 +1,23 @@
+.text-field, .text-area, .combo-box, .date-picker {
+    -fx-background-color: -color-surface-alt;
+    -fx-text-fill: -color-text;
+    -fx-prompt-text-fill: -color-muted;
+    -fx-background-radius: 11;
+    -fx-border-color: -color-border;
+    -fx-border-radius: 11;
+    -fx-padding: 7 10;
+}
+.text-field:focused, .text-area:focused, .combo-box:focused, .date-picker:focused { -fx-border-color: -accent; -fx-effect: dropshadow(gaussian, -accent-soft, 6, 0.1, 0, 0); }
+.text-area .content { -fx-background-color: -color-surface-alt; -fx-background-radius: 10; }
+.text-area .text { -fx-fill: -color-text; }
+.combo-box .list-cell, .date-picker .text-field { -fx-text-fill: -color-text; }
+.combo-box-popup .list-view { -fx-background-color: -color-surface; -fx-border-color: -color-border; -fx-background-radius: 10; }
+.combo-box-popup .list-cell { -fx-background-color: -color-surface; -fx-text-fill: -color-text; }
+.combo-box-popup .list-cell:hover { -fx-background-color: -accent-soft; -fx-text-fill: -accent-text; }
+.check-box { -fx-text-fill: -color-text; }
+.check-box .box { -fx-background-color: -color-surface-alt; -fx-border-color: -color-border; -fx-border-radius: 5; -fx-background-radius: 5; }
+.check-box:selected .box { -fx-background-color: -accent; -fx-border-color: -accent; }
+.field-label { -fx-font-size: 9px; -fx-font-weight: bold; -fx-text-fill: -color-muted; }
+.search-field { -fx-font-size: 13px; -fx-padding: 10 14; -fx-background-color: -color-surface; }
+.filter-chip { -fx-font-size: 11px; -fx-padding: 5 9; -fx-background-color: -color-surface; }
+.filter-check { -fx-background-color: -color-surface; -fx-padding: 8 12; -fx-background-radius: 11; -fx-border-color: -color-border; -fx-border-radius: 11; }

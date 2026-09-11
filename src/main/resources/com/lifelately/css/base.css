@@ -1,0 +1,35 @@
+.root {
+    -fx-font-family: "Segoe UI", "Inter", sans-serif;
+    -accent: #6f8fea;
+    -accent-soft: #e8eeff;
+    -accent-text: #385daf;
+    -mood-great: #e9b937;
+    -mood-good: #65ae90;
+    -mood-okay: #6f9ed8;
+    -mood-low: #9a86da;
+    -mood-rough: #e57c6c;
+}
+.accent-blue { -accent: #6f8fea; -accent-soft: -soft-blue; -accent-text: #496cc5; }
+.accent-yellow { -accent: #e9b937; -accent-soft: -soft-yellow; -accent-text: #8a6511; }
+.accent-green { -accent: #65ae90; -accent-soft: -soft-green; -accent-text: #397d66; }
+.accent-lavender { -accent: #9a86da; -accent-soft: -soft-lavender; -accent-text: #6654b3; }
+.accent-coral { -accent: #e57c6c; -accent-soft: -soft-coral; -accent-text: #ad5148; }
+.app-root, .content-host, .page-scroll, .page-scroll > .viewport, .page { -fx-background-color: -color-bg; }
+.page { -fx-min-width: 730px; }
+.label { -fx-text-fill: -color-text; }
+.page-title { -fx-font-size: 32px; -fx-font-weight: bold; -fx-text-fill: -color-text-strong; }
+.page-subtitle { -fx-font-size: 12px; -fx-text-fill: -color-muted; }
+.section-title { -fx-font-size: 17px; -fx-font-weight: bold; -fx-text-fill: -color-text-strong; }
+.section-kicker { -fx-font-size: 11px; -fx-text-fill: -color-muted; -fx-font-style: italic; }
+.card-title { -fx-font-size: 15px; -fx-font-weight: bold; -fx-text-fill: -color-text-strong; }
+.eyebrow, .tiny-label { -fx-font-size: 10px; -fx-font-weight: bold; -fx-text-fill: -accent; }
+.body-copy { -fx-font-size: 13px; -fx-text-fill: -color-muted; -fx-line-spacing: 2px; }
+.muted-label { -fx-font-size: 11px; -fx-text-fill: -color-muted; }
+.error-label { -fx-text-fill: -color-danger; -fx-font-weight: bold; }
+.success-label { -fx-text-fill: -color-success; -fx-font-weight: bold; }
+.separator .line { -fx-border-color: -color-border; -fx-border-width: 1 0 0 0; }
+.scroll-pane { -fx-background-insets: 0; -fx-padding: 0; }
+.scroll-bar:vertical { -fx-background-color: transparent; -fx-pref-width: 9; }
+.scroll-bar:vertical .thumb { -fx-background-color: -color-border; -fx-background-radius: 10; }
+.scroll-bar .increment-button, .scroll-bar .decrement-button { -fx-pref-height: 0; -fx-opacity: 0; }
+.tooltip { -fx-background-color: -color-text-strong; -fx-text-fill: -color-surface; -fx-background-radius: 8; }

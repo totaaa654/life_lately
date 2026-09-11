@@ -1,0 +1,26 @@
+.content-card, .stat-card, .notice-card, .settings-card, .calendar-card, .day-memories-card,
+.mood-story-card, .tags-story-card {
+    -fx-background-color: -color-surface;
+    -fx-background-radius: 18;
+    -fx-border-color: -color-border;
+    -fx-border-radius: 18;
+    -fx-effect: dropshadow(gaussian, -color-shadow, 11, 0.05, 0, 3);
+}
+.content-card, .settings-card, .calendar-card, .day-memories-card, .mood-story-card, .tags-story-card { -fx-padding: 20; }
+.notice-card { -fx-padding: 16 19; -fx-border-color: -accent; -fx-background-color: -accent-soft; }
+.stat-card { -fx-padding: 16 18; -fx-min-width: 178; }
+.stat-card:hover { -fx-translate-y: -2; -fx-effect: dropshadow(gaussian, -color-shadow, 15, 0.08, 0, 5); }
+.stat-streak { -fx-background-color: linear-gradient(to bottom right, -soft-coral, -color-surface); -fx-border-color: derive(#ee8c78, 65%); }
+.stat-memories, .stat-month { -fx-background-color: linear-gradient(to bottom right, -soft-blue, -color-surface); -fx-border-color: derive(#6f8fea, 68%); }
+.stat-feeling { -fx-background-color: linear-gradient(to bottom right, -soft-green, -color-surface); -fx-border-color: derive(#78bfa3, 62%); }
+.stat-lavender { -fx-background-color: linear-gradient(to bottom right, -soft-lavender, -color-surface); -fx-border-color: derive(#a994e8, 65%); }
+.stat-icon { -fx-font-size: 19px; }
+.stat-label { -fx-font-size: 9px; -fx-font-weight: bold; -fx-text-fill: -color-muted; }
+.stat-value { -fx-font-size: 27px; -fx-font-weight: bold; -fx-text-fill: -color-text-strong; }
+.stat-value-small { -fx-font-size: 21px; -fx-font-weight: bold; -fx-text-fill: -color-text-strong; }
+.stat-suffix { -fx-font-size: 11px; -fx-text-fill: -color-muted; }
+.stat-note { -fx-font-size: 9px; -fx-text-fill: -color-muted; }
+.tag-chip { -fx-background-color: -color-surface-alt; -fx-text-fill: -color-muted; -fx-padding: 4 9; -fx-background-radius: 14; -fx-font-size: 9px; -fx-font-weight: bold; }
+.empty-state { -fx-padding: 10 18 14 18; }
+.empty-state-large { -fx-alignment: CENTER; -fx-padding: 28; -fx-background-color: -color-surface; -fx-background-radius: 18; -fx-border-color: -color-border; -fx-border-radius: 18; }
+.empty-title { -fx-font-size: 17px; -fx-font-weight: bold; -fx-text-fill: -color-text-strong; }

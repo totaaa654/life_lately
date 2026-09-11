@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.control.Separator?>
+<?import javafx.scene.control.ToggleButton?>
+<?import javafx.scene.control.ToggleGroup?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.FlowPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.Priority?>
+<?import javafx.scene.layout.Region?>
+<?import javafx.scene.layout.StackPane?>
+<?import javafx.scene.layout.VBox?>
+<ScrollPane xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="com.lifelately.controller.home.HomeController"
+            fitToWidth="true" hbarPolicy="NEVER" styleClass="page-scroll">
+    <content>
+        <VBox spacing="22" styleClass="page home-page">
+            <fx:define><ToggleGroup fx:id="moodGroup"/></fx:define>
+            <padding><Insets top="28" right="34" bottom="42" left="34"/></padding>
+            <HBox alignment="CENTER_LEFT">
+                <VBox spacing="2">
+                    <Label fx:id="greetingLabel" styleClass="home-greeting"/>
+                    <Label text="Here’s a gentle place to land." styleClass="page-subtitle"/>
+                </VBox>
+                <Region HBox.hgrow="ALWAYS"/>
+                <Label fx:id="todayLabel" styleClass="today-pill"/>
+            </HBox>
+            <HBox spacing="24" alignment="CENTER_LEFT" styleClass="home-hero">
+                <VBox spacing="13" HBox.hgrow="ALWAYS" styleClass="hero-copy">
+                    <Label text="A LITTLE CHECK-IN" styleClass="eyebrow"/>
+                    <Label text="How’s life lately?" wrapText="true" styleClass="hero-title"/>
+                    <Label text="Whatever today feels like, there’s room for it here. Start with one honest little moment." wrapText="true" maxWidth="510" styleClass="hero-subtitle"/>
+                    <HBox spacing="10" alignment="CENTER_LEFT">
+                        <Button text="＋  Write about today" onAction="#writeToday" styleClass="primary-button hero-button"/>
+                        <Label text="one page at a time  ✦" styleClass="hero-note"/>
+                    </HBox>
+                </VBox>
+                <StackPane minWidth="285" prefWidth="310" minHeight="230" styleClass="hero-art">
+                    <Region prefWidth="210" prefHeight="210" styleClass="hero-orbit"/>
+                    <Label text="☁" translateX="-98" translateY="-76" styleClass="hero-cloud"/>
+                    <Label text="✦" translateX="105" translateY="-85" styleClass="hero-sparkle"/>
+                    <Label text="✧" translateX="118" translateY="-43" styleClass="hero-sparkle-small"/>
+                    <ImageView fitWidth="250" fitHeight="250" preserveRatio="true" translateY="9"><image><Image url="@../../images/bear/bear-default.png"/></image></ImageView>
+                </StackPane>
+            </HBox>
+            <VBox spacing="14" styleClass="mood-checkin-card">
+                <HBox alignment="CENTER_LEFT">
+                    <VBox spacing="2"><Label text="How are you feeling today?" styleClass="section-title"/><Label text="Pick the one that feels closest." styleClass="page-subtitle"/></VBox>
+                    <Region HBox.hgrow="ALWAYS"/><Label text="TODAY" styleClass="tiny-label"/>
+                </HBox>
+                <FlowPane hgap="10" vgap="10" alignment="CENTER_LEFT">
+                    <ToggleButton text="☀&#10;Great" userData="Great" toggleGroup="$moodGroup" styleClass="mood-choice mood-great"/>
+                    <ToggleButton text="●&#10;Good" userData="Good" selected="true" toggleGroup="$moodGroup" styleClass="mood-choice mood-good"/>
+                    <ToggleButton text="☁&#10;Okay" userData="Okay" toggleGroup="$moodGroup" styleClass="mood-choice mood-okay"/>
+                    <ToggleButton text="◕&#10;Low" userData="Low" toggleGroup="$moodGroup" styleClass="mood-choice mood-low"/>
+                    <ToggleButton text="☂&#10;Rough" userData="Rough" toggleGroup="$moodGroup" styleClass="mood-choice mood-rough"/>
+                </FlowPane>
+            </VBox>
+            <VBox fx:id="databaseNotice" visible="false" managed="false" spacing="8" styleClass="notice-card">
+                <Label text="The journal database is taking a tiny nap." styleClass="card-title"/>
+                <Label text="Start MySQL in Laragon, then restart Life Lately. Your pages will be waiting." wrapText="true" styleClass="body-copy"/>
+            </VBox>
+            <VBox spacing="12">
+                <HBox alignment="CENTER_LEFT"><Label text="Your lately" styleClass="section-title"/><Region HBox.hgrow="ALWAYS"/><Label text="little wins, real feelings" styleClass="section-kicker"/></HBox>
+                <HBox spacing="14">
+                    <VBox spacing="8" styleClass="stat-card stat-streak" HBox.hgrow="ALWAYS">
+                        <HBox alignment="CENTER_LEFT"><Label text="🔥" styleClass="stat-icon"/><Region HBox.hgrow="ALWAYS"/><Label text="KEEP GOING" styleClass="stat-label"/></HBox>
+                        <HBox alignment="BASELINE_LEFT" spacing="7"><Label fx:id="streakValue" text="0" styleClass="stat-value"/><Label text="day streak" styleClass="stat-suffix"/></HBox>
+                        <Label text="Your quiet ritual is growing." styleClass="stat-note"/>
+                    </VBox>
+                    <VBox spacing="8" styleClass="stat-card stat-memories" HBox.hgrow="ALWAYS">
+                        <HBox alignment="CENTER_LEFT"><Label text="▣" styleClass="stat-icon"/><Region HBox.hgrow="ALWAYS"/><Label fx:id="monthLabel" styleClass="stat-label"/></HBox>
+                        <HBox alignment="BASELINE_LEFT" spacing="7"><Label fx:id="monthValue" text="0" styleClass="stat-value"/><Label text="memories" styleClass="stat-suffix"/></HBox>
+                        <Label text="Little moments, safely kept." styleClass="stat-note"/>
+                    </VBox>
+                    <VBox spacing="8" styleClass="stat-card stat-feeling" HBox.hgrow="ALWAYS">
+                        <HBox alignment="CENTER_LEFT"><Label text="🌤" styleClass="stat-icon"/><Region HBox.hgrow="ALWAYS"/><Label text="TOP MOOD" styleClass="stat-label"/></HBox>
+                        <Label fx:id="moodValue" text="—" styleClass="stat-value-small"/>
+                        <Label text="You’ve been showing up honestly." styleClass="stat-note"/>
+                    </VBox>
+                </HBox>
+            </VBox>
+            <HBox spacing="18" alignment="TOP_LEFT">
+                <VBox spacing="12" styleClass="content-card memories-card" HBox.hgrow="ALWAYS">
+                    <HBox alignment="CENTER_LEFT">
+                        <VBox spacing="2"><Label text="Recent memories" styleClass="section-title"/><Label text="A few pages from your lately." styleClass="page-subtitle"/></VBox>
+                        <Region HBox.hgrow="ALWAYS"/><Button text="View all  →" onAction="#openJournal" styleClass="link-button"/>
+                    </HBox>
+                    <Separator/>
+                    <VBox fx:id="recentEntries" spacing="6">
+                        <VBox fx:id="emptyState" alignment="CENTER" spacing="6" styleClass="empty-state">
+                            <ImageView fitWidth="126" fitHeight="126" preserveRatio="true"><image><Image url="@../../images/bear/bear-empty.png"/></image></ImageView>
+                            <Label text="A fresh page is waiting." styleClass="card-title"/>
+                            <Label text="Messy thoughts are welcome here." styleClass="muted-label"/>
+                        </VBox>
+                    </VBox>
+                </VBox>
+                <VBox spacing="12" minWidth="306" prefWidth="306" styleClass="content-card week-card">
+                    <HBox alignment="CENTER_LEFT"><VBox spacing="2"><Label text="This week" styleClass="section-title"/><Label text="A tiny view of today." styleClass="page-subtitle"/></VBox><Region HBox.hgrow="ALWAYS"/><Label text="✦" styleClass="week-sparkle"/></HBox>
+                    <HBox fx:id="calendarDays" spacing="5" alignment="CENTER"/>
+                    <HBox spacing="10" alignment="CENTER_LEFT" styleClass="week-whisper">
+                        <ImageView fitWidth="64" fitHeight="64" preserveRatio="true"><image><Image url="@../../images/bear/bear-celebrate.png"/></image></ImageView>
+                        <Label text="Small moments count, too." wrapText="true" styleClass="week-whisper-copy"/>
+                    </HBox>
+                </VBox>
+            </HBox>
+        </VBox>
+    </content>
+</ScrollPane>

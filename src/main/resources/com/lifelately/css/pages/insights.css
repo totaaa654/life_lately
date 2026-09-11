@@ -1,0 +1,15 @@
+.mood-story-card { -fx-min-height: 335; }
+.insight-row { -fx-alignment: CENTER_LEFT; -fx-padding: 7 0; }
+.insight-mood-name { -fx-font-size: 11px; -fx-font-weight: bold; -fx-pref-width: 62; }
+.insight-count { -fx-font-size: 10px; -fx-font-weight: bold; -fx-text-fill: -color-muted; -fx-pref-width: 24; }
+.progress-bar { -fx-pref-height: 12; }
+.progress-bar > .track { -fx-background-color: -color-surface-alt; -fx-background-radius: 8; }
+.progress-bar > .bar { -fx-background-insets: 0; -fx-background-radius: 8; }
+.mood-bar-great > .bar { -fx-background-color: -mood-great; }
+.mood-bar-good > .bar { -fx-background-color: -mood-good; }
+.mood-bar-okay > .bar { -fx-background-color: -mood-okay; }
+.mood-bar-low > .bar { -fx-background-color: -mood-low; }
+.mood-bar-rough > .bar { -fx-background-color: -mood-rough; }
+.observation-card { -fx-background-color: linear-gradient(to bottom right, -soft-yellow, -soft-coral); -fx-background-radius: 18; -fx-border-color: -color-border; -fx-border-radius: 18; -fx-padding: 13; }
+.observation-copy { -fx-font-size: 11px; -fx-text-fill: -color-text; -fx-line-spacing: 2px; }
+.tags-story-card { -fx-background-color: linear-gradient(to bottom right, -color-surface, -soft-green); }

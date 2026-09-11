@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.FlowPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.Priority?>
+<?import javafx.scene.layout.Region?>
+<?import javafx.scene.layout.VBox?>
+<ScrollPane xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="com.lifelately.controller.insights.InsightsController"
+            fitToWidth="true" hbarPolicy="NEVER" styleClass="page-scroll">
+    <content>
+        <VBox spacing="20" styleClass="page insights-page">
+            <padding><Insets top="28" right="38" bottom="42" left="38"/></padding>
+            <VBox spacing="3"><Label text="A SOFT LOOK BACK" styleClass="eyebrow"/><Label text="Your lately" styleClass="page-title"/><Label text="No scores, no judgment—just the shape of how you’ve been." styleClass="page-subtitle"/></VBox>
+            <VBox fx:id="unavailableState" visible="false" managed="false" spacing="8" styleClass="notice-card"><Label text="Insights are taking a tiny nap." styleClass="card-title"/><Label text="Start MySQL in Laragon to notice your journal patterns." styleClass="body-copy"/></VBox>
+            <FlowPane hgap="13" vgap="13">
+                <VBox spacing="6" prefWidth="180" styleClass="stat-card stat-memories"><Label text="▣  ALL MEMORIES" styleClass="stat-label"/><Label fx:id="totalValue" text="0" styleClass="stat-value"/><Label text="pages you’ve kept" styleClass="stat-note"/></VBox>
+                <VBox spacing="6" prefWidth="180" styleClass="stat-card stat-month"><Label text="✦  THIS MONTH" styleClass="stat-label"/><Label fx:id="monthValue" text="0" styleClass="stat-value"/><Label text="moments captured" styleClass="stat-note"/></VBox>
+                <VBox spacing="6" prefWidth="180" styleClass="stat-card stat-streak"><Label text="🔥  CURRENT STREAK" styleClass="stat-label"/><Label fx:id="currentStreakValue" text="0" styleClass="stat-value"/><Label text="days in a row" styleClass="stat-note"/></VBox>
+                <VBox spacing="6" prefWidth="180" styleClass="stat-card stat-lavender"><Label text="★  LONGEST STREAK" styleClass="stat-label"/><Label fx:id="longestStreakValue" text="0" styleClass="stat-value"/><Label text="your personal best" styleClass="stat-note"/></VBox>
+                <VBox spacing="6" prefWidth="180" styleClass="stat-card stat-feeling"><Label text="●  MOST FELT" styleClass="stat-label"/><Label fx:id="commonMoodValue" text="—" styleClass="stat-value-small"/><Label text="your recent weather" styleClass="stat-note"/></VBox>
+            </FlowPane>
+            <HBox spacing="18" alignment="TOP_LEFT">
+                <VBox spacing="14" styleClass="mood-story-card" HBox.hgrow="ALWAYS">
+                    <VBox spacing="2"><Label text="How you’ve been lately" styleClass="section-title"/><Label text="Every color has a place in your story." styleClass="page-subtitle"/></VBox>
+                    <VBox fx:id="moodCounts" spacing="9"/>
+                </VBox>
+                <VBox spacing="12" minWidth="318" prefWidth="318">
+                    <HBox spacing="10" alignment="CENTER_LEFT" styleClass="observation-card">
+                        <ImageView fitWidth="118" fitHeight="118" preserveRatio="true"><image><Image url="@../../images/bear/bear-celebrate.png"/></image></ImageView>
+                        <VBox spacing="5" HBox.hgrow="ALWAYS"><Label text="A NOTE FROM YOUR BUDDY" wrapText="true" styleClass="tiny-label"/><Label fx:id="observationLabel" wrapText="true" styleClass="observation-copy"/></VBox>
+                    </HBox>
+                    <VBox spacing="10" styleClass="tags-story-card"><Label text="Threads in your story" styleClass="section-title"/><Label text="The things that keep showing up." styleClass="page-subtitle"/><HBox fx:id="topTags" spacing="8"/></VBox>
+                </VBox>
+            </HBox>
+        </VBox>
+    </content>
+</ScrollPane>

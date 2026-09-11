@@ -1,0 +1,23 @@
+.mood-great { -mood: -mood-great; -mood-soft: -soft-yellow; }
+.mood-good { -mood: -mood-good; -mood-soft: -soft-green; }
+.mood-okay { -mood: -mood-okay; -mood-soft: -soft-blue; }
+.mood-low { -mood: -mood-low; -mood-soft: -soft-lavender; }
+.mood-rough { -mood: -mood-rough; -mood-soft: -soft-coral; }
+.mood-choice {
+    -fx-background-color: -mood-soft;
+    -fx-text-fill: -color-text;
+    -fx-font-size: 11px;
+    -fx-font-weight: bold;
+    -fx-text-alignment: CENTER;
+    -fx-content-display: CENTER;
+    -fx-padding: 9 18;
+    -fx-min-width: 92;
+    -fx-min-height: 60;
+    -fx-background-radius: 15;
+    -fx-border-radius: 15;
+    -fx-border-color: transparent;
+}
+.mood-choice:hover { -fx-translate-y: -2; -fx-border-color: -mood; }
+.mood-choice:selected { -fx-border-color: -mood; -fx-border-width: 2; -fx-effect: dropshadow(gaussian, -color-shadow, 10, 0.12, 0, 3); -fx-scale-x: 1.03; -fx-scale-y: 1.03; }
+.mood-badge { -fx-background-color: -mood-soft; -fx-text-fill: -mood; -fx-padding: 5 10; -fx-background-radius: 14; -fx-font-size: 10px; -fx-font-weight: bold; }
+.mini-mood { -fx-text-fill: -mood; -fx-font-size: 9px; -fx-font-weight: bold; }

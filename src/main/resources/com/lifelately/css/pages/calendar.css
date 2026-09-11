@@ -1,0 +1,21 @@
+.calendar-card { -fx-min-width: 520; }
+.calendar-month-title { -fx-font-size: 19px; -fx-font-weight: bold; -fx-text-fill: -color-text-strong; }
+.calendar-heading { -fx-font-size: 9px; -fx-font-weight: bold; -fx-text-fill: -color-muted; -fx-alignment: CENTER; -fx-min-width: 64; -fx-padding: 4; }
+.calendar-day { -fx-background-color: -color-surface-alt; -fx-text-fill: -color-text; -fx-background-radius: 12; -fx-min-width: 64; -fx-min-height: 59; -fx-font-size: 11px; -fx-alignment: TOP_LEFT; -fx-padding: 8; }
+.calendar-day:hover { -fx-background-color: -accent-soft; -fx-translate-y: -1; }
+.calendar-has-entry { -fx-border-color: transparent transparent -accent transparent; -fx-border-radius: 12; -fx-border-width: 0 0 3 0; }
+.calendar-mood-great { -fx-border-color: transparent transparent -mood-great transparent; }
+.calendar-mood-good { -fx-border-color: transparent transparent -mood-good transparent; }
+.calendar-mood-okay { -fx-border-color: transparent transparent -mood-okay transparent; }
+.calendar-mood-low { -fx-border-color: transparent transparent -mood-low transparent; }
+.calendar-mood-rough { -fx-border-color: transparent transparent -mood-rough transparent; }
+.calendar-today { -fx-background-color: -accent; -fx-text-fill: white; -fx-font-weight: bold; }
+.calendar-entry-row { -fx-background-color: -color-surface-alt; -fx-text-fill: -color-text; -fx-alignment: CENTER_LEFT; -fx-max-width: Infinity; -fx-padding: 9 11; -fx-background-radius: 10; }
+.calendar-entry-row:hover { -fx-background-color: -accent-soft; -fx-text-fill: -accent-text; }
+.calendar-legend { -fx-padding: 7 4 0 4; }
+.calendar-legend .label { -fx-font-size: 8px; }
+.legend-great { -fx-text-fill: -mood-great; }.legend-good { -fx-text-fill: -mood-good; }.legend-okay { -fx-text-fill: -mood-okay; }.legend-low { -fx-text-fill: -mood-low; }.legend-rough { -fx-text-fill: -mood-rough; }
+.month-story-card { -fx-background-color: linear-gradient(to bottom right, -soft-blue, -soft-yellow); -fx-background-radius: 18; -fx-border-color: -color-border; -fx-border-radius: 18; -fx-padding: 18; -fx-alignment: CENTER; }
+.month-story-icon { -fx-font-size: 16px; }.icon-blue { -fx-text-fill: -mood-okay; }.icon-green { -fx-text-fill: -mood-good; }
+.month-story-value { -fx-font-size: 11px; -fx-font-weight: bold; }
+.calendar-quote { -fx-font-size: 10px; -fx-text-fill: -color-muted; -fx-font-style: italic; -fx-text-alignment: CENTER; }

@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.VBox?>
+
+<!-- Reusable visual shell for future compact layouts. Main navigation behavior stays in MainController. -->
+<VBox xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" prefWidth="232" spacing="4" styleClass="sidebar">
+    <padding><Insets top="28" right="18" bottom="20" left="18"/></padding>
+    <Label text="life lately." styleClass="brand-title"/>
+    <Label text="your quiet corner" styleClass="brand-subtitle"/>
+</VBox>

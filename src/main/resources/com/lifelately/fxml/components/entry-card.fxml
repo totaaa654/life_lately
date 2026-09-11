@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.FlowPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.Priority?>
+<?import javafx.scene.layout.Region?>
+<?import javafx.scene.layout.VBox?>
+<HBox fx:id="cardRoot" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1"
+      fx:controller="com.lifelately.controller.journal.EntryCardController"
+      spacing="16" alignment="CENTER_LEFT" styleClass="entry-card journal-card">
+    <padding><Insets top="16" right="18" bottom="16" left="18"/></padding>
+    <VBox alignment="CENTER" spacing="-2" minWidth="64" prefWidth="64" styleClass="journal-date-tile">
+        <Label fx:id="monthLabel" styleClass="journal-date-month"/>
+        <Label fx:id="dayLabel" styleClass="journal-date-day"/>
+    </VBox>
+    <VBox spacing="6" HBox.hgrow="ALWAYS">
+        <HBox alignment="CENTER_LEFT" spacing="9">
+            <Label fx:id="titleLabel" styleClass="entry-title"/>
+            <Region HBox.hgrow="ALWAYS"/>
+            <Label fx:id="moodLabel" styleClass="mood-badge"/>
+        </HBox>
+        <Label fx:id="previewLabel" wrapText="true" maxHeight="40" styleClass="entry-preview"/>
+        <FlowPane fx:id="tagPane" hgap="7" vgap="7"/>
+    </VBox>
+    <Label fx:id="favoriteLabel" styleClass="favorite-star"/>
+    <Label text="›" styleClass="journal-card-arrow"/>
+</HBox>

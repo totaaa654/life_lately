@@ -1,0 +1,6 @@
+.settings-card .combo-box { -fx-padding: 7 9; }
+.appearance-glyphs { -fx-background-color: -soft-blue; -fx-text-fill: -accent-text; -fx-background-radius: 14; -fx-padding: 7 11; }
+.accent-dot { -fx-font-size: 25px; }.dot-blue { -fx-text-fill: #6f8fea; }.dot-yellow { -fx-text-fill: #f6c85f; }.dot-green { -fx-text-fill: #78bfa3; }.dot-lavender { -fx-text-fill: #a994e8; }.dot-coral { -fx-text-fill: #ee8c78; }
+.night-companion-card { -fx-background-color: linear-gradient(to bottom, -soft-blue, -soft-lavender); -fx-background-radius: 20; -fx-border-color: -color-border; -fx-border-radius: 20; -fx-padding: 20; -fx-min-height: 470; }
+.night-message { -fx-font-size: 13px; -fx-font-weight: bold; -fx-text-fill: -color-text; -fx-line-spacing: 2px; }
+.night-stars { -fx-text-fill: #f6c85f; -fx-font-size: 20px; }

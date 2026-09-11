@@ -1,0 +1,19 @@
+.root {
+    -color-bg: #f7f9fd;
+    -color-surface: #ffffff;
+    -color-surface-alt: #f3f6fb;
+    -color-text: #252a34;
+    -color-text-strong: #17213a;
+    -color-muted: #7a8292;
+    -color-border: #e7ebf2;
+    -color-shadow: rgba(47, 67, 103, 0.11);
+    -color-sidebar: linear-gradient(to bottom, #fbfdff, #f3f7ff);
+    -color-danger: #d9655b;
+    -color-success: #3f9879;
+    -soft-blue: #e8eeff;
+    -soft-yellow: #fff4cc;
+    -soft-green: #e4f5ed;
+    -soft-lavender: #eee9ff;
+    -soft-coral: #ffebe7;
+    -paper-line: #edf0f5;
+}

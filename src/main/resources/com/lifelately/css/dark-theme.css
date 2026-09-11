@@ -1,0 +1,19 @@
+.root {
+    -color-bg: #171a21;
+    -color-surface: #20242d;
+    -color-surface-alt: #292e39;
+    -color-text: #f4f6fa;
+    -color-text-strong: #ffffff;
+    -color-muted: #a8afbe;
+    -color-border: #353b47;
+    -color-shadow: rgba(4, 7, 13, 0.34);
+    -color-sidebar: linear-gradient(to bottom, #1d2330, #191e29);
+    -color-danger: #ff9285;
+    -color-success: #7ad1ad;
+    -soft-blue: #283654;
+    -soft-yellow: #443b25;
+    -soft-green: #263f38;
+    -soft-lavender: #352f50;
+    -soft-coral: #4a302f;
+    -paper-line: #343a46;
+}

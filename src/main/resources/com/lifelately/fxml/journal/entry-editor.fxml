@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.CheckBox?>
+<?import javafx.scene.control.DatePicker?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.control.Separator?>
+<?import javafx.scene.control.TextArea?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.control.ToggleButton?>
+<?import javafx.scene.control.ToggleGroup?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.FlowPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.Priority?>
+<?import javafx.scene.layout.Region?>
+<?import javafx.scene.layout.StackPane?>
+<?import javafx.scene.layout.VBox?>
+<ScrollPane xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="com.lifelately.controller.journal.EntryEditorController"
+            fitToWidth="true" hbarPolicy="NEVER" styleClass="page-scroll">
+    <content>
+        <VBox spacing="18" styleClass="page editor-page">
+            <fx:define><ToggleGroup fx:id="moodGroup"/></fx:define>
+            <padding><Insets top="26" right="46" bottom="42" left="46"/></padding>
+            <HBox alignment="CENTER_LEFT">
+                <VBox spacing="2"><Label text="A QUIET PAGE FOR YOU" styleClass="eyebrow"/><Label fx:id="pageTitle" text="Write a new memory" styleClass="page-title"/><Label text="No perfect words needed. Just begin where you are." styleClass="page-subtitle"/></VBox>
+                <Region HBox.hgrow="ALWAYS"/>
+                <Button text="Cancel" onAction="#cancel" styleClass="ghost-button"/>
+                <Button text="Save memory  →" onAction="#save" styleClass="primary-button"/>
+            </HBox>
+            <HBox spacing="24" alignment="TOP_LEFT" styleClass="notebook-card">
+                <VBox spacing="17" HBox.hgrow="ALWAYS" styleClass="notebook-page">
+                    <HBox alignment="CENTER_LEFT" spacing="13">
+                        <VBox spacing="-3">
+                            <Label fx:id="weekdayLabel" text="Thursday" styleClass="editor-weekday"/>
+                            <Label fx:id="fullDateLabel" text="September 11, 2026" styleClass="editor-date"/>
+                        </VBox>
+                        <Region HBox.hgrow="ALWAYS"/>
+                        <DatePicker fx:id="datePicker" prefWidth="142" styleClass="date-chip"/>
+                    </HBox>
+                    <Separator/>
+                    <VBox spacing="10">
+                        <Label text="How are you feeling?" styleClass="section-title"/>
+                        <FlowPane hgap="9" vgap="9">
+                            <ToggleButton text="☀&#10;Great" userData="Great" toggleGroup="$moodGroup" styleClass="mood-choice editor-mood mood-great"/>
+                            <ToggleButton text="●&#10;Good" userData="Good" selected="true" toggleGroup="$moodGroup" styleClass="mood-choice editor-mood mood-good"/>
+                            <ToggleButton text="☁&#10;Okay" userData="Okay" toggleGroup="$moodGroup" styleClass="mood-choice editor-mood mood-okay"/>
+                            <ToggleButton text="◕&#10;Low" userData="Low" toggleGroup="$moodGroup" styleClass="mood-choice editor-mood mood-low"/>
+                            <ToggleButton text="☂&#10;Rough" userData="Rough" toggleGroup="$moodGroup" styleClass="mood-choice editor-mood mood-rough"/>
+                        </FlowPane>
+                    </VBox>
+                    <TextField fx:id="titleField" promptText="Give your day a title…" styleClass="journal-title-field"/>
+                    <TextArea fx:id="contentArea" promptText="What’s on your mind?" wrapText="true" prefRowCount="12" styleClass="journal-text-area" VBox.vgrow="ALWAYS"/>
+                    <HBox alignment="CENTER_LEFT" spacing="10">
+                        <TextField fx:id="tagsField" promptText="＋  Add tags, separated by commas" HBox.hgrow="ALWAYS" styleClass="tags-field"/>
+                        <CheckBox fx:id="favoriteBox" text="♡  Keep close" styleClass="favorite-check"/>
+                        <Label fx:id="wordCountLabel" text="0 words" styleClass="word-count"/>
+                    </HBox>
+                    <Label fx:id="errorLabel" visible="false" managed="false" wrapText="true" styleClass="error-label"/>
+                </VBox>
+                <VBox alignment="CENTER" spacing="8" minWidth="225" prefWidth="225" styleClass="writing-companion">
+                    <Label text="TAKE YOUR TIME" styleClass="tiny-label"/>
+                    <StackPane>
+                        <Region prefWidth="180" prefHeight="180" styleClass="writing-halo"/>
+                        <ImageView fitWidth="205" fitHeight="205" preserveRatio="true"><image><Image url="@../../images/bear/bear-writing.png"/></image></ImageView>
+                    </StackPane>
+                    <Label text="I’ll sit with you while you write." wrapText="true" textAlignment="CENTER" styleClass="companion-message"/>
+                    <Label text="✦  ✧  ✦" styleClass="companion-sparkles"/>
+                </VBox>
+            </HBox>
+        </VBox>
+    </content>
+</ScrollPane>
