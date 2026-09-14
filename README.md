@@ -2,7 +2,7 @@
 
 Life Lately is a desktop journal made with JavaFX and MySQL. It lets users write entries, track moods, browse past entries, and view simple journal statistics.
 
-This application was created as a school project. User data stays in the MySQL database configured for the application and is not sent to an external service.
+Life Lately is currently in development. User data stays in the MySQL database configured for the application and is not sent to an external service.
 
 Repository: [github.com/totaaa654/life_lately](https://github.com/totaaa654/life_lately)
 
@@ -167,4 +167,4 @@ src/main/resources/com/lifelately/
 
 ## Project note
 
-Life Lately is intended for educational and demonstration use. Information entered into the app is provided voluntarily and stored in the configured MySQL database. The app is not a medical service or a guaranteed backup system, so sensitive information should not be stored in it.
+Life Lately is currently in development, so bugs and incomplete features may still be present. Information entered into the app is provided voluntarily and stored in the configured MySQL database. Keep your own backups and avoid storing sensitive information.
