@@ -4,6 +4,8 @@ Life Lately is a desktop journal made with JavaFX and MySQL. It lets users write
 
 This application was created as a school project. User data stays in the MySQL database configured for the application and is not sent to an external service.
 
+Repository: [github.com/totaaa654/life_lately](https://github.com/totaaa654/life_lately)
+
 ## Features
 
 - Local account creation, login, logout, and remembered sessions
@@ -37,28 +39,57 @@ FXML and CSS -> Controller -> Service -> DAO -> MySQL
 
 The application creates the `life_lately` database and its tables on startup if they do not exist. Default moods and settings are also added automatically.
 
-## Requirements
+## Setup and run
 
-Install the following before running the project:
+The steps below use Windows and Laragon, which is the setup used during development.
+
+### 1. Get the project
+
+Clone the repository:
+
+```shell
+git clone https://github.com/totaaa654/life_lately.git
+cd life_lately
+```
+
+You can also use **Code > Download ZIP** on GitHub, extract the ZIP, and open a terminal inside the extracted folder.
+
+### 2. Install the requirements
+
+Install:
 
 - JDK 21
 - Maven
-- MySQL 8, or Laragon with MySQL enabled
+- Laragon with MySQL, or another MySQL 8 installation
 
-Check the installed versions:
+Check that Java and Maven are available:
 
 ```shell
 java -version
 mvn -version
 ```
 
-## Database setup
+Both commands should finish successfully. The Java version should be 21.
 
-1. Start MySQL in Laragon or through your local MySQL installation.
-2. Copy `config.properties.example` to `config.properties` in the project root.
-3. Update the database connection if your MySQL username, password, or port is different.
+### 3. Start MySQL
 
-Default Laragon configuration:
+1. Open Laragon.
+2. Start MySQL or click **Start All**.
+3. Leave Laragon running while using the app.
+
+The MySQL account must be allowed to create databases and tables. A default Laragon installation normally uses the `root` account with no password.
+
+### 4. Create the local configuration
+
+In PowerShell, run this from the project folder:
+
+```powershell
+Copy-Item config.properties.example config.properties
+```
+
+You can also copy the example file manually and rename the copy to `config.properties`.
+
+The default file contains:
 
 ```properties
 db.url=jdbc:mysql://localhost:3306/life_lately?useSSL=false&allowPublicKeyRetrieval=true&serverTimezone=UTC&connectTimeout=3000
@@ -66,24 +97,42 @@ db.username=root
 db.password=
 ```
 
-`config.properties` is ignored by Git so local database credentials are not committed.
+Change the port, username, or password if your MySQL setup is different. `config.properties` is ignored by Git, so local database credentials are not committed.
 
-The app normally handles database setup by itself. The SQL files are available here if manual import is needed:
-
-- `src/main/resources/com/lifelately/database/schema.sql`
-- `src/main/resources/com/lifelately/database/seed.sql`
-
-## Run the application
-
-Open a terminal in the project folder and run:
+### 5. Run the application
 
 ```shell
 mvn clean javafx:run
 ```
 
-Create an account on the first launch. Later sessions will reopen the remembered account until the user logs out.
+Maven downloads the required dependencies during the first run, so it may take longer than later launches.
 
-If the app cannot connect, make sure MySQL is running and that the values in `config.properties` are correct.
+The app automatically creates the `life_lately` database, tables, moods, and default settings. You do not need to import the SQL files manually.
+
+### 6. Create an account
+
+Create a local account when the login window opens. Accounts have separate journal entries and settings. A successful login is remembered until the user logs out.
+
+## Common setup problems
+
+### MySQL is not available
+
+- Confirm that Laragon and MySQL are running.
+- Check the port, username, and password in `config.properties`.
+- Restart the application after starting MySQL.
+
+### `java` or `mvn` is not recognized
+
+- Install JDK 21 and Maven.
+- Add their `bin` folders to the Windows `PATH`.
+- Open a new terminal and run `java -version` and `mvn -version` again.
+
+### Manual database import
+
+Manual import is normally unnecessary. If needed, import these files in order:
+
+1. `src/main/resources/com/lifelately/database/schema.sql`
+2. `src/main/resources/com/lifelately/database/seed.sql`
 
 ## Run the tests
 
