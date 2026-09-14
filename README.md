@@ -1,92 +1,64 @@
 # Life Lately
 
-Life Lately is a clean, single-user desktop journal for capturing everyday moments without turning
-journaling into a chore. It uses one JavaFX window, a calm bear companion, quick mood check-ins,
-searchable entries, tags, calendar browsing, lightweight insights, and persistent appearance settings.
+Life Lately is a desktop journal made with JavaFX and MySQL. It lets users write entries, track moods, browse past entries, and view simple journal statistics.
 
-## Phase 1 features
+This application was created as a school project. User data stays in the MySQL database configured for the application and is not sent to an external service.
 
-- One-stage JavaFX shell with Home, Journal, Calendar, Insights, and Settings navigation
-- First-run local account setup, sign-in, and logout
-- Restored local sessions, so successful sign-in persists until logout
-- Multiple local accounts with isolated entries, tags, and appearance settings
-- PBKDF2-SHA256 password hashing with a unique random salt
-- Create, read, edit, search, favorite, and soft-delete journal entries
-- Five seeded moods: Great, Good, Okay, Low, and Rough
-- Comma-separated tags that are reused automatically
-- Search plus mood, tag, favorite, date, and sort filters
-- Monthly calendar with entry indicators and entries for the selected day
-- Total/monthly entry counts, streaks, mood counts, and popular tags
-- Light and dark themes with five accent choices
-- Database-backed theme, accent, date-format, and first-day-of-week settings
-- Friendly offline state when Laragon/MySQL is not running
-- Replaceable mascot and illustration asset locations
+## Features
 
-## Technologies
+- Local account creation, login, logout, and remembered sessions
+- Separate journal entries and settings for each account
+- Create, view, edit, search, favorite, and delete journal entries
+- Mood selection using Great, Good, Okay, Low, or Rough
+- Tags, date filters, mood filters, and sorting
+- Monthly calendar with mood indicators and entries for each day
+- Basic insights such as entry totals, streaks, common moods, and popular tags
+- Light, dark, and system themes with multiple accent colors
+- Saved theme, date format, and first-day-of-week preferences
+- Display-name and password changes from Settings
+- Password hashing using PBKDF2-HMAC-SHA256 with a random salt
+
+## Tech stack
 
 - Java 21
-- JavaFX 21 (Controls and FXML)
+- JavaFX 21 with FXML and CSS
 - Maven
-- JDBC with MySQL Connector/J
 - MySQL 8 / Laragon
-- FXML for layouts and modular CSS for styling
-- JUnit 5 for the Phase 1 integration and FXML smoke checks
+- JDBC and MySQL Connector/J
+- JUnit 5
 
-## Architecture
+## How it works
 
-The application uses a deliberately small layered architecture:
-
-```text
-FXML + CSS -> Controller -> Service -> DAO -> MySQL
-                         ↘ Model ↗
-```
-
-- `model` contains application data only.
-- `dao` owns SQL and JDBC work.
-- `service` owns validation, saving rules, tag resolution, and insight calculations.
-- `controller` translates JavaFX events and fields into service calls.
-- `navigation` loads page FXML into the center of the one primary Stage.
-- `theme` applies shared stylesheets and theme/accent classes.
-- `database` creates the database and runs the schema/seed resources.
-- `config` loads configuration and wires the application services together.
-
-## Folder structure
+The interface is defined using FXML and CSS. Controllers handle user actions, services contain validation and application logic, and DAO classes read and write data through JDBC.
 
 ```text
-src/main/java/com/lifelately/
-├── App.java
-├── config/        # application wiring and database properties
-├── controller/    # small JavaFX page/component controllers
-├── dao/           # all SQL queries and row mapping
-├── database/      # connections and repeatable initialization
-├── model/         # Entry, Mood, Tag, AppSettings
-├── navigation/    # single-stage page switching
-├── service/       # validation and journal business rules
-├── theme/         # theme and accent application
-└── util/          # focused date and validation helpers
-
-src/main/resources/com/lifelately/
-├── css/
-│   ├── base.css
-│   ├── light-theme.css
-│   ├── dark-theme.css
-│   ├── components/
-│   └── pages/
-├── database/      # schema.sql and seed.sql
-├── fxml/          # main shell, pages, and reusable components
-├── fonts/
-├── icons/
-└── images/
+FXML and CSS -> Controller -> Service -> DAO -> MySQL
 ```
 
-## Database setup with Laragon
+The application creates the `life_lately` database and its tables on startup if they do not exist. Default moods and settings are also added automatically.
 
-1. Open Laragon and start **MySQL**.
-2. Confirm the MySQL user you plan to use can create databases and tables.
-3. Copy `config.properties.example` to `config.properties` in the project root.
-4. Update the username, password, port, or URL if your Laragon setup differs.
+## Requirements
 
-Default local configuration:
+Install the following before running the project:
+
+- JDK 21
+- Maven
+- MySQL 8, or Laragon with MySQL enabled
+
+Check the installed versions:
+
+```shell
+java -version
+mvn -version
+```
+
+## Database setup
+
+1. Start MySQL in Laragon or through your local MySQL installation.
+2. Copy `config.properties.example` to `config.properties` in the project root.
+3. Update the database connection if your MySQL username, password, or port is different.
+
+Default Laragon configuration:
 
 ```properties
 db.url=jdbc:mysql://localhost:3306/life_lately?useSSL=false&allowPublicKeyRetrieval=true&serverTimezone=UTC&connectTimeout=3000
@@ -94,83 +66,56 @@ db.username=root
 db.password=
 ```
 
-On startup, Life Lately creates the `life_lately` database when necessary, applies
-`schema.sql`, and idempotently seeds moods and default settings. The schema uses InnoDB,
-`utf8mb4`, primary and foreign keys, useful indexes, timestamps, and `deleted_at` soft deletion.
+`config.properties` is ignored by Git so local database credentials are not committed.
 
-`config.properties` is ignored by Git. Do not put real credentials in the example file.
+The app normally handles database setup by itself. The SQL files are available here if manual import is needed:
 
-## Run the app
+- `src/main/resources/com/lifelately/database/schema.sql`
+- `src/main/resources/com/lifelately/database/seed.sql`
 
-From the project directory:
+## Run the application
+
+Open a terminal in the project folder and run:
 
 ```shell
 mvn clean javafx:run
 ```
 
-On the first launch, create the one local account used by this installation. Later launches open the
-sign-in page. If MySQL is stopped, the sign-in page explains how to reconnect; start MySQL and restart
-the application.
+Create an account on the first launch. Later sessions will reopen the remembered account until the user logs out.
 
-## View or import the SQL tables
+If the app cannot connect, make sure MySQL is running and that the values in `config.properties` are correct.
 
-The app creates the database automatically. To import it yourself in phpMyAdmin, open **Import** and
-run these files in order:
+## Run the tests
 
-1. `src/main/resources/com/lifelately/database/schema.sql`
-2. `src/main/resources/com/lifelately/database/seed.sql`
-
-From the MySQL command line, the equivalent commands are:
-
-```shell
-mysql -u root -p < src/main/resources/com/lifelately/database/schema.sql
-mysql -u root -p < src/main/resources/com/lifelately/database/seed.sql
-```
-
-After import, `SHOW TABLES FROM life_lately;` displays `users`, `moods`, `entries`, `tags`,
-`entry_tags`, `app_settings`, and `user_settings`. Passwords are never stored as plain text.
-Existing entries are assigned to the first existing account during startup migration; new accounts
-cannot see or edit another account's entries.
-
-## Verify Phase 1
-
-With Laragon MySQL running:
+Keep MySQL running, then run:
 
 ```shell
 mvn clean test
 ```
 
-The integration test initializes the schema, exercises create/read/search/update/soft-delete/restore,
-and removes its temporary verification data. The JavaFX smoke test loads every page and reusable FXML
-resource so broken controller bindings or malformed layouts fail the build.
+The tests check the database operations, account separation, settings, authentication changes, and JavaFX/FXML loading. Temporary test records are removed after the test run.
 
-## Where do I edit things?
+## Project structure
 
-| What you want to change | File or folder |
-|---|---|
-| Home layout | `src/main/resources/com/lifelately/fxml/home/home.fxml` |
-| Home styling | `src/main/resources/com/lifelately/css/pages/home.css` |
-| Journal layouts | `src/main/resources/com/lifelately/fxml/journal/` |
-| Journal styling | `src/main/resources/com/lifelately/css/pages/journal.css` |
-| Reusable buttons, cards, and forms | `src/main/resources/com/lifelately/css/components/` |
-| Entry database queries | `src/main/java/com/lifelately/dao/EntryDAO.java` |
-| Entry validation and logic | `src/main/java/com/lifelately/service/EntryService.java` |
-| Entry editor UI behavior | `src/main/java/com/lifelately/controller/journal/EntryEditorController.java` |
-| Models and stored fields | `src/main/java/com/lifelately/model/` |
-| Login layout and styling | `src/main/resources/com/lifelately/fxml/auth/login.fxml` and `css/pages/login.css` |
-| Database tables or seed values | `src/main/resources/com/lifelately/database/` |
-| Navigation destinations | `src/main/java/com/lifelately/navigation/NavigationManager.java` and `View.java` |
-| Shared theme colors | `src/main/resources/com/lifelately/css/light-theme.css` and `dark-theme.css` |
-| Theme application behavior | `src/main/java/com/lifelately/theme/ThemeManager.java` |
-| Bear mascot files | `src/main/resources/com/lifelately/images/bear/` |
-| Application logo and window icon | `src/main/resources/com/lifelately/images/brand/app-icon.png` |
-| Application wiring | `src/main/java/com/lifelately/config/AppConfig.java` |
+```text
+src/main/java/com/lifelately/
+  config/       Application and database configuration
+  controller/   JavaFX controllers
+  dao/          SQL queries and database mapping
+  database/     Database connection and initialization
+  model/        Data models
+  navigation/   Page navigation
+  service/      Validation and application logic
+  theme/        Theme handling
+  util/         Shared utilities
 
-## Notes for extending the app
+src/main/resources/com/lifelately/
+  css/          Application styles
+  database/     Schema and seed SQL
+  fxml/         Page and component layouts
+  images/       Icons and illustrations
+```
 
-- Keep SQL in DAO classes and business rules in services.
-- Keep controllers focused on reading controls, calling services, and updating the visible state.
-- Add page-specific CSS to `css/pages` and reusable control styling to `css/components`.
-- Add new pages to `View` and load them through `NavigationManager`; do not create a Stage per page.
-- Soft-deleted entries remain in MySQL and can already be restored through `EntryService.restore`.
-  A future Trash screen can expose that operation in the interface.
+## Project note
+
+Life Lately is intended for educational and demonstration use. Information entered into the app is provided voluntarily and stored in the configured MySQL database. The app is not a medical service or a guaranteed backup system, so sensitive information should not be stored in it.
