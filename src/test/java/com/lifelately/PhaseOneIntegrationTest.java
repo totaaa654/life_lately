@@ -2,21 +2,30 @@ package com.lifelately;
 
 import com.lifelately.config.AppConfig;
 import com.lifelately.config.DatabaseConfig;
+import com.lifelately.controller.journal.EntryCardController;
 import com.lifelately.database.DatabaseConnection;
 import com.lifelately.dao.UserDAO;
+import com.lifelately.model.AppSettings;
 import com.lifelately.model.Entry;
 import com.lifelately.model.Mood;
 import com.lifelately.model.User;
 import com.lifelately.theme.Theme;
 import com.lifelately.theme.ThemeManager;
 import javafx.application.Platform;
+import javafx.geometry.Rectangle2D;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.ComboBox;
 import javafx.scene.control.DatePicker;
+import javafx.scene.control.Label;
+import javafx.scene.control.ToggleButton;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Region;
+import javafx.scene.layout.StackPane;
+import javafx.scene.paint.Color;
+import javafx.stage.Stage;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.AfterEach;
@@ -24,6 +33,7 @@ import org.junit.jupiter.api.Test;
 
 import java.sql.SQLException;
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.TimeUnit;
@@ -32,6 +42,7 @@ import java.util.concurrent.atomic.AtomicReference;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 class PhaseOneIntegrationTest {
@@ -39,7 +50,8 @@ class PhaseOneIntegrationTest {
     private static final DatabaseConnection TEST_DATABASE = new DatabaseConnection(DatabaseConfig.load());
     private static final UserDAO TEST_USERS = new UserDAO(TEST_DATABASE);
     private static final String TEST_USERNAME = "verify_user_" + System.nanoTime();
-    private static final String TEST_PASSWORD = "VerificationPass123";
+    private static final String TEST_PASSWORD = "VerificationPass123!";
+    private static final String CHANGED_PASSWORD = "ChangedPassword456!";
     private static Long testUserId;
     private static String previousRememberedUser;
 
@@ -258,6 +270,194 @@ class PhaseOneIntegrationTest {
             assertTrue(scene.getStylesheets().stream().anyMatch(path -> path.endsWith("dark-theme.css")));
             assertTrue(root.getStyleClass().contains("accent-coral"));
             assertFalse(root.getStyleClass().contains("accent-blue"));
+        });
+    }
+
+    @Test
+    void settingsAppearanceControlsReflectTheActivePreview() throws Exception {
+        startJavaFx();
+        runOnJavaFxThread(() -> {
+            Parent main = new FXMLLoader(App.class.getResource("/com/lifelately/fxml/main.fxml")).load();
+            Scene scene = new Scene(main, 1240, 820);
+            ThemeManager.initialize(scene);
+            ThemeManager.apply(Theme.DARK, "LAVENDER");
+
+            Parent settings = new FXMLLoader(
+                    App.class.getResource("/com/lifelately/fxml/settings/settings.fxml")).load();
+            new Scene(settings);
+            settings.applyCss();
+            ComboBox<?> themeBox = (ComboBox<?>) settings.lookup("#themeBox");
+            ComboBox<?> accentBox = (ComboBox<?>) settings.lookup("#accentBox");
+
+            assertEquals("Dark", themeBox.getValue());
+            assertEquals("Lavender", accentBox.getValue());
+        });
+    }
+
+    @Test
+    void registrationAllowsFriendlyUsernamesButRequiresUniqueNamesAndStrongPasswords() {
+        IllegalArgumentException duplicate = assertThrows(IllegalArgumentException.class,
+                () -> CONFIG.authService().createAccount(TEST_USERNAME.toUpperCase(), "Duplicate User",
+                        TEST_PASSWORD, TEST_PASSWORD));
+        assertEquals("That username is already taken.", duplicate.getMessage());
+
+        IllegalArgumentException weakPassword = assertThrows(IllegalArgumentException.class,
+                () -> CONFIG.authService().createAccount("Friendly name!", "Friendly User",
+                        "alllowercase1!", "alllowercase1!"));
+        assertEquals("Password needs at least one uppercase letter.", weakPassword.getMessage());
+    }
+
+    @Test
+    void selectedCurrentDayKeepsItsMoodIndicatorVisible() throws Exception {
+        startJavaFx();
+        runOnJavaFxThread(() -> {
+            Button currentDay = new Button("14");
+            currentDay.getStyleClass().addAll("calendar-day", "calendar-today", "calendar-selected",
+                    "calendar-has-entry", "calendar-mood-low");
+            StackPane root = new StackPane(currentDay);
+            Scene scene = new Scene(root, 200, 120);
+            ThemeManager.initialize(scene);
+            ThemeManager.apply(Theme.LIGHT, "YELLOW");
+            root.applyCss();
+
+            var border = currentDay.getBorder().getStrokes().getFirst();
+            assertEquals(Color.web("#e9b937"), border.getTopStroke());
+            assertEquals(Color.web("#9a86da"), border.getBottomStroke(),
+                    "The selected current day must retain its Low mood color");
+        });
+    }
+
+    @Test
+    void journalCardsOnlyShowTheFavoriteBadgeForFavorites() throws Exception {
+        startJavaFx();
+        runOnJavaFxThread(() -> {
+            Entry entry = new Entry();
+            entry.setId(1);
+            entry.setEntryDate(LocalDate.now());
+            entry.setTitle("A regular memory");
+            entry.setContent("Already saved, but not marked as a favorite.");
+            entry.setMood(new Mood(1, "Good", "leaf", "#65AE90", 2));
+
+            FXMLLoader loader = new FXMLLoader(
+                    App.class.getResource("/com/lifelately/fxml/components/entry-card.fxml"));
+            Parent card = loader.load();
+            EntryCardController controller = loader.getController();
+            controller.setEntry(entry);
+            new Scene(card);
+            card.applyCss();
+            Label favoriteLabel = (Label) card.lookup("#favoriteLabel");
+
+            assertFalse(favoriteLabel.isVisible());
+            assertFalse(favoriteLabel.isManaged());
+
+            entry.setFavorite(true);
+            controller.setEntry(entry);
+            card.applyCss();
+            card.layout();
+            Label moodLabel = (Label) card.lookup("#moodLabel");
+            assertTrue(favoriteLabel.isVisible());
+            assertTrue(favoriteLabel.isManaged());
+            assertEquals("Favorite", favoriteLabel.getText());
+            assertEquals(moodLabel.getBoundsInParent().getMinY(),
+                    favoriteLabel.getBoundsInParent().getMinY(), 1,
+                    "Mood and favorite badges should be vertically aligned");
+        });
+    }
+
+    @Test
+    @SuppressWarnings("unchecked")
+    void appearanceChangesArePersistedWithoutPressingThePreferencesButton() throws Exception {
+        startJavaFx();
+        runOnJavaFxThread(() -> {
+            Parent main = new FXMLLoader(App.class.getResource("/com/lifelately/fxml/main.fxml")).load();
+            Scene scene = new Scene(main, 1240, 820);
+            ThemeManager.initialize(scene);
+            AppSettings original = CONFIG.settingsService().getSettings();
+            ThemeManager.apply(Theme.valueOf(original.theme()), original.accentColor());
+
+            Parent settings = new FXMLLoader(
+                    App.class.getResource("/com/lifelately/fxml/settings/settings.fxml")).load();
+            new Scene(settings);
+            settings.applyCss();
+            ComboBox<String> themeBox = (ComboBox<String>) settings.lookup("#themeBox");
+            ComboBox<String> accentBox = (ComboBox<String>) settings.lookup("#accentBox");
+
+            themeBox.setValue("Dark");
+            accentBox.setValue("Coral");
+
+            AppSettings persisted = CONFIG.settingsService().getSettings();
+            assertEquals("DARK", persisted.theme());
+            assertEquals("CORAL", persisted.accentColor());
+        });
+    }
+
+    @Test
+    void signedInUserCanUpdateDisplayNameAndPassword() throws SQLException {
+        String username = "account_settings_" + System.nanoTime();
+        User account = null;
+        try {
+            account = CONFIG.authService().createAccount(username, "Original Name",
+                    TEST_PASSWORD, TEST_PASSWORD);
+
+            User updated = CONFIG.authService().updateDisplayName("Updated Name");
+            assertEquals("Updated Name", updated.displayName());
+            assertEquals("Updated Name", TEST_USERS.findById(account.id()).orElseThrow().displayName());
+
+            CONFIG.authService().changePassword(TEST_PASSWORD, CHANGED_PASSWORD, CHANGED_PASSWORD);
+            CONFIG.authService().logout();
+            assertThrows(IllegalArgumentException.class,
+                    () -> CONFIG.authService().login(username, TEST_PASSWORD));
+            assertEquals(account.id(), CONFIG.authService().login(username, CHANGED_PASSWORD).id());
+        } finally {
+            CONFIG.authService().logout();
+            if (account != null) {
+                try (var connection = TEST_DATABASE.getConnection();
+                     var statement = connection.prepareStatement("DELETE FROM users WHERE id = ?")) {
+                    statement.setLong(1, account.id());
+                    statement.executeUpdate();
+                }
+            }
+            switchToTestUser(testUserId);
+        }
+    }
+
+    @Test
+    void startupWindowFitsAndCentersWithinTheUsableScreen() throws Exception {
+        startJavaFx();
+        runOnJavaFxThread(() -> {
+            Stage stage = new Stage();
+            Rectangle2D scaledLaptopScreen = new Rectangle2D(0, 0, 1536, 824);
+            App.sizeToScreen(stage, scaledLaptopScreen);
+
+            assertEquals(1413.12, stage.getWidth(), 0.01);
+            assertEquals(741.60, stage.getHeight(), 0.01);
+            assertTrue(stage.getX() >= scaledLaptopScreen.getMinX());
+            assertTrue(stage.getY() >= scaledLaptopScreen.getMinY());
+            assertTrue(stage.getX() + stage.getWidth() <= scaledLaptopScreen.getMaxX());
+            assertTrue(stage.getY() + stage.getHeight() <= scaledLaptopScreen.getMaxY());
+            stage.close();
+        });
+    }
+
+    @Test
+    void homeMoodChoicesShareTheAvailableWidthWithoutSquashing() throws Exception {
+        startJavaFx();
+        runOnJavaFxThread(() -> {
+            Parent home = new FXMLLoader(App.class.getResource("/com/lifelately/fxml/home/home.fxml")).load();
+            Scene scene = new Scene(home, 820, 720);
+            ThemeManager.initialize(scene);
+            ThemeManager.apply(Theme.LIGHT, "BLUE");
+            home.applyCss();
+            home.layout();
+
+            List<ToggleButton> moodChoices = new ArrayList<>();
+            home.lookupAll(".home-mood-choice").forEach(node -> moodChoices.add((ToggleButton) node));
+            assertEquals(5, moodChoices.size());
+            double firstWidth = moodChoices.getFirst().getWidth();
+            assertTrue(firstWidth >= 120, "Home mood choices should remain comfortably wide");
+            assertTrue(moodChoices.stream().allMatch(choice -> Math.abs(choice.getWidth() - firstWidth) <= 2),
+                    "Mood choices should have equal widths apart from pixel rounding");
+            assertTrue(moodChoices.stream().allMatch(choice -> choice.getHeight() >= 76));
         });
     }
 

@@ -146,6 +146,33 @@ public final class UserDAO {
         }
     }
 
+    public User updateDisplayName(long userId, String displayName) {
+        String sql = "UPDATE users SET display_name = ? WHERE id = ?";
+        try (var connection = databaseConnection.getConnection();
+             var statement = connection.prepareStatement(sql)) {
+            statement.setString(1, displayName);
+            statement.setLong(2, userId);
+            if (statement.executeUpdate() == 0) throw new SQLException("User was not found");
+            return findById(userId).orElseThrow();
+        } catch (SQLException exception) {
+            throw databaseError("update display name", exception);
+        }
+    }
+
+    public User updatePassword(long userId, String passwordHash, String passwordSalt) {
+        String sql = "UPDATE users SET password_hash = ?, password_salt = ? WHERE id = ?";
+        try (var connection = databaseConnection.getConnection();
+             var statement = connection.prepareStatement(sql)) {
+            statement.setString(1, passwordHash);
+            statement.setString(2, passwordSalt);
+            statement.setLong(3, userId);
+            if (statement.executeUpdate() == 0) throw new SQLException("User was not found");
+            return findById(userId).orElseThrow();
+        } catch (SQLException exception) {
+            throw databaseError("update password", exception);
+        }
+    }
+
     private User map(ResultSet result) throws SQLException {
         Timestamp lastLogin = result.getTimestamp("last_login_at");
         return new User(

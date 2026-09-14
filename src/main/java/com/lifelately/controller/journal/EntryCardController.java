@@ -23,7 +23,9 @@ public final class EntryCardController {
         entryId = entry.getId();
         monthLabel.setText(entry.getEntryDate().getMonth().toString().substring(0, 3));
         dayLabel.setText(Integer.toString(entry.getEntryDate().getDayOfMonth()));
-        favoriteLabel.setText(entry.isFavorite() ? "Saved" : "");
+        favoriteLabel.setText(entry.isFavorite() ? "Favorite" : "");
+        favoriteLabel.setVisible(entry.isFavorite());
+        favoriteLabel.setManaged(entry.isFavorite());
         moodLabel.setText(entry.getMood().name());
         moodLabel.getStyleClass().add("mood-" + entry.getMood().name().toLowerCase());
         cardRoot.getStyleClass().add("journal-card-" + entry.getMood().name().toLowerCase());

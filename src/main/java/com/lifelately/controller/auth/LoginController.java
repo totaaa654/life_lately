@@ -18,6 +18,8 @@ public final class LoginController {
     @FXML private Label formSubtitle;
     @FXML private VBox displayNameGroup;
     @FXML private VBox confirmationGroup;
+    @FXML private Label usernameRequirements;
+    @FXML private Label passwordRequirements;
     @FXML private TextField displayNameField;
     @FXML private TextField usernameField;
     @FXML private PasswordField passwordField;
@@ -75,6 +77,10 @@ public final class LoginController {
         displayNameGroup.setManaged(register);
         confirmationGroup.setVisible(register);
         confirmationGroup.setManaged(register);
+        usernameRequirements.setVisible(register);
+        usernameRequirements.setManaged(register);
+        passwordRequirements.setVisible(register);
+        passwordRequirements.setManaged(register);
         if (register) {
             formEyebrow.setText("CREATE ACCOUNT");
             formTitle.setText("Start your own journal");

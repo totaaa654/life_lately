@@ -35,8 +35,11 @@ public final class AuthService {
 
     public User createAccount(String username, String displayName, String password, String confirmation) {
         String cleanUsername = validateUsername(username);
-        String cleanDisplayName = ValidationUtils.requireText(displayName, "Display name");
+        String cleanDisplayName = validateDisplayName(displayName);
         validatePassword(password, confirmation);
+        if (userDAO.findByUsername(cleanUsername).isPresent()) {
+            throw new IllegalArgumentException("That username is already taken.");
+        }
         byte[] salt = new byte[SALT_BYTES];
         new SecureRandom().nextBytes(salt);
         User user = userDAO.insert(cleanUsername, cleanDisplayName, hash(password, salt),
@@ -47,15 +50,36 @@ public final class AuthService {
         return user;
     }
 
+    public User updateDisplayName(String displayName) {
+        User user = requireCurrentUser();
+        currentUser = userDAO.updateDisplayName(user.id(), validateDisplayName(displayName));
+        return currentUser;
+    }
+
+    public void changePassword(String currentPassword, String newPassword, String confirmation) {
+        User user = requireCurrentUser();
+        if (currentPassword == null || currentPassword.isBlank()) {
+            throw new IllegalArgumentException("Current password is required.");
+        }
+        if (!passwordMatches(user, currentPassword)) {
+            throw new IllegalArgumentException("Current password is incorrect.");
+        }
+        validatePassword(newPassword, confirmation);
+        if (passwordMatches(user, newPassword)) {
+            throw new IllegalArgumentException("New password must be different from the current password.");
+        }
+        byte[] salt = new byte[SALT_BYTES];
+        new SecureRandom().nextBytes(salt);
+        currentUser = userDAO.updatePassword(user.id(), hash(newPassword, salt),
+                Base64.getEncoder().encodeToString(salt));
+    }
+
     public User login(String username, String password) {
         String cleanUsername = ValidationUtils.requireText(username, "Username");
         if (password == null || password.isBlank()) throw new IllegalArgumentException("Password is required.");
         User user = userDAO.findByUsername(cleanUsername)
                 .orElseThrow(() -> new IllegalArgumentException("Username or password is incorrect."));
-        byte[] salt = Base64.getDecoder().decode(user.passwordSalt());
-        byte[] expected = Base64.getDecoder().decode(user.passwordHash());
-        byte[] actual = Base64.getDecoder().decode(hash(password, salt));
-        if (!MessageDigest.isEqual(expected, actual)) {
+        if (!passwordMatches(user, password)) {
             throw new IllegalArgumentException("Username or password is incorrect.");
         }
         userDAO.recordLogin(user.id());
@@ -81,19 +105,60 @@ public final class AuthService {
 
     private String validateUsername(String username) {
         String clean = ValidationUtils.requireText(username, "Username");
-        if (!clean.matches("[A-Za-z0-9._-]{3,40}")) {
-            throw new IllegalArgumentException("Username must be 3-40 letters, numbers, dots, dashes, or underscores.");
+        int length = clean.codePointCount(0, clean.length());
+        if (length < 2 || length > 40) {
+            throw new IllegalArgumentException("Username must be 2-40 characters.");
+        }
+        if (clean.codePoints().anyMatch(Character::isISOControl)) {
+            throw new IllegalArgumentException("Username cannot contain line breaks or control characters.");
+        }
+        return clean;
+    }
+
+    private String validateDisplayName(String displayName) {
+        String clean = ValidationUtils.requireText(displayName, "Display name");
+        if (clean.codePointCount(0, clean.length()) > 80) {
+            throw new IllegalArgumentException("Display name must be 80 characters or fewer.");
         }
         return clean;
     }
 
     private void validatePassword(String password, String confirmation) {
-        if (password == null || password.length() < 8) {
-            throw new IllegalArgumentException("Password must be at least 8 characters.");
+        if (password == null || password.isEmpty()) {
+            throw new IllegalArgumentException("Password is required.");
+        }
+        if (password.length() < 8 || password.length() > 128) {
+            throw new IllegalArgumentException("Password must be 8-128 characters.");
+        }
+        if (password.codePoints().anyMatch(Character::isWhitespace)) {
+            throw new IllegalArgumentException("Password cannot contain spaces.");
+        }
+        if (password.codePoints().noneMatch(Character::isUpperCase)) {
+            throw new IllegalArgumentException("Password needs at least one uppercase letter.");
+        }
+        if (password.codePoints().noneMatch(Character::isLowerCase)) {
+            throw new IllegalArgumentException("Password needs at least one lowercase letter.");
+        }
+        if (password.codePoints().noneMatch(Character::isDigit)) {
+            throw new IllegalArgumentException("Password needs at least one number.");
+        }
+        if (password.codePoints().noneMatch(character -> !Character.isLetterOrDigit(character))) {
+            throw new IllegalArgumentException("Password needs at least one symbol.");
         }
         if (!password.equals(confirmation)) {
             throw new IllegalArgumentException("Passwords do not match.");
         }
+    }
+
+    private User requireCurrentUser() {
+        return currentUser().orElseThrow(() -> new IllegalStateException("Sign in to manage your account."));
+    }
+
+    private boolean passwordMatches(User user, String password) {
+        byte[] salt = Base64.getDecoder().decode(user.passwordSalt());
+        byte[] expected = Base64.getDecoder().decode(user.passwordHash());
+        byte[] actual = Base64.getDecoder().decode(hash(password, salt));
+        return MessageDigest.isEqual(expected, actual);
     }
 
     private String hash(String password, byte[] salt) {

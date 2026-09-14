@@ -31,7 +31,7 @@
                         <VBox spacing="2"><Label text="A MOMENT YOU KEPT" styleClass="tiny-label"/><Label fx:id="dateLabel" styleClass="editor-date"/></VBox>
                         <Region HBox.hgrow="ALWAYS"/>
                         <Label fx:id="moodLabel" styleClass="mood-badge"/>
-                        <Label fx:id="favoriteLabel" styleClass="favorite-star"/>
+                        <Label fx:id="favoriteLabel" visible="false" managed="false" styleClass="favorite-star"/>
                     </HBox>
                     <Label fx:id="titleLabel" wrapText="true" styleClass="detail-title"/>
                     <Separator/>

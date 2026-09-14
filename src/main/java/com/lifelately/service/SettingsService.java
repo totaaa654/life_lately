@@ -33,6 +33,12 @@ public final class SettingsService {
         settingsDAO.save(userId, "first_day_of_week", settings.firstDayOfWeek());
     }
 
+    public void saveAppearance(String theme, String accentColor) {
+        long userId = currentUserId();
+        settingsDAO.save(userId, "theme", theme);
+        settingsDAO.save(userId, "accent_color", accentColor);
+    }
+
     private long currentUserId() {
         return authService.currentUser()
                 .orElseThrow(() -> new IllegalStateException("Sign in to access journal settings."))

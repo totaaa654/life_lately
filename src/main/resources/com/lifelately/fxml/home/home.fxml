@@ -9,6 +9,8 @@
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.FlowPane?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.Priority?>
 <?import javafx.scene.layout.Region?>
@@ -52,13 +54,20 @@
                     <VBox spacing="2"><Label text="How are you feeling today?" styleClass="section-title"/><Label text="Pick the one that feels closest." styleClass="page-subtitle"/></VBox>
                     <Region HBox.hgrow="ALWAYS"/><Label text="TODAY" styleClass="tiny-label"/>
                 </HBox>
-                <FlowPane hgap="10" vgap="10" alignment="CENTER_LEFT">
-                    <ToggleButton text="Great" userData="Great" toggleGroup="$moodGroup" contentDisplay="TOP" styleClass="mood-choice, mood-great"><graphic><Region styleClass="mood-icon, mood-icon-great"/></graphic></ToggleButton>
-                    <ToggleButton text="Good" userData="Good" selected="true" toggleGroup="$moodGroup" contentDisplay="TOP" styleClass="mood-choice, mood-good"><graphic><Region styleClass="mood-icon, mood-icon-good"/></graphic></ToggleButton>
-                    <ToggleButton text="Okay" userData="Okay" toggleGroup="$moodGroup" contentDisplay="TOP" styleClass="mood-choice, mood-okay"><graphic><Region styleClass="mood-icon, mood-icon-okay"/></graphic></ToggleButton>
-                    <ToggleButton text="Low" userData="Low" toggleGroup="$moodGroup" contentDisplay="TOP" styleClass="mood-choice, mood-low"><graphic><Region styleClass="mood-icon, mood-icon-low"/></graphic></ToggleButton>
-                    <ToggleButton text="Rough" userData="Rough" toggleGroup="$moodGroup" contentDisplay="TOP" styleClass="mood-choice, mood-rough"><graphic><Region styleClass="mood-icon, mood-icon-rough"/></graphic></ToggleButton>
-                </FlowPane>
+                <GridPane hgap="10" maxWidth="Infinity" styleClass="home-mood-row">
+                    <columnConstraints>
+                        <ColumnConstraints percentWidth="20" hgrow="ALWAYS" fillWidth="true"/>
+                        <ColumnConstraints percentWidth="20" hgrow="ALWAYS" fillWidth="true"/>
+                        <ColumnConstraints percentWidth="20" hgrow="ALWAYS" fillWidth="true"/>
+                        <ColumnConstraints percentWidth="20" hgrow="ALWAYS" fillWidth="true"/>
+                        <ColumnConstraints percentWidth="20" hgrow="ALWAYS" fillWidth="true"/>
+                    </columnConstraints>
+                    <ToggleButton text="Great" userData="Great" toggleGroup="$moodGroup" contentDisplay="TOP" maxWidth="Infinity" styleClass="mood-choice, home-mood-choice, mood-great" GridPane.columnIndex="0"><graphic><Region styleClass="mood-icon, mood-icon-great"/></graphic></ToggleButton>
+                    <ToggleButton text="Good" userData="Good" selected="true" toggleGroup="$moodGroup" contentDisplay="TOP" maxWidth="Infinity" styleClass="mood-choice, home-mood-choice, mood-good" GridPane.columnIndex="1"><graphic><Region styleClass="mood-icon, mood-icon-good"/></graphic></ToggleButton>
+                    <ToggleButton text="Okay" userData="Okay" toggleGroup="$moodGroup" contentDisplay="TOP" maxWidth="Infinity" styleClass="mood-choice, home-mood-choice, mood-okay" GridPane.columnIndex="2"><graphic><Region styleClass="mood-icon, mood-icon-okay"/></graphic></ToggleButton>
+                    <ToggleButton text="Low" userData="Low" toggleGroup="$moodGroup" contentDisplay="TOP" maxWidth="Infinity" styleClass="mood-choice, home-mood-choice, mood-low" GridPane.columnIndex="3"><graphic><Region styleClass="mood-icon, mood-icon-low"/></graphic></ToggleButton>
+                    <ToggleButton text="Rough" userData="Rough" toggleGroup="$moodGroup" contentDisplay="TOP" maxWidth="Infinity" styleClass="mood-choice, home-mood-choice, mood-rough" GridPane.columnIndex="4"><graphic><Region styleClass="mood-icon, mood-icon-rough"/></graphic></ToggleButton>
+                </GridPane>
             </VBox>
             <VBox fx:id="databaseNotice" visible="false" managed="false" spacing="8" styleClass="notice-card">
                 <Label text="The journal database is taking a tiny nap." styleClass="card-title"/>

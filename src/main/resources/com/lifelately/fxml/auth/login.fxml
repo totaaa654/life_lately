@@ -50,10 +50,14 @@
                     <VBox spacing="7">
                         <Label text="USERNAME" styleClass="field-label"/>
                         <TextField fx:id="usernameField" promptText="Your username" prefHeight="46"/>
+                        <Label fx:id="usernameRequirements" text="2–40 characters. Spaces and symbols are welcome." wrapText="true"
+                               visible="false" managed="false" styleClass="login-note"/>
                     </VBox>
                     <VBox spacing="7">
                         <Label text="PASSWORD" styleClass="field-label"/>
                         <PasswordField fx:id="passwordField" promptText="Your password" prefHeight="46"/>
+                        <Label fx:id="passwordRequirements" text="Use 8–128 characters with uppercase, lowercase, a number, and a symbol. No spaces." wrapText="true"
+                               visible="false" managed="false" styleClass="login-note"/>
                     </VBox>
                     <VBox fx:id="confirmationGroup" spacing="7" visible="false" managed="false">
                         <Label text="CONFIRM PASSWORD" styleClass="field-label"/>

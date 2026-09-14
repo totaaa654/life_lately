@@ -16,7 +16,10 @@
 .hero-cloud { -fx-background-color: rgba(255,255,255,0.78); -fx-shape: "M 4 20 C 0 20 0 15 3 13 C 4 9 8 8 11 10 C 13 4 21 4 24 10 C 29 9 33 12 32 16 C 32 19 29 20 26 20 Z"; -fx-min-width: 48; -fx-pref-width: 48; -fx-max-width: 48; -fx-min-height: 28; -fx-pref-height: 28; -fx-max-height: 28; }
 .hero-sparkle { -fx-background-color: #e9b937; -fx-shape: "M 8 0 L 10 6 L 16 8 L 10 10 L 8 16 L 6 10 L 0 8 L 6 6 Z"; -fx-min-width: 20; -fx-pref-width: 20; -fx-max-width: 20; -fx-min-height: 20; -fx-pref-height: 20; -fx-max-height: 20; }
 .hero-sparkle-small { -fx-background-color: -accent; -fx-shape: "M 8 0 L 10 6 L 16 8 L 10 10 L 8 16 L 6 10 L 0 8 L 6 6 Z"; -fx-min-width: 11; -fx-pref-width: 11; -fx-max-width: 11; -fx-min-height: 11; -fx-pref-height: 11; -fx-max-height: 11; }
-.mood-checkin-card { -fx-background-color: -color-surface; -fx-background-radius: 18; -fx-border-color: -color-border; -fx-border-radius: 18; -fx-padding: 17 20; -fx-effect: dropshadow(gaussian, -color-shadow, 9, 0.04, 0, 2); }
+.mood-checkin-card { -fx-background-color: -color-surface; -fx-background-radius: 18; -fx-border-color: -color-border; -fx-border-radius: 18; -fx-padding: 19 21 21 21; -fx-effect: dropshadow(gaussian, -color-shadow, 9, 0.04, 0, 2); }
+.home-mood-row { -fx-min-height: 82; -fx-pref-height: 82; }
+.home-mood-choice { -fx-min-width: 0; -fx-min-height: 76; -fx-pref-height: 76; -fx-padding: 11 14; }
+.mood-choice.home-mood-choice:selected { -fx-scale-x: 1; -fx-scale-y: 1; }
 .memories-card { -fx-min-height: 250; }
 .week-card { -fx-background-color: linear-gradient(to bottom right, -color-surface, -soft-green); }
 .week-sparkle { -fx-text-fill: #e9b937; -fx-font-size: 22px; }

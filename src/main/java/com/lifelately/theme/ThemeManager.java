@@ -46,6 +46,18 @@ public final class ThemeManager {
         apply(currentTheme, currentAccent);
     }
 
+    public static boolean isInitialized() {
+        return scene != null;
+    }
+
+    public static Theme currentTheme() {
+        return currentTheme;
+    }
+
+    public static String currentAccent() {
+        return currentAccent;
+    }
+
     private static void addStylesheet(String path) {
         String resource = ThemeManager.class.getResource(RESOURCE_ROOT + path).toExternalForm();
         if (!scene.getStylesheets().contains(resource)) scene.getStylesheets().add(resource);

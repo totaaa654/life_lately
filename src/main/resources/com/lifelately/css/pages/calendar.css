@@ -3,16 +3,20 @@
 .month-button { -fx-background-color: transparent; -fx-text-fill: -accent; -fx-font-size: 10px; -fx-font-weight: bold; -fx-padding: 7 10; -fx-background-radius: 10; }
 .month-button:hover { -fx-background-color: -accent-soft; }
 .calendar-heading { -fx-font-size: 9px; -fx-font-weight: bold; -fx-text-fill: -color-muted; -fx-alignment: CENTER; -fx-max-width: Infinity; -fx-padding: 4; }
-.calendar-day { -fx-background-color: -color-surface-alt; -fx-text-fill: -color-text; -fx-background-radius: 12; -fx-max-width: Infinity; -fx-min-height: 64; -fx-pref-height: 70; -fx-font-size: 11px; -fx-alignment: TOP_LEFT; -fx-padding: 8; }
-.calendar-day:hover { -fx-background-color: -accent-soft; -fx-translate-y: -1; }
-.calendar-has-entry { -fx-border-color: transparent transparent -accent transparent; -fx-border-radius: 12; -fx-border-width: 0 0 3 0; }
-.calendar-mood-great { -fx-border-color: transparent transparent -mood-great transparent; }
-.calendar-mood-good { -fx-border-color: transparent transparent -mood-good transparent; }
-.calendar-mood-okay { -fx-border-color: transparent transparent -mood-okay transparent; }
-.calendar-mood-low { -fx-border-color: transparent transparent -mood-low transparent; }
-.calendar-mood-rough { -fx-border-color: transparent transparent -mood-rough transparent; }
-.calendar-today { -fx-background-color: -accent; -fx-text-fill: white; -fx-font-weight: bold; }
+.calendar-day { -calendar-day-background: -color-surface-alt; -fx-background-color: -calendar-day-background; -fx-text-fill: -color-text; -fx-background-radius: 12; -fx-max-width: Infinity; -fx-min-height: 64; -fx-pref-height: 70; -fx-font-size: 11px; -fx-alignment: TOP_LEFT; -fx-padding: 8; }
+.calendar-day:hover { -calendar-day-background: -accent-soft; -fx-background-color: -calendar-day-background; -fx-translate-y: -1; }
+.calendar-has-entry { -calendar-entry-color: -accent; -fx-border-color: transparent transparent -calendar-entry-color transparent; -fx-border-radius: 12; -fx-border-width: 0 0 3 0; }
+.calendar-mood-great { -calendar-entry-color: -mood-great; }
+.calendar-mood-good { -calendar-entry-color: -mood-good; }
+.calendar-mood-okay { -calendar-entry-color: -mood-okay; }
+.calendar-mood-low { -calendar-entry-color: -mood-low; }
+.calendar-mood-rough { -calendar-entry-color: -mood-rough; }
+.calendar-today { -calendar-day-background: -accent; -fx-background-color: -calendar-day-background; -fx-text-fill: white; -fx-font-weight: bold; }
 .calendar-selected { -fx-border-color: -accent; -fx-border-width: 2; -fx-border-radius: 12; }
+.calendar-selected.calendar-has-entry {
+    -fx-border-color: -accent -accent -calendar-entry-color -accent;
+    -fx-border-width: 2 2 3 2;
+}
 .calendar-entry-row { -fx-background-color: -color-surface-alt; -fx-text-fill: -color-text; -fx-alignment: CENTER_LEFT; -fx-max-width: Infinity; -fx-padding: 11 12; -fx-background-radius: 11; -fx-border-color: transparent; -fx-border-radius: 11; }
 .calendar-entry-marker { -fx-min-width: 8; -fx-pref-width: 8; -fx-max-width: 8; -fx-min-height: 8; -fx-pref-height: 8; -fx-max-height: 8; -fx-background-radius: 4; }
 .calendar-entry-row:hover { -fx-background-color: -accent-soft; -fx-border-color: derive(-accent, 55%); }

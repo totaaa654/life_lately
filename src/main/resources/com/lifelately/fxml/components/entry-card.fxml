@@ -18,10 +18,12 @@
         <HBox alignment="CENTER_LEFT" spacing="9">
             <Label fx:id="titleLabel" styleClass="entry-title"/>
             <Region HBox.hgrow="ALWAYS"/>
-            <Label fx:id="moodLabel" styleClass="mood-badge"/>
+            <HBox alignment="CENTER_RIGHT" spacing="8" styleClass="entry-badges">
+                <Label fx:id="moodLabel" styleClass="mood-badge"/>
+                <Label fx:id="favoriteLabel" visible="false" managed="false" styleClass="favorite-star"/>
+            </HBox>
         </HBox>
         <Label fx:id="previewLabel" wrapText="true" maxHeight="40" styleClass="entry-preview"/>
         <FlowPane fx:id="tagPane" hgap="7" vgap="7"/>
     </VBox>
-    <Label fx:id="favoriteLabel" styleClass="favorite-star"/>
 </HBox>

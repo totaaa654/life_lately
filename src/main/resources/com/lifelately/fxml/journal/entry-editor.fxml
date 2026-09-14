@@ -56,7 +56,7 @@
                     <TextArea fx:id="contentArea" promptText="What’s on your mind?" wrapText="true" prefRowCount="12" styleClass="journal-text-area" VBox.vgrow="ALWAYS"/>
                     <HBox alignment="CENTER_LEFT" spacing="10">
                         <TextField fx:id="tagsField" promptText="Add tags, separated by commas" HBox.hgrow="ALWAYS" styleClass="tags-field"/>
-                        <CheckBox fx:id="favoriteBox" text="Keep close" styleClass="favorite-check"/>
+                        <CheckBox fx:id="favoriteBox" text="Mark favorite" styleClass="favorite-check"/>
                         <Label fx:id="wordCountLabel" text="0 words" styleClass="word-count"/>
                     </HBox>
                     <Label fx:id="errorLabel" visible="false" managed="false" wrapText="true" styleClass="error-label"/>

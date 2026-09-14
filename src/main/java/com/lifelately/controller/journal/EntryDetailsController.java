@@ -28,7 +28,9 @@ public final class EntryDetailsController {
         Entry entry = config.entryService().getEntry(id).orElseThrow();
         dateLabel.setText(DateUtils.format(entry.getEntryDate(), "EEEE, MMMM d, yyyy"));
         moodLabel.setText(entry.getMood().name());
-        favoriteLabel.setText(entry.isFavorite() ? "Saved memory" : "");
+        favoriteLabel.setText(entry.isFavorite() ? "Favorite" : "");
+        favoriteLabel.setVisible(entry.isFavorite());
+        favoriteLabel.setManaged(entry.isFavorite());
         titleLabel.setText(entry.getTitle());
         contentArea.setText(entry.getContent());
         tagsPane.getChildren().clear();

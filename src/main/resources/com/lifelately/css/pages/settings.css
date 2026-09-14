@@ -8,3 +8,8 @@
 .night-message { -fx-font-size: 13px; -fx-font-weight: bold; -fx-text-fill: -color-text; -fx-line-spacing: 2px; }
 .night-dot { -fx-min-width: 7; -fx-pref-width: 7; -fx-max-width: 7; -fx-min-height: 7; -fx-pref-height: 7; -fx-max-height: 7; -fx-background-radius: 4; -fx-background-color: #f6c85f; }
 .night-dot-small { -fx-min-width: 4; -fx-pref-width: 4; -fx-max-width: 4; -fx-min-height: 4; -fx-pref-height: 4; -fx-max-height: 4; -fx-opacity: 0.65; }
+.account-value { -fx-background-color: -color-surface-alt; -fx-background-radius: 11; -fx-padding: 11 13; -fx-font-weight: bold; -fx-text-fill: -color-muted; }
+.version-pill { -fx-background-color: -accent-soft; -fx-background-radius: 12; -fx-padding: 6 9; -fx-font-size: 9px; -fx-font-weight: bold; -fx-text-fill: -accent-text; }
+.legal-card { -fx-border-color: derive(-color-border, -3%); }
+.legal-copy { -fx-font-size: 11px; -fx-text-fill: -color-muted; -fx-line-spacing: 2px; }
+.settings-status { -fx-background-color: -color-surface; -fx-background-radius: 11; -fx-padding: 8 11; -fx-font-size: 10px; -fx-font-weight: bold; -fx-max-width: 250; }
